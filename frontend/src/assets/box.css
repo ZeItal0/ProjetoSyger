@@ -1,0 +1,174 @@
+.glassmorphism {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 15px;
+  padding: 10px;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  color: black;
+  transition: transform 0.3s ease;
+}
+
+.glassmorphism:hover {
+  transform: translateY(-5px);
+}
+
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.metric-value {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: black;
+  margin-top: 10px;
+}
+
+
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 10px;
+}
+
+.dashboard-container {
+  padding: 20px;
+  min-height: 50vh;
+}
+
+
+
+
+
+
+
+
+
+.relatorio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.export-buttons {
+  grid-column: span 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+.export-btn {
+  background-color: #f4a261;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  color: #58094F;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  max-height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.export-btn:hover {
+  transform: scale(1.03);
+  background-color: #e38a41;
+}
+
+
+
+
+
+
+
+
+
+.grafico-titulo {
+  text-align: center;
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: #264653;
+}
+
+.calendar-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0.1rem 0;
+  margin-top: -5%;
+}
+
+.react-calendar {
+  transform: scale(0.95);
+}
+
+.react-calendar {
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.react-calendar__navigation {
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.react-calendar__navigation button {
+  color: #264653;
+  font-weight: 600;
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.react-calendar__month-view__weekdays {
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #264653;
+  font-size: 0.75rem;
+}
+
+.react-calendar__tile {
+  background: transparent;
+  border: none;
+  color: #264653;
+  padding: 6px 0;
+  font-size: 0.9rem;
+}
+
+.react-calendar__tile--active {
+  background: #2a9d8f !important;
+  color: white !important;
+  border-radius: 8px;
+}
+
+.react-calendar__month-view__days__day--weekend {
+  color: #e76f51;
+}
+
+.react-calendar__tile:disabled {
+  color: rgba(0, 0, 0, 0.2);
+}
+
+.react-calendar__tile:hover {
+  background: rgba(42, 157, 143, 0.1);
+  border-radius: 8px;
+}

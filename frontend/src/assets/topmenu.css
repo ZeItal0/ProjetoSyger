@@ -1,0 +1,74 @@
+.navigation {
+    width: 80%;
+    height: 80%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+    border-radius: 10px;
+}
+
+.navigation ul {
+    position: relative;
+    display: flex;
+    width: 10%;
+}
+
+.navigation ul li {
+    position: relative;
+    list-style: none;
+    width: 40%;
+    height: 40%;
+    z-index: 1;
+}
+
+.navigation ul li a {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.navigation ul li a .icon {
+    position: relative;
+    display: block;
+    font-size: 1.5em;
+    color: #fff;
+    line-height: 50%;
+    opacity: 0.75;
+}
+
+.navigation ul li.listActive a .icon {
+    opacity: 1;
+    color:#f09410;
+    transform: translateY(3px);
+
+}
+
+.indicator {
+    position: absolute;
+    top: -50%;
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border-top-left-radius: 35px;
+    border-top-right-radius: 35px;
+    border: 6px solid #fff;
+    cursor: pointer;
+    transition: 0.5s;
+}
+ .indicator span {
+    position: absolute;
+    left: 3px;
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f09410;
+    border-radius: 50%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    transform: scale(0.85);
+ }
+
+ .navigation ul li:nth-child(1).active ~ .indicator {
+    transform: translateX(calc(70px*1));
+ }
