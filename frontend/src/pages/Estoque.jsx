@@ -4,7 +4,7 @@ import MainHeader from "../components/MainHeader";
 import "../assets/home.css";
 import "../assets/lista.css"
 
-export default function Produtos() {
+export default function Estoque() {
   const [activeItem, setActiveItem] = useState("Produtos");
   const userName = "Nome Do Usuario";
 

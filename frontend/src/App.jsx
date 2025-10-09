@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginCadastro from "./pages/loginCadastro";
 import Home from "./pages/home";
 import DashBoard from "./pages/dashBoard"
-import Produtos from "./pages/produtos"
-import Receitas from "./pages/receitas"
+import Estoque from "./pages/estoque"
+import Pratos from "./pages/pratos"
 import Vendas from "./pages/vendas"
 import Financeiro from "./pages/financeiro"
 import Relatorios from "./pages/relatorio"
@@ -18,8 +18,8 @@ function App() {
         <Route path="/" element={<LoginCadastro/>}/>
         <Route path="/home" element={<Home/>}/>
         <Route path="/dashBoard" element={<DashBoard/>}/>
-        <Route path="/receitas" element={<Receitas/>}/>
-        <Route path="/produtos" element={<Produtos/>}/>
+        <Route path="/pratos" element={<Pratos/>}/>
+        <Route path="/estoque" element={<Estoque/>}/>
         <Route path="/vendas" element={<Vendas/>}/>
         <Route path="/financeiro" element={<Financeiro/>}/>
         <Route path="/relatorio" element={<Relatorios/>}/>

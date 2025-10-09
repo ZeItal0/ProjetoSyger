@@ -15,7 +15,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background-color: #f09410;
+  background-color: #33B088;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
   transition: width 0.9s ease, min-width 0.9s ease;
@@ -85,6 +85,7 @@
   padding: 15px 20px;
   margin-bottom: 16px;
   color: #2A445E;
+  /* color: #0555a4; */
   font-size: 1em;
   font-weight: 600;
   cursor: pointer;
@@ -101,7 +102,7 @@
 
 .nav-item:hover {
   background-color: #fff;
-  color: #f09410;
+  color: #33B088;
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
   margin-left: 15px;
@@ -112,7 +113,7 @@
 
 
 .nav-item:hover .nav-icon {
-  filter: brightness(0) saturate(100%) invert(67%) sepia(80%) saturate(450%) hue-rotate(2deg) brightness(100%) contrast(100%);
+  filter: invert(56%) sepia(13%) saturate(3015%) hue-rotate(124deg) brightness(85%) contrast(85%);
 }
 
 
@@ -169,7 +170,7 @@
 
 .main-header {
   height: 60px;
-  background-color: #f09410;
+  background-color: #33B088;
   padding: 0 20px;
   display: flex;
   justify-content: flex-end;
@@ -196,7 +197,7 @@
 
 .user-name {
   font-weight: 600;
-  color: #000000;
+  color: #2A445E;
 }
 
 .user-avatar {

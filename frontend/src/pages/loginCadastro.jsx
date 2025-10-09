@@ -41,14 +41,14 @@ export default function loginCadastro() {
           <form className="auth-form" onSubmit={handleSubmit}>
             {!isLogin && (
               <>
-                <input type="text" placeholder="NAME" className="form-input" />
+                <input type="text" placeholder="NOME" className="form-input" />
                 <input type="email" placeholder="E-MAIL" className="form-input" />
                 <input type="text" placeholder="CNPJ" className="form-input" />
               </>
             )}
 
-            <input type="text" placeholder="USER" className="form-input" />
-            <input type="password" placeholder="PASSWORD" className="form-input" />
+            <input type="text" placeholder="USUARIO" className="form-input" />
+            <input type="password" placeholder="SENHA" className="form-input" />
 
             <button type="submit" className="enter-button">
               {isLogin ? "ENTER" : "CADASTRAR"}

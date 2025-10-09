@@ -65,10 +65,10 @@
 }
 
 .export-btn {
-  background-color: #f4a261;
+  background-color: #33B088;
   border: none;
   padding: 0.6rem 1.5rem;
-  color: #58094F;
+  color: #2A445E;
   border-radius: 8px;
   font-weight: 600;
   font-size: 0.9rem;
@@ -82,8 +82,8 @@
 }
 
 .export-btn:hover {
-  transform: scale(1.03);
-  background-color: #e38a41;
+  scale: 1.1;
+  transition: 0.6s;
 }
 
 

@@ -2,11 +2,51 @@ import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import MainHeader from "../components/MainHeader";
 import GlassBox from "../components/GlassBox";
+import Calendar from "react-calendar"; // Import do Calendar
+import "react-calendar/dist/Calendar.css"; // CSS do Calendar
 import "../assets/home.css";
 import "../assets/box.css";
 
-import {LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, BarChart, Bar, ResponsiveContainer,} from "recharts";
+import {
+  LineChart,
+  Line,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+  BarChart,
+  Bar,
+  ResponsiveContainer,
+  PieChart, // Import para gráficos de pizza
+  Pie, // Import para gráficos de pizza
+  Cell // Import para gráficos de pizza
+} from "recharts";
 
+// Dados para os gráficos da área de Relatório (MOVEMOS ESTES DADOS)
+const vendasHoje = [
+  { name: "Produto A", value: 400 },
+  { name: "Produto B", value: 300 },
+  { name: "Produto C", value: 300 },
+];
+
+const vendasOntem = [
+  { name: "Produto A", value: 200 },
+  { name: "Produto B", value: 500 },
+  { name: "Produto C", value: 100 },
+];
+
+const meses = [
+  { name: "jan", vendas: 200 },
+  { name: "fev", vendas: 400 },
+  { name: "mar", vendas: 300 },
+  { name: "abr", vendas: 100 },
+  { name: "mai", vendas: 200 },
+  { name: "jun", vendas: 250 },
+];
+
+const COLORS = ["#264653", "#2A9D8F", "#E9C46A"]; // Cores dos gráficos de pizza
+
+// Dados já existentes no Dashboard
 const vendasData = [
   { mes: "Jan", valor: 4000 },
   { mes: "Fev", valor: 3000 },
@@ -25,6 +65,7 @@ const receitasDespesasData = [
 
 export default function Dashboard() {
   const [activeItem, setActiveItem] = useState("Dashboard");
+  const [date, setDate] = useState(new Date());
   const userName = "Nome Do Usuario";
 
   return (
@@ -35,6 +76,8 @@ export default function Dashboard() {
         <MainHeader userName={userName} />
 
         <main className="main-content dashboard-container">
+
+          
           <div className="metrics-row">
             <GlassBox>
               <h3>Total de Vendas</h3>
@@ -57,7 +100,10 @@ export default function Dashboard() {
             </GlassBox>
           </div>
 
-          <div className="charts-grid">
+
+          <div className="charts-grid dashboard-charts-extanded">
+
+            
             <GlassBox>
               <h3>Vendas por Mês</h3>
               <ResponsiveContainer width="100%" height={200}>
@@ -72,7 +118,7 @@ export default function Dashboard() {
             </GlassBox>
 
             <GlassBox>
-              <h3>Receitas vs Despesas</h3>
+              <h3>Receitas e Despesas</h3>
               <ResponsiveContainer width="100%" height={200}>
                 <BarChart data={receitasDespesasData}>
                   <CartesianGrid strokeDasharray="3 3" />
@@ -83,6 +129,43 @@ export default function Dashboard() {
                   <Bar dataKey="despesa" fill="#6a1a7f" />
                 </BarChart>
               </ResponsiveContainer>
+            </GlassBox>
+
+            <GlassBox>
+              <h3 className="grafico-titulo">Dia anterior</h3>
+              <ResponsiveContainer width="100%" height={200}>
+                <PieChart>
+                  <Pie data={vendasOntem} cx="50%" cy="50%" outerRadius={100} dataKey="value" labelLine={false}>
+                    {vendasOntem.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </GlassBox>
+
+            
+            <GlassBox >
+              <h3 className="grafico-titulo">Dia atual</h3>
+              <ResponsiveContainer width="100%" height={200}>
+                <PieChart>
+                  <Pie data={vendasHoje} cx="50%" cy="50%" outerRadius={100} dataKey="value" labelLine={false}>
+                    {vendasHoje.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </GlassBox>
+
+            
+            <GlassBox>
+              <h3 className="grafico-titulo">Calendário</h3>
+              <div className="calendar-container">
+                <Calendar onChange={setDate} value={date} className="custom-calendar" />
+              </div>
             </GlassBox>
 
           </div>

@@ -14,12 +14,7 @@ body {
   width: 35%;
   position: relative;
   overflow: hidden;
-   background-image: linear-gradient(
-    to right, 
-    rgba(188, 67, 13, 0.8),
-    rgba(242, 141, 40, 0.8),
-    rgba(240, 148, 16, 0.8) 
-  );
+  background-color: #33b088;
 }
 
 .left-panel::after {
@@ -50,7 +45,7 @@ body {
   display: block;
   padding: 10px 30px 10px 20px;
   margin-bottom: 5px;
-  color: #6a1a7f;
+  color: #fff;
   font-size: 1.1em;
   font-weight: bold;
   cursor: pointer;
@@ -61,7 +56,7 @@ body {
 .tab.active {
   opacity: 1;
   background-color: #ffffff;
-  color: #f28c28;
+  color: #33b088;
   position: relative;
   padding-right: 50px;
   border-radius: 15px 0 0 15px;
@@ -107,7 +102,7 @@ body {
 }
 
 .logo-text {
-  color: #6a1a7f;
+  color: #33b088;
   font-size: 2.5em;
   font-weight: 800;
   letter-spacing: 1px;
@@ -149,7 +144,7 @@ body {
 }
 
 .enter-button {
-  background-color: #f7931e;
+  background-color: #33b088;
   color: #ffffff;
   border: none;
   padding: 25px 3px;
@@ -163,12 +158,13 @@ body {
 }
 
 .enter-button:hover {
-  background-color: #d97b00;
-  color: #58094F;
+  background-color: #5865f2;
+  transition: 0.6s;
+  scale: 1.1;
 }
 
 .forgot-password {
-  color: #6a1a7f;
+  color: #5865f2;
   text-decoration: none;
   font-size: 0.9em;
   margin-top: 10px;

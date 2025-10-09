@@ -8,11 +8,35 @@ export default function Usuarios() {
   const userName = "Nome Do Usuario";
 
   const [usuarios, setUsuario] = useState([
-            { id: 1, usuario: 42134, acao: "venda adicionada", data: "data", hora: "9:45", detalhes: "registrou uma venda de um bolo de cenoura" },
-            { id: 2, usuario: 5634, acao: "receita removida", data: "data", hora: "9:50", detalhes: "removeu a receita de feijoada dos registros" },
-            { id: 3, usuario: 4354, acao: "produto adicionado", data: "data", hora: "9:34", detalhes: "adicionado arroz ao estoque"},
-            { id: 4, usuario: 65432, acao: "gerou relatorio", data: "data", hora: "15:23", detalhes: "Relatorio diario gerado" },
-          ]);
+    { 
+        id: 1, 
+        Nome: 'João Silva', 
+        Email: 'joao.s@email.com', 
+        cnpj: 'Gerente', // Mantido como 'cnpj', mas com o valor de Cargo
+        data: '2024-05-10' // Mantido como 'data', com o valor de data de cadastro
+    },
+    { 
+        id: 2, 
+        Nome: 'Maria Souza', 
+        Email: 'maria.s@email.com', 
+        cnpj: 'Cozinheira Chefe', 
+        data: '2024-06-15'
+    },
+    { 
+        id: 3, 
+        Nome: 'Pedro Lima', 
+        Email: 'pedro.l@email.com', 
+        cnpj: 'Atendente',
+        data: '2024-08-01'
+    },
+    { 
+        id: 4, 
+        Nome: 'Ana Costa', 
+        Email: 'ana.c@email.com', 
+        cnpj: 'Caixa', 
+        data: '2024-07-20' 
+    }
+]);
 
   return (
     <div className="home-container">
@@ -31,18 +55,18 @@ export default function Usuarios() {
                 <th>Nome</th>
                 <th>E-mail</th>
                 <th>CNPJ</th>
-                <th>User</th>
+                <th>Numero do usuario</th>
                 <th>Data de cadastro</th>
               </tr>
             </thead>
             <tbody>
               {usuarios.map((usuario) => (
                 <tr key={usuario.id}>
-                  <td>{usuario.usuario}</td>
-                  <td>{usuario.acao}</td>
+                  <td>{usuario.Nome}</td>
+                  <td>{usuario.Email}</td>
+                  <td>{usuario.cnpj}</td>
+                  <td>{usuario.id}</td>
                   <td>{usuario.data}</td>
-                  <td>{usuario.hora}</td>
-                  <td>{usuario.detalhes}</td>
                 </tr>
               ))}
             </tbody>

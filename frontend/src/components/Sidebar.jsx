@@ -15,8 +15,8 @@ import sair from "../icons/logout.png";
 
 const menuItems = [
     { label: "DashBoard", icon: dashboard, path: "/dashBoard" },
-    { label: "Produtos", icon: produtos, path: "/produtos" },
-    { label: "Receitas", icon: receitas, path: "/receitas"},
+    { label: "Estoque", icon: produtos, path: "/estoque" },
+    { label: "Pratos", icon: receitas, path: "/pratos"},
     { label: "Vendas", icon: vendas, path: "/vendas" },
     { label: "Financeiro", icon: financeiro, path: "/financeiro" },
     { label: "Relatorios", icon: relatorios, path: "/relatorio" },
@@ -25,7 +25,7 @@ const menuItems = [
 ];
 
 export default function Sidebar({ activeItem, setActiveItem }) {
-    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(true);
+    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
     const navigate = useNavigate();
 
     const toggleSidebar = () => {
