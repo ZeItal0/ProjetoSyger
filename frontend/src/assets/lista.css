@@ -8,11 +8,11 @@
   text-align: center;
   padding: 10px;
   border: none;
-  border-bottom: 1px solid #2A445E;
-  color: #2A445E;
+  border-bottom: 1px solid #FF8E71;
+  color: #333333;
 }
 
 .table th {
-  border-bottom: 2px solid #2A445E;
+  border-bottom: 2px solid #FF8E71;
   background-color: #f0f0f0;
 }

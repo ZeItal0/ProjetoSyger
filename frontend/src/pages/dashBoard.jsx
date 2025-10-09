@@ -2,27 +2,13 @@ import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import MainHeader from "../components/MainHeader";
 import GlassBox from "../components/GlassBox";
-import Calendar from "react-calendar"; // Import do Calendar
-import "react-calendar/dist/Calendar.css"; // CSS do Calendar
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css"; 
 import "../assets/home.css";
 import "../assets/box.css";
 
-import {
-  LineChart,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  BarChart,
-  Bar,
-  ResponsiveContainer,
-  PieChart, // Import para gráficos de pizza
-  Pie, // Import para gráficos de pizza
-  Cell // Import para gráficos de pizza
-} from "recharts";
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, BarChart, Bar, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
 
-// Dados para os gráficos da área de Relatório (MOVEMOS ESTES DADOS)
 const vendasHoje = [
   { name: "Produto A", value: 400 },
   { name: "Produto B", value: 300 },
@@ -44,9 +30,9 @@ const meses = [
   { name: "jun", vendas: 250 },
 ];
 
-const COLORS = ["#264653", "#2A9D8F", "#E9C46A"]; // Cores dos gráficos de pizza
+const COLORS = ["#264653", "#2A9D8F", "#E9C46A"];
 
-// Dados já existentes no Dashboard
+
 const vendasData = [
   { mes: "Jan", valor: 4000 },
   { mes: "Fev", valor: 3000 },
@@ -108,7 +94,7 @@ export default function Dashboard() {
               <h3>Vendas por Mês</h3>
               <ResponsiveContainer width="100%" height={200}>
                 <LineChart data={vendasData}>
-                  <Line type="monotone" dataKey="valor" stroke="#f09410" strokeWidth={2} />
+                  <Line type="monotone" dataKey="valor" stroke="#FF8E71" strokeWidth={2} />
                   <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
                   <XAxis dataKey="mes" />
                   <YAxis />
@@ -125,8 +111,8 @@ export default function Dashboard() {
                   <XAxis dataKey="mes" />
                   <YAxis />
                   <Tooltip />
-                  <Bar dataKey="receita" fill="#f09410" />
-                  <Bar dataKey="despesa" fill="#6a1a7f" />
+                  <Bar dataKey="receita" fill="#FF8E71" />
+                  <Bar dataKey="despesa" fill="#FF5757" />
                 </BarChart>
               </ResponsiveContainer>
             </GlassBox>

@@ -8,34 +8,10 @@ export default function Usuarios() {
   const userName = "Nome Do Usuario";
 
   const [usuarios, setUsuario] = useState([
-    { 
-        id: 1, 
-        Nome: 'João Silva', 
-        Email: 'joao.s@email.com', 
-        cnpj: 'Gerente', // Mantido como 'cnpj', mas com o valor de Cargo
-        data: '2024-05-10' // Mantido como 'data', com o valor de data de cadastro
-    },
-    { 
-        id: 2, 
-        Nome: 'Maria Souza', 
-        Email: 'maria.s@email.com', 
-        cnpj: 'Cozinheira Chefe', 
-        data: '2024-06-15'
-    },
-    { 
-        id: 3, 
-        Nome: 'Pedro Lima', 
-        Email: 'pedro.l@email.com', 
-        cnpj: 'Atendente',
-        data: '2024-08-01'
-    },
-    { 
-        id: 4, 
-        Nome: 'Ana Costa', 
-        Email: 'ana.c@email.com', 
-        cnpj: 'Caixa', 
-        data: '2024-07-20' 
-    }
+    { id: 1, Nome: 'João Silva', Email: 'joao.s@email.com', cnpj: 'Gerente', data: '2024-05-10'},
+    { id: 2, Nome: 'Maria Souza', Email: 'maria.s@email.com', cnpj: 'Cozinheira Chefe', data: '2024-06-15'},
+    { id: 3, Nome: 'Pedro Lima', Email: 'pedro.l@email.com', cnpj: 'Atendente',data: '2024-08-01'},
+    { id: 4, Nome: 'Ana Costa', Email: 'ana.c@email.com', cnpj: 'Caixa', data: '2024-07-20' }
 ]);
 
   return (

@@ -23,8 +23,11 @@
 .metric-value {
   font-size: 1.8rem;
   font-weight: bold;
-  color: black;
+  color: #333333;
   margin-top: 10px;
+}
+.metrics-row h3 {
+  columns: #333333;
 }
 
 
@@ -65,10 +68,10 @@
 }
 
 .export-btn {
-  background-color: #33B088;
+  background-color: #FF8E71;
   border: none;
   padding: 0.6rem 1.5rem;
-  color: #2A445E;
+  color: #F5F5F5;
   border-radius: 8px;
   font-weight: 600;
   font-size: 0.9rem;
@@ -84,6 +87,7 @@
 .export-btn:hover {
   scale: 1.1;
   transition: 0.6s;
+  background-color: #FF6B35;
 }
 
 
@@ -99,7 +103,7 @@
   font-weight: 600;
   font-size: 1rem;
   margin-bottom: 0.5rem;
-  color: #264653;
+  color: #333333;
 }
 
 .calendar-container {
@@ -131,7 +135,7 @@
 }
 
 .react-calendar__navigation button {
-  color: #264653;
+  color: #FF8E71;
   font-weight: 600;
   background: none;
   border: none;
@@ -142,14 +146,14 @@
 .react-calendar__month-view__weekdays {
   text-transform: uppercase;
   font-weight: 600;
-  color: #264653;
+  color: #FF8E71;
   font-size: 0.75rem;
 }
 
 .react-calendar__tile {
   background: transparent;
   border: none;
-  color: #264653;
+  color: #FF8E71;
   padding: 6px 0;
   font-size: 0.9rem;
 }
@@ -165,7 +169,7 @@
 }
 
 .react-calendar__tile:disabled {
-  color: rgba(0, 0, 0, 0.2);
+  color: rgba(0, 255, 119, 0.2);
 }
 
 .react-calendar__tile:hover {

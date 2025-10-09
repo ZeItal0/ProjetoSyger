@@ -14,7 +14,7 @@ body {
   width: 35%;
   position: relative;
   overflow: hidden;
-  background-color: #33b088;
+  background-color: #FF8E71;
 }
 
 .left-panel::after {
@@ -56,7 +56,7 @@ body {
 .tab.active {
   opacity: 1;
   background-color: #ffffff;
-  color: #33b088;
+  color: #FF8E71;
   position: relative;
   padding-right: 50px;
   border-radius: 15px 0 0 15px;
@@ -102,7 +102,7 @@ body {
 }
 
 .logo-text {
-  color: #33b088;
+  color: #FF8E71;
   font-size: 2.5em;
   font-weight: 800;
   letter-spacing: 1px;
@@ -144,7 +144,7 @@ body {
 }
 
 .enter-button {
-  background-color: #33b088;
+  background-color: #FF8E71;
   color: #ffffff;
   border: none;
   padding: 25px 3px;
@@ -158,7 +158,7 @@ body {
 }
 
 .enter-button:hover {
-  background-color: #5865f2;
+  background-color: #FF6B35;
   transition: 0.6s;
   scale: 1.1;
 }

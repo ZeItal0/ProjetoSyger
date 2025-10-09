@@ -15,7 +15,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  background-color: #33B088;
+  background-color: #FF8E71;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
   transition: width 0.9s ease, min-width 0.9s ease;
@@ -84,7 +84,7 @@
   align-items: center;
   padding: 15px 20px;
   margin-bottom: 16px;
-  color: #2A445E;
+  color: #F5F5F5;
   /* color: #0555a4; */
   font-size: 1em;
   font-weight: 600;
@@ -102,7 +102,7 @@
 
 .nav-item:hover {
   background-color: #fff;
-  color: #33B088;
+  color: #FF8E71;
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
   margin-left: 15px;
@@ -113,8 +113,10 @@
 
 
 .nav-item:hover .nav-icon {
-  filter: invert(56%) sepia(13%) saturate(3015%) hue-rotate(124deg) brightness(85%) contrast(85%);
+  filter: invert(29%) sepia(25%) saturate(1053%) hue-rotate(325deg) brightness(102%) contrast(97%);
+
 }
+
 
 
 .nav-item:hover .nav-text {
@@ -133,7 +135,7 @@
 .logout-btn {
   background: none;
   border: none;
-  color: #2A445E;
+  color: #F5F5F5;
   font-weight: 600;
   cursor: pointer;
   padding: 0;
@@ -170,7 +172,7 @@
 
 .main-header {
   height: 60px;
-  background-color: #33B088;
+  background-color: #FF8E71;
   padding: 0 20px;
   display: flex;
   justify-content: flex-end;
@@ -197,7 +199,7 @@
 
 .user-name {
   font-weight: 600;
-  color: #2A445E;
+  color: #F5F5F5;
 }
 
 .user-avatar {
