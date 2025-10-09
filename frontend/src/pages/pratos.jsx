@@ -4,8 +4,8 @@ import MainHeader from "../components/MainHeader";
 import "../assets/home.css";
 import "../assets/lista.css"
 
-export default function Receitas() {
-  const [activeItem, setActiveItem] = useState("Receitas");
+export default function pratos() {
+  const [activeItem, setActiveItem] = useState("Pratos");
   const userName = "Nome Do Usuario";
 
   const [receitas, setReceita] = useState([

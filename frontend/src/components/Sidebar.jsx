@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../assets/home.css";
 
@@ -16,7 +16,7 @@ import sair from "../icons/logout.png";
 const menuItems = [
     { label: "DashBoard", icon: dashboard, path: "/dashBoard" },
     { label: "Estoque", icon: produtos, path: "/estoque" },
-    { label: "Pratos", icon: receitas, path: "/pratos"},
+    { label: "Pratos", icon: receitas, path: "/pratos" },
     { label: "Vendas", icon: vendas, path: "/vendas" },
     { label: "Financeiro", icon: financeiro, path: "/financeiro" },
     { label: "Relatorios", icon: relatorios, path: "/relatorio" },
@@ -25,8 +25,17 @@ const menuItems = [
 ];
 
 export default function Sidebar({ activeItem, setActiveItem }) {
-    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
     const navigate = useNavigate();
+
+    const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
+        const savedState = localStorage.getItem("sidebar-collapsed");
+        return savedState === "true";
+    });
+
+    useEffect(() => {
+        localStorage.setItem("sidebar-collapsed", isSidebarCollapsed);
+    }, [isSidebarCollapsed]);
+
 
     const toggleSidebar = () => {
         setIsSidebarCollapsed(!isSidebarCollapsed);

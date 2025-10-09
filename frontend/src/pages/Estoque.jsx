@@ -5,7 +5,7 @@ import "../assets/home.css";
 import "../assets/lista.css"
 
 export default function Estoque() {
-  const [activeItem, setActiveItem] = useState("Produtos");
+  const [activeItem, setActiveItem] = useState("Estoque");
   const userName = "Nome Do Usuario";
 
   const [produtos, setProdutos] = useState([
