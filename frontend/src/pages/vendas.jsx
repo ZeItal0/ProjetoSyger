@@ -20,7 +20,7 @@ export default function Vendas() {
       <Sidebar activeItem={activeItem} setActiveItem={setActiveItem} />
 
       <div className="main-content-area">
-        <MainHeader userName={userName} />
+        <MainHeader userName={userName} area="Vendas"/>
 
         <main className="main-content">
           {/* <h2>{activeItem}</h2>

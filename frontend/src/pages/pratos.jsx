@@ -20,7 +20,7 @@ export default function pratos() {
       <Sidebar activeItem={activeItem} setActiveItem={setActiveItem} />
 
       <div className="main-content-area">
-        <MainHeader userName={userName} />
+        <MainHeader userName={userName} area="Pratos" />
 
         <main className="main-content">
           {/* <h2>{activeItem}</h2>

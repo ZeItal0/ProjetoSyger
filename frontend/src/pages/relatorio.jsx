@@ -15,7 +15,7 @@ export default function Relatorio() {
     <div className="home-container">
       <Sidebar activeItem={activeItem} setActiveItem={setActiveItem} />
       <div className="main-content-area">
-        <MainHeader userName={userName} />
+        <MainHeader userName={userName} area="Relatorio"/>
 
         <main className="main-content relatorio-grid">
           <div className="export-buttons">

@@ -20,7 +20,7 @@ export default function Estoque() {
       <Sidebar activeItem={activeItem} setActiveItem={setActiveItem} />
 
       <div className="main-content-area">
-        <MainHeader userName={userName} />
+        <MainHeader userName={userName} area="Estoque"/>
 
         <main className="main-content">
           {/* <h2>{activeItem}</h2>

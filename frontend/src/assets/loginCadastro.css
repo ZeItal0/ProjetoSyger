@@ -15,21 +15,34 @@ body {
   position: relative;
   overflow: hidden;
   background-color: #FF8E71;
-}
-
-.left-panel::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 120%;
-  height: 120%;
-  border-radius: 50%;
-  transform: translate(-30%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 
+.logo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: -50px; 
+}
 
+.logo-image {
+  width: 150px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.logo-text {
+  color: #ffffff;
+  font-size: 2.3em;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin: 0;
+}
 
 
 .tab-menu-wrapper {
@@ -37,7 +50,6 @@ body {
   top: 50%;
   right: 0;
   transform: translateY(-50%);
-  text-align: right;
   z-index: 10;
 }
 
@@ -49,21 +61,14 @@ body {
   font-size: 1.1em;
   font-weight: bold;
   cursor: pointer;
-  opacity: 1;
-  transition: opacity 0.3s;
+  transition: 0.3s;
 }
 
 .tab.active {
-  opacity: 1;
   background-color: #ffffff;
   color: #FF8E71;
-  position: relative;
-  padding-right: 50px;
   border-radius: 15px 0 0 15px;
 }
-
-
-
 
 
 .right-panel {
@@ -72,63 +77,44 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  /* background-image: url('../components/PratoQuentecomVaporAscendente.png');
-  background-size: 1300px;
-  background-repeat: no-repeat;
-  background-attachment: fixed; */
 }
 
-
-
 .login-form-box {
-  width: 80%;
-  max-width: 400px;
+  position: relative;
+  overflow: hidden; 
   text-align: center;
 }
 
-
-
-.logo-section {
-  margin-bottom: 50px;
+.login-form-box {
+  width: 80%;
+  max-width: 420px;
+  min-height: 400px;
+  transition: all 0.4s ease;
+  overflow: visible;
 }
 
-.logo-cubes {
-  height: auto; 
-  width: 100%;
-  margin: 0 auto 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
 
-.logo-text {
+
+.text-login {
   color: #FF8E71;
   font-size: 2.5em;
   font-weight: 800;
   letter-spacing: 1px;
-  margin: 0;
+  margin-bottom: 40px;
 }
-.logo-image {
-  max-width: 250px; 
-  height: auto;
-}
-
-
-
 
 
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 25px;
 }
 
 .auth-form input {
   border: none;
   border-bottom: 2px solid #ccc;
-  background-color: #ffffff;
-  padding: 10px 0;
-  text-align: center;
+  background-color: #F5F5F5;
+  padding: 10px;
   font-size: 1em;
   outline: none;
   color: black;
@@ -137,34 +123,39 @@ body {
 }
 
 .auth-form input::placeholder {
-  text-align: right;
-  color: #888; 
+  color: #888;
   text-transform: uppercase;
   font-weight: 500;
 }
+.auth-form input, .enter-button {
+  width: 100%;
+  max-width: 430px; 
+  margin: 0 auto; 
+}
+
 
 .enter-button {
   background-color: #FF8E71;
   color: #ffffff;
   border: none;
-  padding: 25px 3px;
-  border-radius: 20px;
+  padding: 18px;
+  border-radius: 15px;
   cursor: pointer;
-  font-size: 0.9em;
+  font-size: 1em;
   font-weight: bold;
-  margin-top: 30px;
+  margin-top: 20px;
   text-transform: uppercase;
-  transition: background-color 0.3s;
+  transition: all 0.3s;
 }
 
 .enter-button:hover {
   background-color: #FF6B35;
-  transition: 0.6s;
-  scale: 1.1;
+  transform: scale(1.05);
 }
 
+
 .forgot-password {
-  color: #5865f2;
+  color: #FF6B35;
   text-decoration: none;
   font-size: 0.9em;
   margin-top: 10px;
@@ -174,3 +165,27 @@ body {
 .forgot-password:hover {
   text-decoration: underline;
 }
+
+
+.form-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: transform 0.6s ease, opacity 0.6s ease;
+}
+
+.form-slide.active {
+  opacity: 1;
+  transform: translateY(0);
+  z-index: 2;
+}
+
+.form-slide.hidden {
+  opacity: 0;
+  transform: translateY(-50px);
+  z-index: 1;
+}
+

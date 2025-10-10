@@ -59,7 +59,7 @@ export default function Dashboard() {
       <Sidebar activeItem={activeItem} setActiveItem={setActiveItem} />
 
       <div className="main-content-area">
-        <MainHeader userName={userName} />
+        <MainHeader userName={userName} area="DashBoard"/>
 
         <main className="main-content dashboard-container">
 

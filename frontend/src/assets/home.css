@@ -191,7 +191,7 @@
 .divider {
   width: 2px;
   height: 30px;
-  background-color: #fff;
+  background-color: #F5F5F5;
   opacity: 0.6;
   margin: 0 10px;
   border-radius: 1px;
@@ -204,7 +204,7 @@
 
 .user-avatar {
   font-size: 1.5em;
-  color: #ffffff;
+  color: #F5F5F5;
   border-radius: 50%;
   padding: 5px 8px;
   line-height: 1;

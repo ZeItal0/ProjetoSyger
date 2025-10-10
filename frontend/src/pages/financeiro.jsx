@@ -14,7 +14,7 @@ export default function Financeiro() {
       <Sidebar activeItem={activeItem} setActiveItem={setActiveItem} />
 
       <div className="main-content-area">
-        <MainHeader userName={userName} />
+        <MainHeader userName={userName} area="Financeiro"/>
 
         <main className="main-content">
           {/* <h2>{activeItem}</h2>

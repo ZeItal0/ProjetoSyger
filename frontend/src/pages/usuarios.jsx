@@ -19,7 +19,7 @@ export default function Usuarios() {
       <Sidebar activeItem={activeItem} setActiveItem={setActiveItem} />
 
       <div className="main-content-area">
-        <MainHeader userName={userName} />
+        <MainHeader userName={userName} area="Usuarios"/>
 
         <main className="main-content">
           {/* <h2>{activeItem}</h2>
