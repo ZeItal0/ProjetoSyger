@@ -1,0 +1,45 @@
+.main-header {
+  height: 60px;
+  background-color: #FF8E71;
+  padding: 0 25px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+}
+
+
+.user-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.divider {
+  width: 2px;
+  height: 30px;
+  background-color: #F5F5F5;
+  opacity: 0.6;
+  margin: 0 10px;
+  border-radius: 1px;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #F5F5F5;
+}
+
+.icon-btn {
+width: 30px;
+height: 30px;
+}
+
+.user-avatar {
+  width: 30px;
+  height: 30px;
+}
+
+
+

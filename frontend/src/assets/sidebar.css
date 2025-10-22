@@ -1,0 +1,152 @@
+.sidebar {
+  width: 250px;
+  min-width: 200px;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #FF8E71;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  transition: width 0.9s ease, min-width 0.9s ease;
+}
+
+.sidebar.collapsed {
+  width: 90px;
+  min-width: 90px;
+}
+
+.sidebar.collapsed .nav-text, .sidebar.collapsed .logout-btn {
+  display: none;
+}
+
+.sidebar.collapsed .sidebar-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.sidebar.collapsed .nav-icon {
+  margin-right: 0;
+}
+
+.sidebar.collapsed .siderbar-footer {
+  justify-content: center;
+}
+
+.sidebar.collapsed .menu-icon img {
+    transform: rotate(90deg); 
+    transition: transform 0.9s ease-in-out;
+    
+}
+
+
+.sidebar-header {
+  padding: 20px;
+  color: #ffffff;
+  font-size: 1.5em;
+  text-align: left;
+}
+
+.menu-icon {
+  flex-grow: 1;
+  padding-top: 10px;
+}
+
+
+.sidebar-nav {
+  flex-grow: 1;
+  padding: 70px 0;
+}
+
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 20px;
+  margin-bottom: 16px;
+  color: #F5F5F5;
+  /* color: #0555a4; */
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-icon {
+  margin-right: 15px;
+  width: 30px;
+  height: 30px;
+}
+
+
+.nav-item:hover {
+  margin-left: 10px;
+  padding-left: 25px;
+}
+
+
+
+/* .nav-item:hover .nav-icon {
+  filter: invert(29%) sepia(25%) saturate(1053%) hue-rotate(325deg) brightness(102%) contrast(97%);
+
+} */
+
+.nav-item.active {
+  background-color: #fff;
+  color: #ff8e71;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  margin-left: 10px;
+  padding-left: 25px;
+  font-weight: 700;
+}
+
+.nav-item.active .nav-icon {
+  filter: invert(29%) sepia(25%) saturate(1053%) hue-rotate(325deg)
+    brightness(102%) contrast(97%);
+}
+
+.nav-item:hover .nav-text {
+  font-weight: 700;
+}
+
+.siderbar-footer {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  color: #F5F5F5;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+}
+
+.icon-btn {
+  width: 24px;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+
+.siderbar-footer:hover .icon-btn {
+  transform: translateX(6px);
+}
+
+
+.logout-btn:hover {
+  background-color: rgba(0, 0, 0, 0);
+}
+

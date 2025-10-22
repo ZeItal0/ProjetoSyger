@@ -52,14 +52,14 @@ const receitasDespesasData = [
 export default function Dashboard() {
   const [activeItem, setActiveItem] = useState("Dashboard");
   const [date, setDate] = useState(new Date());
-  const userName = "Nome Do Usuario";
+  
 
   return (
     <div className="home-container">
       <Sidebar activeItem={activeItem} setActiveItem={setActiveItem} />
 
       <div className="main-content-area">
-        <MainHeader userName={userName} area="DashBoard"/>
+        <MainHeader area="DashBoard"/>
 
         <main className="main-content dashboard-container">
 

@@ -5,7 +5,6 @@ import "../assets/home.css";
 
 export default function Usuarios() {
   const [activeItem, setActiveItem] = useState("Usuarios");
-  const userName = "Nome Do Usuario";
 
   const [usuarios, setUsuario] = useState([
     { id: 1, Nome: 'João Silva', Email: 'joao.s@email.com', cnpj: 'Gerente', data: '2024-05-10'},
@@ -19,11 +18,9 @@ export default function Usuarios() {
       <Sidebar activeItem={activeItem} setActiveItem={setActiveItem} />
 
       <div className="main-content-area">
-        <MainHeader userName={userName} area="Usuarios"/>
+        <MainHeader area="Usuarios"/>
 
         <main className="main-content">
-          {/* <h2>{activeItem}</h2>
-          <p>{activeItem}</p> */}
 
           <table className="table">
             <thead>

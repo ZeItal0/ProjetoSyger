@@ -11,7 +11,7 @@ body {
 
 
 .left-panel {
-  width: 35%;
+  width: 40%;
   position: relative;
   overflow: hidden;
   background-color: #FF8E71;
@@ -21,36 +21,88 @@ body {
   justify-content: center;
 }
 
+.content-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.waves-background {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 15vh;
+    margin-bottom: -7px;
+    z-index: 1;
+}
+
+.waves {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 100px;
+    max-height: 150px;
+}
+
+.parallax > use {
+    animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+}
+.parallax > use:nth-child(1) {
+    animation-delay: -2s;
+    animation-duration: 20s;
+}
+.parallax > use:nth-child(2) {
+    animation-delay: -3s;
+    animation-duration: 30s;
+}
+.parallax > use:nth-child(3) {
+    animation-delay: -4s;
+    animation-duration: 15s;
+}
+.parallax > use:nth-child(4) {
+    animation-delay: -5s;
+    animation-duration: 24s;
+}
+
+@keyframes move-forever {
+    0% {
+        transform: translate3d(-90px,0,0);
+    }
+    100% { 
+        transform: translate3d(85px,0,0);
+    }
+}
 
 .logo-section {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  align-self: start;
   justify-content: center;
-  margin-top: -50px; 
+  margin-top: -3.125vw;
 }
 
 .logo-image {
-  width: 150px;
+  max-width: 80%;
+  width: 25vw;
   height: auto;
   margin-bottom: 10px;
+  object-fit: contain
 }
-
-.logo-text {
-  color: #ffffff;
-  font-size: 2.3em;
-  font-weight: 800;
-  letter-spacing: 1px;
-  margin: 0;
-}
-
 
 .tab-menu-wrapper {
   position: absolute;
   top: 50%;
   right: 0;
   transform: translateY(-50%);
-  z-index: 10;
+  
 }
 
 .tab {
@@ -81,7 +133,7 @@ body {
 
 .login-form-box {
   position: relative;
-  overflow: hidden; 
+  overflow: hidden;
   text-align: center;
 }
 
@@ -127,10 +179,12 @@ body {
   text-transform: uppercase;
   font-weight: 500;
 }
-.auth-form input, .enter-button {
+
+.auth-form input,
+.enter-button {
   width: 100%;
-  max-width: 430px; 
-  margin: 0 auto; 
+  max-width: 430px;
+  margin: 0 auto;
 }
 
 
@@ -149,13 +203,13 @@ body {
 }
 
 .enter-button:hover {
-  background-color: #FF6B35;
+  background-color: #ff724e;
   transform: scale(1.05);
 }
 
 
 .forgot-password {
-  color: #FF6B35;
+  color: #ff724e;
   text-decoration: none;
   font-size: 0.9em;
   margin-top: 10px;
@@ -188,4 +242,3 @@ body {
   transform: translateY(-50px);
   z-index: 1;
 }
-

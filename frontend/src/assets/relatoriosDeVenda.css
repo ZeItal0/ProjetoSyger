@@ -1,0 +1,280 @@
+.relatorios-vendas-container * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.relatorios-vendas-container {
+  padding: 30px 50px;
+  background-color: #fff;
+  color: #333;
+   height: 10vh;
+}
+
+.relatorios-vendas-container h1 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+.conteudo-principal {
+  display: flex;
+  gap: 60px;
+  align-items: flex-start;
+}
+
+.coluna-esquerda {
+  flex: 1;
+}
+
+.coluna-esquerda h2 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+
+
+
+
+
+.filtro-grupo {
+  margin-bottom: 15px;
+}
+
+.filtro-grupo select, .filtro-grupo input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background-color: #f5f5f5;
+  font-size: 14px;
+  transition: border 0.2s;
+  color: #989696;
+}
+
+.filtro-grupo select:focus, .filtro-grupo input:focus {
+  border-color: #ff8e71;
+  outline: none;
+}
+
+.btn-comparacao {
+  width: 100%;
+  background-color: #ff8e71;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 0;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+
+
+
+.btn-comparacao:hover {
+  background-color: #ff7856;
+  transition: 0.6s;
+  transform: scale(1.05);
+}
+
+
+
+
+.coluna-direita {
+  flex: 1;
+  text-align: center;
+}
+
+.react-calendar {
+  width: 100%;
+  background: #f5f5f5;
+  border: none;
+  font-family: "Poppins", sans-serif;
+  border-radius: 10px;
+  box-shadow: #ff8e71;
+}
+
+.react-calendar__tile {
+  border-radius: 8px;
+  transition: background-color 0.3s;
+  font-size: 14px;
+  color: #333333;
+}
+
+.react-calendar__tile--active {
+  background: none !important;
+  color: #ff8e71 !important;
+  font-weight: 600;
+  position: relative;
+}
+.react-calendar__tile--active::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 18px;
+  border: 1px solid #ff8e71;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+
+
+
+.react-calendar__tile:hover {
+  background: #333333;
+}
+
+.react-calendar__navigation button {
+  color: #ff8e71;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.react-calendar__navigation button:hover {
+  color: #ff7755;
+}
+
+
+
+.resumo-section {
+  margin-top: 40px;
+}
+
+.resumo-section h2 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.cards-resumo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card-resumo {
+  flex: 1;
+  background-color: #ff8e71;
+  color: white;
+  border-radius: 12px;
+  padding: 15px 20px;
+  text-align: start;
+  min-width: 160px;
+}
+
+.card-label {
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.card-valor {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+
+.top10-section {
+  margin-top: 40px;
+}
+
+.top10-section h2 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.tabela-container {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.tabela-top10 {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.tabela-top10 th {
+  background-color: #f3f3f3;
+  color: #333;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 12px;
+  border-bottom: 2px solid #ddd;
+}
+
+.tabela-top10 td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  color: #555;
+}
+
+.tabela-top10 tr:last-child td {
+  border-bottom: none;
+}
+
+.botoes-exportar {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-bottom: 15px;
+}
+
+
+
+
+
+.botao-exportar, .botao-email {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background-color: #ff8e71;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.botao-exportar:hover, .botao-email:hover {
+  background-color: #ff7755;
+  transform: scale(1.05);
+}
+
+.botao-email {
+  background-color: #444;
+}
+
+.botao-email:hover {
+  background-color: #222;
+}
+
+.botoes-exportar img {
+  width: 20px;
+  height: 20px;
+}
+
+
+
+@media (max-width: 900px) {
+  .conteudo-principal {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .cards-resumo {
+    flex-direction: column;
+  }
+}

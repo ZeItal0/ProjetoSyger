@@ -1,0 +1,289 @@
+.relatorio-estoque-container {
+    padding: 30px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: #fff;
+    height: 10vh;
+}
+
+.relatorio-estoque-container h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #000;
+}
+
+.relatorio-estoque-container h2 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: #000;
+}
+
+.filtros-section {
+    margin-bottom: 30px;
+}
+
+.filtros-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.filtros-grid select {
+    padding: 12px 15px;
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background: #fff;
+    color: #999;
+    outline: none;
+    transition: border-color 0.2s;
+    cursor: pointer;
+}
+
+.filtros-grid select:focus {
+    border-color: #ff8e71;
+    color: #333;
+}
+
+.input-pesquisa {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #d0d0d0;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background: #fff;
+    color: #333;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-pesquisa:focus {
+    border-color: #ff8e71;
+}
+
+.input-pesquisa::placeholder {
+    color: #999;
+}
+
+.resultados-acoes {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.resultados-contador {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.label-resultados {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000;
+}
+
+.contador-badge {
+    background: #ff8e71;
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.acoes-exportacao {
+    display: flex;
+    gap: 15px;
+}
+
+.btn-exportar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: #ff8e71;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-exportar:hover {
+    background: #ff724e;
+    transform: scale(1.02);
+}
+
+.acoes-exportacao img {
+    height: 25px;
+}
+
+.tabela-estoque-container {
+    background: #f8f8f8;
+    border-radius: 10px;
+    padding: 20px;
+    overflow-x: auto;
+}
+
+.tabela-estoque {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.tabela-estoque thead {
+    background: #f8f8f8;
+}
+
+.tabela-estoque th {
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #e8e8e8;
+}
+
+.tabela-estoque td {
+    padding: 15px;
+    border-bottom: 1px solid #e8e8e8;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.tabela-estoque tbody tr {
+    background: #fff;
+    transition: background 0.2s;
+}
+
+.tabela-estoque tbody tr:hover {
+    background: #fafafa;
+}
+
+.insumo-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.insumo-nome {
+    font-weight: 600;
+    color: #333;
+}
+
+.insumo-fornecedor {
+    font-size: 0.8rem;
+    color: #999;
+}
+
+.badge-estoque {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+    min-width: 120px;
+}
+
+.badge-estoque.abaixo {
+    background: #ffcccc;
+    color: #cc0000;
+}
+
+.badge-estoque.ok {
+    background: #ccffcc;
+    color: #009900;
+}
+
+.badge-estoque.excesso {
+    background: #cce5ff;
+    color: #0066cc;
+}
+
+.qtd-info {
+    font-size: 0.7rem;
+    margin-top: 4px;
+    opacity: 0.8;
+}
+
+
+.badge-validade {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+    background: #fff3cd;
+    color: #856404;
+    min-width: 100px;
+}
+
+.badge-validade.vencido {
+    background: #ffcccc;
+    color: #cc0000;
+}
+
+.badge-validade.proximo {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.badge-validade.normal {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+.data-validade {
+    font-size: 0.7rem;
+    margin-top: 4px;
+    opacity: 0.8;
+}
+
+
+@media (max-width: 1200px) {
+    .filtros-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .filtros-grid {
+        grid-template-columns: 1fr;
+    }
+    .resultados-acoes {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    .acoes-exportacao {
+        flex-direction: column;
+        width: 100%;
+    }
+    .btn-exportar {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media print {
+    .filtros-section, .acoes-exportacao {
+        display: none;
+    }
+}
+

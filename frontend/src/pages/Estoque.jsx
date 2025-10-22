@@ -1,56 +1,52 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import MainHeader from "../components/MainHeader";
-import "../assets/home.css";
-import "../assets/lista.css"
+import RegistrarProduto from "./registrarProduto";
+import RegistrarFornecedores from "./registrarFornecedores";
+import Inventario from "./inventario";
 
 export default function Estoque() {
   const [activeItem, setActiveItem] = useState("Estoque");
-  const userName = "Nome Do Usuario";
+  const [activeTab, setActiveTab] = useState(null);
 
-  const [produtos, setProdutos] = useState([
-    { id: 1, nome: "Arroz", categoria: "Alimentos", unidade: "Kg", quantidade: 50, estoqueMinimo: 10 },
-    { id: 2, nome: "Feijão", categoria: "Alimentos", unidade: "Kg", quantidade: 30, estoqueMinimo: 5 },
-    { id: 3, nome: "Óleo", categoria: "Bebidas", unidade: "L", quantidade: 20, estoqueMinimo: 5 },
-    { id: 4, nome: "Cenoura", categoria: "Hortifruti", unidade: "Kg", quantidade: 15, estoqueMinimo: 3 },
-  ]);
+  const userRole = localStorage.getItem("nivel_acesso");
+  const allMenuItems = [
+    { label: "Registrar Produto", area: "Estoque", roles: ["Administrador", "Funcionario_Comum"] },
+    { label: "Registrar Fornecedores", area: "Estoque", roles: ["Administrador"] },
+    { label: "Inventário", area: "Estoque", roles: ["Administrador", "Funcionario_Comum"] },
+  ];
+
+  const filteredItems = allMenuItems.filter(
+    (item) => item.area === "Estoque" && item.roles.includes(userRole)
+  );
+
+  useEffect(() => {
+    if (filteredItems.length > 0) {
+      setActiveTab(filteredItems[0].label);
+    } else {
+      setActiveTab(null);
+    }
+  }, [userRole]);
+
+  const renderConteudo = () => {
+    switch (activeTab) {
+      case "Registrar Produto":
+        return <RegistrarProduto />;
+      case "Registrar Fornecedores":
+        return <RegistrarFornecedores />;
+      case "Inventário":
+        return <Inventario />;
+      default:
+        return <p>Opcoes disponiveis para cliente</p>;
+    }
+  };
 
   return (
     <div className="home-container">
       <Sidebar activeItem={activeItem} setActiveItem={setActiveItem} />
-
       <div className="main-content-area">
-        <MainHeader userName={userName} area="Estoque"/>
-
-        <main className="main-content">
-          {/* <h2>{activeItem}</h2>
-          <p>{activeItem}</p> */}
-
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Nome</th>
-                <th>Categoria</th>
-                <th>Unidade</th>
-                <th>Quantidade</th>
-                <th>Estoque Mínimo</th>
-              </tr>
-            </thead>
-            <tbody>
-              {produtos.map((produto) => (
-                <tr key={produto.id}>
-                  <td>{produto.nome}</td>
-                  <td>{produto.categoria}</td>
-                  <td>{produto.unidade}</td>
-                  <td>{produto.quantidade}</td>
-                  <td>{produto.estoqueMinimo}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-
-        </main>
+        <MainHeader area="Estoque" onMenuSelect={setActiveTab} />
+        <main className="main-content">{renderConteudo()}</main>
       </div>
     </div>
   );

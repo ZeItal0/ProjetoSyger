@@ -1,0 +1,74 @@
+.registrar-fornecedor-container {
+  background: #fff;
+  padding: 40px 60px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  font-family: "Inter", sans-serif;
+  max-width: 950px;
+  margin: 40px auto;
+}
+
+
+
+.titulo {
+  font-size: 1.5rem;
+  margin-bottom: 25px;
+  color: #333333;
+}
+
+.form-fornecedor {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.linha {
+  display: flex;
+  gap: 15px;
+}
+
+.linha input, .linha textarea {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: border-color 0.2s ease;
+  background-color: #fff;
+  color: #333333;
+}
+
+
+
+
+
+.linha textarea {
+  resize: none;
+  height: 90px;
+  background-color: #fff;
+  color: #333333;
+}
+
+
+
+.linha input:focus, .linha textarea:focus {
+  border-color: #ff8e71;
+  outline: none;
+}
+
+.btn-salvar-fornecedor {
+  align-self: flex-end;
+  background-color: #ff8e71;
+  color: #fff;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-salvar-fornecedor:hover {
+  background-color: #ff7856;
+  transform: scale(1.05);
+}

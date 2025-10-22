@@ -1,0 +1,246 @@
+.cardapio-container {
+    gap: 20px;
+    height: 1vh;
+    color: #333;
+}
+
+.cardapio-header {
+    margin-bottom: 30px;
+}
+
+.cardapio-header h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.header-descricao {
+    font-size: 14px;
+    color: #666;
+}
+
+.cardapio-content {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.cardapio-geral-coluna, .cardapio-dia-coluna {
+    flex: 1;
+    min-width: 450px;
+}
+
+.cardapio-geral-coluna h2, .cardapio-dia-coluna h2 {
+    font-size: 20px;
+    font-weight: bold;
+    color: #333333;
+    margin-bottom: 15px;
+}
+
+.cardapio-dia-coluna .item-count {
+    font-weight: normal;
+    color: #333333;
+    font-size: 16px;
+}
+
+.cardapio-dia-coluna .coluna-descricao {
+    font-size: 14px;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+
+
+.categorias-nav-cardapio {
+    display: flex;
+    gap: 20px;
+    border-bottom: 2px solid #eee;
+    margin-bottom: 20px;
+}
+
+.categoria-btn-cardapio {
+    background: none;
+    border: none;
+    padding: 10px 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333333;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s;
+}
+
+.categoria-btn-cardapio:hover {
+    color: #FF8E71;
+}
+
+.categoria-btn-cardapio.active {
+    color: #FF8E71;
+}
+
+.categoria-btn-cardapio.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #FF8E71;
+}
+
+.busca-container {
+    margin-bottom: 20px;
+}
+
+.busca-input {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+    background-color: #f5f5f5;
+    color: #333333;
+}
+
+.busca-container input[type="text"]:focus {
+  outline: none;
+  border-color: #ff8e71;
+  background-color: #f5f5f5;
+}
+
+.prato-geral-item, .cardapio-dia-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background-color: #f5f5f5;
+    transition: background-color 0.2s;
+}
+
+.prato-geral-item {
+    border: 1px solid #FF8E71;
+}
+
+.cardapio-dia-item {
+    border: 1px solid #FF8E71;
+    
+}
+
+.prato-geral-item:hover, .cardapio-dia-item:hover {
+    background-color: #f5f5f5;
+}
+
+.prato-info {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.prato-nome {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333333;
+    margin: 0 0 5px 0;
+}
+
+.prato-detalhes {
+    font-size: 12px;
+    color: #666;
+    margin: 0 0 5px 0;
+}
+
+.prato-estoque {
+    font-size: 12px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.estoque-minimo {
+    color: #D04F4F;
+}
+
+.estoque-ok {
+    color: #666666;
+}
+
+.estoque-excesso {
+    color: #666666;
+}
+.adicionar-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+.adicionar-btn img {
+    width: 35px;
+}
+
+.adicionar-btn:hover {
+    transform: scale(1.1);
+}
+
+.item-acoes {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.item-acoes img {
+    width: 35px;
+    height: 35px;
+}
+
+.status-esgotado, .status-disponivel {
+    font-size: 12px;
+    font-weight: bold;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.status-esgotado {
+    background-color: #F8CDCD;
+    color: #D04F4F;
+}
+
+.status-disponivel {
+    background-color: #e8f5e9;
+    color: #8BC34A;
+}
+
+.remover-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.remover-btn:hover {
+    transform: scale(1.1);
+}
+
+@media (max-width: 900px) {
+    .cardapio-content {
+        flex-direction: column;
+    }
+
+    .cardapio-geral-coluna,
+    .cardapio-dia-coluna {
+        min-width: unset;
+        width: 100%;
+    }
+}

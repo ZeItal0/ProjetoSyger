@@ -6,7 +6,6 @@ import "../assets/lista.css"
 
 export default function Historico() {
   const [activeItem, setActiveItem] = useState("Historico");
-  const userName = "Nome Do Usuario";
 
   const [historico, setHistorico] = useState([
           { id: 1, usuario: 42134, acao: "venda adicionada", data: "data", hora: "9:45", detalhes: "registrou uma venda de um bolo de cenoura" },
@@ -20,7 +19,7 @@ export default function Historico() {
       <Sidebar activeItem={activeItem} setActiveItem={setActiveItem} />
 
       <div className="main-content-area">
-        <MainHeader userName={userName} area="Historico"/>
+        <MainHeader area="Historico"/>
 
         <main className="main-content">
           {/* <h2>{activeItem}</h2>

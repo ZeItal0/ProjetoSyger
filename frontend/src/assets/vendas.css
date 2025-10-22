@@ -1,0 +1,415 @@
+.vendas-container {
+    display: flex;
+    gap: 20px;
+    height: 80vh;
+    font-family: 'Inter', sans-serif;
+    color: #333;
+}
+
+.receitas-area {
+    flex: 2;
+    background: #fff;
+    border-right: 2px solid #f1f1f1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.titulo-vendas {
+    font-size: 1.4rem;
+}
+
+.carrinho-area {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    background: #f7f7f7;
+    border-radius: 12px;
+}
+
+.categorias-receitas {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.categoria-btn-receitas {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    color: #666;
+    transition: color 0.3s ease;
+}
+
+.categoria-btn-receitas:hover:not(.active) {
+    color: #ff8e71;
+}
+
+.categoria-btn-receitas.active {
+    border-radius: 0px;
+    border-bottom: 2px solid #ff8e71;
+    color: #ff8e71;
+    transform: translateY(-1px);
+}
+
+.produtos-scroll {
+    flex: 1;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #ff8e71 #f5f5f5;
+    padding-right: 10px;
+}
+
+.produtos-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.produtos-scroll::-webkit-scrollbar-thumb {
+    background: #ff8e71;
+    border-radius: 6px;
+}
+
+.grid-produtos-receitas {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+}
+.grid-produtos-receitas img {
+    height: 50px;
+    width: 50px;
+}
+.grid-produtos-receitas img:hover {
+    filter: grayscale(100%); 
+    filter: grayscale(100%) brightness(200%) contrast(100%);
+}
+
+
+
+
+.card-receita {
+    border: 1px solid #ff8e71;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    padding: 5px;
+    text-align: center;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s;
+    cursor: pointer;
+}
+.card-receita:hover {
+    transform: translateY(1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.card-receita .btn-add-carrinho {
+    stroke: #333;
+}
+
+
+
+.btn-add-carrinho {
+    margin-top: 15px;
+    border: none;
+    background: #f5f5f5;
+    color: #333;
+    font-size: 18px;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    align-self: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+.btn-add-carrinho:hover {
+    background: #d2f6a5;
+}
+.btn-add-carrinho:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+
+
+.abas {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+.aba {
+    background: none;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    color: #999;
+    padding-bottom: 10px;
+    
+}
+.aba.ativa {
+    color: #ff8e71;
+    border-bottom: 2px solid #ff8e71;
+    padding-bottom: 10px;
+    border-radius: 0px;
+    
+}
+
+
+
+
+.titulo-carrinho {
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #444;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    border-bottom: 1px dashed #ddd;
+}
+.lista-carrinho {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 15px;
+    scrollbar-width: thin;
+}
+.item-carrinho {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px dotted #e0e0e0;
+    font-size: 0.95rem;
+}
+.item-carrinho .controles {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.item-carrinho .controles button {
+    background: #eee;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+.controles img {
+    width: 15px;
+    height: 15px;
+}
+
+
+
+
+.item-carrinho .controles button:hover {
+    background: #ddd;
+}
+.item-carrinho span:nth-child(3) {
+    font-weight: 700;
+    color: #ff8e71;
+}
+
+
+
+.lixo-icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    stroke: #333;
+}
+.lixo-icon:hover {
+    opacity: 1;
+}
+
+
+
+.resumo {
+    border-top: 2px solid #e0e0e0;
+    padding-top: 15px;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.resumo p {
+    display: flex;
+    justify-content: space-between;
+}
+
+.resumo input {
+    width: 60px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 5px;
+    text-align: center;
+    outline: none;
+    background-color: #f5f5f5;
+    color: #333333;
+    appearance: textfield; 
+}
+.resumo input::-webkit-outer-spin-button, .resumo input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.resumo h3 {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #333;
+    margin-top: 10px;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+
+.pagamentos {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    align-items: center;
+    justify-content: space-around;
+}
+.pagamentos button {
+    flex: 1;
+    border: 1px solid #ff8e71;
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    color: #333;
+}
+.pagamentos button:hover {
+    background: #ff8e71;
+    box-shadow: 0 4px 8px rgba(255, 142, 113, 0.3);
+}
+.pagamentos button.active-pagamento {
+    background: #ff8e71;
+    color: #ffffff;
+    border-color: #ff8e71;
+    transform: scale(1.05);
+    box-shadow: 0 4px 10px rgba(255, 142, 113, 0.5);
+    z-index: 10;
+}
+
+.pagamentos span {
+    text-align: center;
+    flex: 1;
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: -10px;
+}
+.pix, .dinheiro,.cartao {
+    width: 33px;
+}
+
+
+
+.finalizar-btn {
+    margin-top: 20px;
+    background: #ff8e71;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: 0.3s;
+}
+.finalizar-btn:hover {
+    background: #ff724e;
+    transform: scale(1.01);
+}
+
+
+
+.voltar-btn {
+    margin-top: 10px;
+    background: #ccc;
+    border: none;
+    color: #333;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+.voltar-btn:hover {
+    background: #aaa;
+}
+
+
+
+
+.grid-mesas-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 15px;
+    align-content: flex-start;
+}
+.card-mesa {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 5px;
+    border-radius: 12px;
+    border: 2px solid #ddd;
+    cursor: pointer;
+    transition: all 0.2s;
+    height: 100px;
+    text-align: center;
+}
+.card-mesa .mesa-icon {
+    width: 35px;
+    height: 35px;
+    margin-bottom: 5px;
+}
+.nome-mesa {
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1;
+}
+.total-mesa {
+    font-size: 0.8rem;
+    font-weight: 700;
+    margin-top: 2px;
+}
+.card-mesa:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.card-mesa.livre {
+    background-color: #e6ffe6;
+    border-color: #8ce68c;
+    color: #38761d;
+}
+.card-mesa.ocupada {
+    background-color: #fff0e6;
+    border-color: #ffb799;
+    color: #cc5200;
+}
+.card-mesa.aguardando {
+    background-color: #ffffcc;
+    border-color: #ffcc00;
+    color: #997300;
+}

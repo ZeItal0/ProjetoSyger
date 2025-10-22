@@ -1,0 +1,274 @@
+.registrar-prato-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 30px;
+  background-color: #f5f5f5;
+  height: 10vh;
+}
+
+.top-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15%;
+}
+
+.form-area {
+  flex: 1;
+}
+
+.form-area h2 {
+  font-size: 1.5rem;
+}
+
+.inputs {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.inputs input, .inputs select {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  color: #333333;
+  background-color: #f5f5f5;
+}
+
+.inputs input:focus {
+  border-color: #ff8e71;
+  outline: none;
+}
+
+.input-medida {
+  height: 19px;
+  width: 45px;
+}
+
+.input-medida {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  color: #333333;
+}
+
+.input-medida:focus, .input-medida:focus {
+  border-color: #ff8e71;
+  outline: none;
+}
+
+.btn-salvar-prato {
+  margin-top: 20px;
+  background: #ff8e71;
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%;
+  max-width: 80vh;
+}
+
+.btn-salvar-prato:hover {
+  background-color: #ff7856;
+  transform: scale(1.05);
+}
+
+.ingredientes-area {
+  background: #f7f7f7;
+  padding: 15px;
+  border-radius: 10px;
+  flex-basis: 350px;
+}
+
+.ingredientes-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.ingrediente-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.qtd-controles {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.qtd-controles button {
+  border: none;
+  background: #d8d8d8;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 2px;
+}
+
+.qtd-controles img {
+  width: 10px;
+  height: 10px;
+}
+
+
+
+
+
+
+.estoque-area {
+  border-top: 3px solid #ddd;
+}
+
+
+.categorias {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4vh;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.categoria-btn {
+  background: none;
+  border: none;
+  font-weight: bold;
+  color: #333333;
+  cursor: pointer;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.categoria-btn.active {
+  color: #ff8e71;
+  border-bottom: 2px solid #ff8e71;
+  padding-bottom: 3px;
+  border-radius: 0px;
+}
+
+.categoria-btn:hover {
+  color: #ff8e71;
+}
+
+.grid-produtos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
+}
+
+.card-produto {
+  border: 1px solid #FF8E71;
+  border-radius: 20px;
+  border-top-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  background-color: #fff;
+  padding: 12px;
+  padding: 5px;
+  align-items: center;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+
+
+
+.card-produto:hover {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.nome-produto {
+  font-weight: 600;
+  margin-bottom: -10px;
+  color: #333333;
+}
+
+.preco-produto {
+  font-size: 0.9rem;
+  color: #333333;
+  margin-bottom: 10px;
+}
+
+.quantidade-produto {
+  font-size: 0.9rem;
+  color: #333333;
+  margin-bottom: -15px;
+}
+
+.acoes {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn.add {
+  background: #f5f5f5;
+  border: none;
+  border-radius: 60px;
+  cursor: pointer;
+}
+
+.btn.add:hover {
+  transition: 0.1s;
+  transform: scale(1.03);
+}
+
+.btn.remove {
+  background: #f5f5f5;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn.remove:hover {
+  transition: 0.1s;
+  transform: scale(1.06);
+}
+.acoes img {
+  height: 35px;
+  width: 35px;
+}
+
+
+/* .produtos-scroll {
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-right: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: #ff8e71 #f1f1f1;
+} */
+
+
+
+
+.produtos-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.produtos-scroll::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 8px;
+}
+
+.produtos-scroll::-webkit-scrollbar-thumb {
+  background-color: #ff8e71;
+  border-radius: 8px;
+  border: 2px solid #f1f1f1;
+}
+
+.produtos-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: #ff724e;
+}
+
+.produtos-scroll {
+  scroll-behavior: smooth;
+}
