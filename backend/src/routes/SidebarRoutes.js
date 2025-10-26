@@ -11,4 +11,29 @@ router.get("/estoque", autenticarToken, autorizar("Administrador", "Funcionario_
   res.json({nivelAcesso: req.usuario.nivel_acesso,});
 });
 
+router.get("/pratos", autenticarToken, autorizar("Administrador", "Funcionario_Comum"), (req, res) => {
+  res.json({nivelAcesso: req.usuario.nivel_acesso,});
+});
+
+router.get("/vendas", autenticarToken, autorizar("Administrador", "Funcionario_Comum"), (req, res) => {
+  res.json({nivelAcesso: req.usuario.nivel_acesso,});
+});
+
+router.get("/financeiro", autenticarToken, autorizar("Administrador", "Funcionario_Comum"), (req, res) => {
+  res.json({nivelAcesso: req.usuario.nivel_acesso,});
+});
+
+router.get("/relatorio", autenticarToken, autorizar("Administrador", "Funcionario_Comum"), (req, res) => {
+  res.json({nivelAcesso: req.usuario.nivel_acesso,});
+});
+
+router.get("/historico", autenticarToken, autorizar("Administrador", "Funcionario_Comum"), (req, res) => {
+  res.json({nivelAcesso: req.usuario.nivel_acesso,});
+});
+
+router.get("/usuarios", autenticarToken, autorizar("Administrador", "Funcionario_Comum"), (req, res) => {
+  res.json({nivelAcesso: req.usuario.nivel_acesso,});
+});
+
+
 export default router;

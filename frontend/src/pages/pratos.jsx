@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import MainHeader from "../components/MainHeader";
 import RegistrarPrato from "./registrarPrato";
@@ -7,10 +7,29 @@ import CardapioDoDia from "./CardapioDoDia";
 import "../assets/home.css";
 import "../assets/lista.css";
 
-export default function pratos() {
+export default function Pratos() {
   const [activeItem, setActiveItem] = useState("Pratos");
+  const [ activeTab, setActiveTab] = useState(null);
 
-  const [activeTab, setActiveTab] = useState("Registrar Pratos")
+  const userRole = localStorage.getItem("nivel_acesso");
+
+  const allMenuItems = [
+    { label: "Registrar Pratos", area: "Pratos", roles: ["Administrador", "Funcionario_Comum"] },
+    { label: "Gestão do Cardápio", area: "Pratos", roles: ["Administrador", "Funcionario_Comum"] },
+    { label: "Montagem do Cardápio", area: "Pratos", roles: ["Administrador", "Funcionario_Comum"] },
+  ];
+
+  const filteredItems = allMenuItems.filter(
+      (item) => item.area === "Pratos" && item.roles.includes(userRole)
+    );
+  
+    useEffect(() => {
+      if (filteredItems.length > 0) {
+        setActiveTab(filteredItems[0].label);
+      } else {
+        setActiveTab(null);
+      }
+    }, [userRole]);
 
   const renderConteudo = () => {
     switch (activeTab) {
@@ -21,7 +40,7 @@ export default function pratos() {
       case "Montagem do Cardápio":
         return <CardapioDoDia />;
       default:
-        return <p>Escolha uma das Opcões</p>;
+        return <p>Opcoes disponiveis para cliente</p>;
     }
   };
 

@@ -17,8 +17,8 @@ const menuItems = [
   { label: "Estoque", icon: produtos, path: "/estoque", roles: ["Administrador", "Funcionario_Comum"] },
   { label: "Pratos", icon: receitas, path: "/pratos", roles: ["Administrador", "Funcionario_Comum"] },
   { label: "Vendas", icon: vendas, path: "/vendas", roles: ["Administrador", "Funcionario_Comum"] },
-  { label: "Financeiro", icon: financeiro, path: "/financeiro", roles: ["Administrador", "Financeiro_Gerente"] },
-  { label: "Relatorios", icon: relatorios, path: "/relatorio", roles: ["Administrador", "Financeiro_Gerente"] },
+  { label: "Financeiro", icon: financeiro, path: "/financeiro", roles: ["Administrador", "Funcionario_Comum", "Financeiro_Gerente"] },
+  { label: "Relatorios", icon: relatorios, path: "/relatorio", roles: ["Administrador", "Funcionario_Comum", "Financeiro_Gerente"] },
   { label: "Historico", icon: historico, path: "/historico", roles: ["Administrador"] },
   { label: "Usuarios", icon: usuarios, path: "/usuarios", roles: ["Administrador"] },
 ];

@@ -10,21 +10,23 @@ import Financeiro from "./pages/financeiro"
 import Relatorios from "./pages/relatorio"
 import Historico from "./pages/historico"
 import Usuarios from "./pages/usuarios"
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LoginCadastro/>}/>
-        <Route path="/home" element={<Home/>}/>
-        <Route path="/dashBoard" element={<DashBoard/>}/>
-        <Route path="/pratos" element={<Pratos/>}/>
-        <Route path="/estoque" element={<Estoque/>}/>
-        <Route path="/vendas" element={<Vendas/>}/>
-        <Route path="/financeiro" element={<Financeiro/>}/>
-        <Route path="/relatorio" element={<Relatorios/>}/>
-        <Route path="/historico" element={<Historico/>}/>
-        <Route path="/usuarios" element={<Usuarios/>}/>
+
+        <Route path="/home" element={<ProtectedRoute element={Home} requiredRoles={["Administrador", "Funcionario_Comum", "Financeiro_Gerente"]}/>}/>
+        <Route path="/dashBoard" element={<ProtectedRoute element={DashBoard} requiredRoles={["Administrador", "Funcionario_Comum", "Financeiro_Gerente"]}/>}/>
+        <Route path="/pratos" element={<ProtectedRoute element={Pratos} requiredRoles={["Administrador", "Funcionario_Comum", "Financeiro_Gerente"]}/>}/>
+        <Route path="/estoque" element={<ProtectedRoute element={Estoque} requiredRoles={["Administrador", "Funcionario_Comum", "Financeiro_Gerente"]}/>}/>
+        <Route path="/vendas" element={<ProtectedRoute element={Vendas} requiredRoles={["Administrador", "Funcionario_Comum", "Financeiro_Gerente"]}/>}/>
+        <Route path="/financeiro" element={<ProtectedRoute element={Financeiro} requiredRoles={["Administrador", "Funcionario_Comum", "Financeiro_Gerente"]}/>}/>
+        <Route path="/relatorio" element={<ProtectedRoute element={Relatorios} requiredRoles={["Administrador", "Funcionario_Comum", "Financeiro_Gerente"]}/>}/>
+        <Route path="/historico" element={<ProtectedRoute element={Historico} requiredRoles={["Administrador"]}/>}/>
+        <Route path="/usuarios" element={<ProtectedRoute element={Usuarios} requiredRoles={["Administrador"]}/>}/>
 
       </Routes>
     </Router>

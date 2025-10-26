@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import MainHeader from "../components/MainHeader";
 import RegistrarProduto from "./registrarProduto";
@@ -7,26 +7,7 @@ import Inventario from "./inventario";
 
 export default function Estoque() {
   const [activeItem, setActiveItem] = useState("Estoque");
-  const [activeTab, setActiveTab] = useState(null);
-
-  const userRole = localStorage.getItem("nivel_acesso");
-  const allMenuItems = [
-    { label: "Registrar Produto", area: "Estoque", roles: ["Administrador", "Funcionario_Comum"] },
-    { label: "Registrar Fornecedores", area: "Estoque", roles: ["Administrador"] },
-    { label: "Inventário", area: "Estoque", roles: ["Administrador", "Funcionario_Comum"] },
-  ];
-
-  const filteredItems = allMenuItems.filter(
-    (item) => item.area === "Estoque" && item.roles.includes(userRole)
-  );
-
-  useEffect(() => {
-    if (filteredItems.length > 0) {
-      setActiveTab(filteredItems[0].label);
-    } else {
-      setActiveTab(null);
-    }
-  }, [userRole]);
+  const [activeTab, setActiveTab] = useState("Registrar Produto");
 
   const renderConteudo = () => {
     switch (activeTab) {
@@ -37,7 +18,7 @@ export default function Estoque() {
       case "Inventário":
         return <Inventario />;
       default:
-        return <p>Opcoes disponiveis para cliente</p>;
+        return <p>Escolha uma das opções do menu</p>;
     }
   };
 
