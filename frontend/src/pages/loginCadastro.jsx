@@ -22,6 +22,7 @@ export default function LoginCadastro() {
       if (isLogin) {
         result = await login(data.USUARIO, data.SENHA);
         localStorage.setItem("token", result.token);
+        localStorage.setItem("id", result.user.id);
         localStorage.setItem("nome_usuario", result.user.nome);
         localStorage.setItem("nivel_acesso", result.user.nivel_acesso);
         alert(result.message);

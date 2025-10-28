@@ -70,8 +70,8 @@ model Usuarios {
   id_usuario              Int       @id @default(autoincrement())
   nome_completo           String    @db.VarChar(255)
   email                   String    @unique @db.VarChar(255)
-  usuario       String    @unique @db.VarChar(100)
-  cnpj          String?   @unique @db.VarChar(18)
+  usuario                 String    @unique @db.VarChar(100)
+  cnpj                    String?   @unique @db.VarChar(18)
   senha_hash              String    @db.VarChar(255)
   cargo                   String    @db.VarChar(100)
   nivel_acesso            NivelAcesso
@@ -102,6 +102,7 @@ model Fornecedores {
   bairro             String?   @db.VarChar(255)
   observacoes        String?   @db.VarChar(500)
   data_cadastro      DateTime  @default(now())
+  ativo              Boolean   @default(true)
 
   produtos           Fornecedor_Produto[]
   despesas           Despesas[]
@@ -129,13 +130,15 @@ model Produtos {
   validade                DateTime?
   quantidade_atual        Decimal   @default(0.00)
   quantidade_minima       Decimal   @default(0.00)
+  quantidade_maxima       Decimal   @default(0.00)
   forma_compra            String?   @db.VarChar(50)
   custo_unitario          Decimal?
   data_cadastro           DateTime  @default(now())
   data_ultima_atualizacao DateTime  @default(now())
+  ativo                   Boolean   @default(true)
 
   categoria               CategoriasProduto @relation(fields: [id_categoria_produto], references: [id_categoria_produto])
-  unidade                 UnidadesMedida @relation(fields: [id_unidade_medida], references: [id_unidade_medida])
+  unidade                 UnidadesMedida     @relation(fields: [id_unidade_medida], references: [id_unidade_medida])
   fornecedores            Fornecedor_Produto[]
   ingredientes            Prato_Ingrediente[]
   movimentacoes           MovimentacaoEstoque[]
@@ -146,8 +149,8 @@ model Fornecedor_Produto {
   id_fornecedor Int
   id_produto    Int
 
-  fornecedor    Fornecedores @relation(fields: [id_fornecedor], references: [id_fornecedor])
-  produto       Produtos     @relation(fields: [id_produto], references: [id_produto])
+  fornecedor    Fornecedores @relation(fields: [id_fornecedor], references: [id_fornecedor], onDelete: Cascade)
+  produto       Produtos     @relation(fields: [id_produto], references: [id_produto], onDelete: Cascade)
 
   @@id([id_fornecedor, id_produto])
 }
@@ -162,7 +165,7 @@ model MovimentacaoEstoque {
   id_usuario        Int?
   observacoes       String?   @db.VarChar(500)
 
-  produto           Produtos       @relation(fields: [id_produto], references: [id_produto])
+  produto           Produtos       @relation(fields: [id_produto], references: [id_produto], onDelete: SetNull)
   unidade           UnidadesMedida @relation(fields: [id_unidade_medida], references: [id_unidade_medida])
   usuario           Usuarios?      @relation(fields: [id_usuario], references: [id_usuario])
 }
@@ -181,6 +184,7 @@ model Pratos {
   valor_base_custo   Decimal?
   descricao          String?   @db.VarChar(500)
   data_cadastro      DateTime  @default(now())
+  ativo              Boolean   @default(true)
 
   categoria          CategoriasPrato @relation(fields: [id_categoria_prato], references: [id_categoria_prato])
   ingredientes       Prato_Ingrediente[]
@@ -195,23 +199,23 @@ model Prato_Ingrediente {
   quantidade        Decimal
   id_unidade_medida Int
 
-  prato             Pratos          @relation(fields: [id_prato], references: [id_prato])
-  produto           Produtos        @relation(fields: [id_produto], references: [id_produto])
+  prato             Pratos          @relation(fields: [id_prato], references: [id_prato], onDelete: Cascade)
+  produto           Produtos        @relation(fields: [id_produto], references: [id_produto], onDelete: Cascade)
   unidade           UnidadesMedida  @relation(fields: [id_unidade_medida], references: [id_unidade_medida])
 
   @@id([id_prato, id_produto])
 }
 
 model VariacoesPorcao {
-  id_variacao         Int       @id @default(autoincrement())
-  id_prato            Int
-  nome_menu           String    @db.VarChar(100)
+  id_variacao          Int       @id @default(autoincrement())
+  id_prato             Int
+  nome_menu            String    @db.VarChar(100)
   multiplicador_receita Decimal?
-  preco_venda         Decimal
+  preco_venda          Decimal
 
-  prato               Pratos @relation(fields: [id_prato], references: [id_prato])
-  adicionais          VariacaoPorcao_Adicional[]
-  itensPedido         Pedido_Itens[]
+  prato                Pratos @relation(fields: [id_prato], references: [id_prato], onDelete: Cascade)
+  adicionais           VariacaoPorcao_Adicional[]
+  itensPedido          Pedido_Itens[]
 }
 
 model Adicionais {
@@ -222,11 +226,11 @@ model Adicionais {
 }
 
 model VariacaoPorcao_Adicional {
-  id_variacao Int
+  id_variacao  Int
   id_adicional Int
 
-  variacao   VariacoesPorcao @relation(fields: [id_variacao], references: [id_variacao])
-  adicional  Adicionais      @relation(fields: [id_adicional], references: [id_adicional])
+  variacao     VariacoesPorcao @relation(fields: [id_variacao], references: [id_variacao], onDelete: Cascade)
+  adicional    Adicionais      @relation(fields: [id_adicional], references: [id_adicional], onDelete: Cascade)
 
   @@id([id_variacao, id_adicional])
 }
@@ -249,22 +253,22 @@ model Marmitas {
 }
 
 model Pedidos {
-  id_pedido       Int           @id @default(autoincrement())
-  tipo_venda      TipoVenda
-  id_mesa         Int?
-  id_marmita      Int?
+  id_pedido        Int           @id @default(autoincrement())
+  tipo_venda       TipoVenda
+  id_mesa          Int?
+  id_marmita       Int?
   data_hora_pedido DateTime      @default(now())
-  subtotal        Decimal
-  desconto        Decimal        @default(0.00)
-  total_liquido   Decimal
-  forma_pagamento FormaPagamento
-  status_pedido   StatusPedido   @default(Pendente)
-  id_usuario      Int?
+  subtotal         Decimal
+  desconto         Decimal        @default(0.00)
+  total_liquido    Decimal
+  forma_pagamento  FormaPagamento
+  status_pedido    StatusPedido   @default(Pendente)
+  id_usuario       Int?
 
-  mesa            Mesas?         @relation(fields: [id_mesa], references: [id_mesa])
-  marmita         Marmitas?      @relation(fields: [id_marmita], references: [id_marmita])
-  usuario         Usuarios?      @relation(fields: [id_usuario], references: [id_usuario])
-  itens           Pedido_Itens[]
+  mesa             Mesas?         @relation(fields: [id_mesa], references: [id_mesa])
+  marmita          Marmitas?      @relation(fields: [id_marmita], references: [id_marmita])
+  usuario          Usuarios?      @relation(fields: [id_usuario], references: [id_usuario])
+  itens            Pedido_Itens[]
 }
 
 model Pedido_Itens {
@@ -277,9 +281,9 @@ model Pedido_Itens {
   preco_unitario Decimal
 
   pedido         Pedidos          @relation(fields: [id_pedido], references: [id_pedido])
-  prato          Pratos?          @relation(fields: [id_prato], references: [id_prato])
-  produto        Produtos?        @relation(fields: [id_produto], references: [id_produto])
-  variacao       VariacoesPorcao? @relation(fields: [id_variacao], references: [id_variacao])
+  prato          Pratos?          @relation(fields: [id_prato], references: [id_prato], onDelete: SetNull)
+  produto        Produtos?        @relation(fields: [id_produto], references: [id_produto], onDelete: SetNull)
+  variacao       VariacoesPorcao? @relation(fields: [id_variacao], references: [id_variacao], onDelete: SetNull)
 }
 
 model CategoriasFinanceiras {
@@ -300,7 +304,7 @@ model Despesas {
   data_registro           DateTime @default(now())
   id_usuario_registro     Int?
 
-  fornecedor              Fornecedores? @relation(fields: [id_fornecedor], references: [id_fornecedor])
+  fornecedor              Fornecedores? @relation(fields: [id_fornecedor], references: [id_fornecedor], onDelete: SetNull)
   categoria               CategoriasFinanceiras @relation(fields: [id_categoria_financeira], references: [id_categoria_financeira])
   usuario                 Usuarios?     @relation(fields: [id_usuario_registro], references: [id_usuario])
 }
@@ -316,27 +320,27 @@ model Historico_Auditoria {
 }
 
 model MensagensInternas {
-  id_mensagem    Int       @id @default(autoincrement())
-  id_remetente   Int
+  id_mensagem     Int       @id @default(autoincrement())
+  id_remetente    Int
   id_destinatario Int?
-  assunto        String?   @db.VarChar(255)
-  conteudo       String    @db.VarChar(1000)
-  data_envio     DateTime  @default(now())
-  lida           Boolean   @default(false)
+  assunto         String?   @db.VarChar(255)
+  conteudo        String    @db.VarChar(1000)
+  data_envio      DateTime  @default(now())
+  lida            Boolean   @default(false)
 
-  remetente      Usuarios  @relation("Remetente", fields: [id_remetente], references: [id_usuario])
-  destinatario   Usuarios? @relation("Destinatario", fields: [id_destinatario], references: [id_usuario])
+  remetente       Usuarios  @relation("Remetente", fields: [id_remetente], references: [id_usuario])
+  destinatario    Usuarios? @relation("Destinatario", fields: [id_destinatario], references: [id_usuario])
 }
 
 model Alertas {
-  id_alerta         Int      @id @default(autoincrement())
-  tipo_alerta       String?  @db.VarChar(100)
-  mensagem          String   @db.VarChar(500)
-  data_criacao      DateTime @default(now())
+  id_alerta          Int      @id @default(autoincrement())
+  tipo_alerta        String?  @db.VarChar(100)
+  mensagem           String   @db.VarChar(500)
+  data_criacao       DateTime @default(now())
   id_usuario_destino Int?
-  lido              Boolean  @default(false)
+  lido               Boolean  @default(false)
 
-  usuario_destino   Usuarios? @relation(fields: [id_usuario_destino], references: [id_usuario])
+  usuario_destino    Usuarios? @relation(fields: [id_usuario_destino], references: [id_usuario])
 }
 
 model Cardapio {
@@ -354,9 +358,6 @@ model CardapioPratos {
   id_prato          Int
   disponivel        Boolean @default(true)
 
-  cardapio          Cardapio @relation(fields: [id_cardapio], references: [id_cardapio])
-  prato             Pratos   @relation(fields: [id_prato], references: [id_prato])
+  cardapio          Cardapio @relation(fields: [id_cardapio], references: [id_cardapio], onDelete: Cascade)
+  prato             Pratos   @relation(fields: [id_prato], references: [id_prato], onDelete: Cascade)
 }
-
-
-

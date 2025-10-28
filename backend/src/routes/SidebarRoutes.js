@@ -16,7 +16,7 @@ router.get("/pratos", autenticarToken, autorizar("Administrador", "Funcionario_C
 });
 
 router.get("/vendas", autenticarToken, autorizar("Administrador", "Funcionario_Comum"), (req, res) => {
-  res.json({nivelAcesso: req.usuario.nivel_acesso,});
+res.json({nivelAcesso: req.usuario.nivel_acesso,});
 });
 
 router.get("/financeiro", autenticarToken, autorizar("Administrador", "Funcionario_Comum"), (req, res) => {

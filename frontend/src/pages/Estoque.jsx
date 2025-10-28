@@ -18,7 +18,7 @@ export default function Estoque() {
       case "Inventário":
         return <Inventario />;
       default:
-        return <p>Escolha uma das opções do menu</p>;
+        return <p>Opcoes disponiveis para cliente</p>;
     }
   };
 
