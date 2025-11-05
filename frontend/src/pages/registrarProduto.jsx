@@ -37,24 +37,22 @@ export default function RegistrarProduto() {
         </div>
 
         <div className="input-row">
-          <input type="number" name="quantidadeMinima" placeholder="Quantidade MÍN" value={formData.quantidadeMinima} onChange={handleInputChange} className="input-medium"/>
-          <input type="number" name="quantidadeMaxima" placeholder="Quantidade MAX" value={formData.quantidadeMaxima} onChange={handleInputChange} className="input-medium"/>
+          <input type="number" name="quantidadeMinima" placeholder="Quantidade MÍN" value={formData.quantidadeMinima} onChange={handleInputChange} className="input-medium" />
+          <input type="number" name="quantidadeMaxima" placeholder="Quantidade MAX" value={formData.quantidadeMaxima} onChange={handleInputChange} className="input-medium" />
 
           <input type="date" name="validade" value={formData.validade} onChange={handleInputChange} className="input-medium" />
 
           <select name="unidadeMedida" value={formData.unidadeMedida} onChange={handleInputChange}>
             <option value="">Unidade de medida</option>
             <option value="gramas">Gramas</option>
-            <option value="litros">Litros</option>
-            <option value="unidade">Unidade</option>
-            <option value="kg">Kg</option>
+            <option value="mililitros">Mililitros</option>
           </select>
 
           <input type="number" name="valorTotal" placeholder="Valor Total" value={formData.valorTotal} onChange={handleInputChange} className="input-medium" />
         </div>
 
         <div className="quantidade-container">
-          <span className="quantidade-label">Quantidade</span>
+          <span className="quantidade-label">Quantidade no estoque</span>
           <div className="quantidade-controls">
             <button className="btn-quantidade" onClick={diminuir}>
               <img src={Minus} alt="minus-icon" />

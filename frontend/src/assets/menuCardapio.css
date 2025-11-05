@@ -26,12 +26,14 @@
     align-items: flex-start;
 }
 
-.cardapio-geral-coluna, .cardapio-dia-coluna {
+.cardapio-geral-coluna,
+.cardapio-dia-coluna {
     flex: 1;
     min-width: 450px;
 }
 
-.cardapio-geral-coluna h2, .cardapio-dia-coluna h2 {
+.cardapio-geral-coluna h2,
+.cardapio-dia-coluna h2 {
     font-size: 20px;
     font-weight: bold;
     color: #333333;
@@ -50,7 +52,23 @@
     margin-bottom: 20px;
 }
 
+.salvar-btn-cadapio-dia {
+    background-color: #FF8E71;
+    border: none;
+    transition: all 0.3s;
+}
 
+.salvar-btn-cadapio-dia:hover {
+    background-color: #ff724e;
+    transform: scale(1.05);
+}
+
+.status-select {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    color: #333333;
+}
 
 .categorias-nav-cardapio {
     display: flex;
@@ -105,12 +123,13 @@
 }
 
 .busca-container input[type="text"]:focus {
-  outline: none;
-  border-color: #ff8e71;
-  background-color: #f5f5f5;
+    outline: none;
+    border-color: #ff8e71;
+    background-color: #f5f5f5;
 }
 
-.prato-geral-item, .cardapio-dia-item {
+.prato-geral-item,
+.cardapio-dia-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -127,10 +146,11 @@
 
 .cardapio-dia-item {
     border: 1px solid #FF8E71;
-    
+
 }
 
-.prato-geral-item:hover, .cardapio-dia-item:hover {
+.prato-geral-item:hover,
+.cardapio-dia-item:hover {
     background-color: #f5f5f5;
 }
 
@@ -169,6 +189,7 @@
 .estoque-excesso {
     color: #666666;
 }
+
 .adicionar-btn {
     background: none;
     border: none;
@@ -181,6 +202,7 @@
     justify-content: center;
     transition: transform 0.2s;
 }
+
 .adicionar-btn img {
     width: 35px;
 }
@@ -194,12 +216,14 @@
     align-items: center;
     gap: 10px;
 }
+
 .item-acoes img {
     width: 35px;
     height: 35px;
 }
 
-.status-esgotado, .status-disponivel {
+.status-esgotado,
+.status-disponivel {
     font-size: 12px;
     font-weight: bold;
     padding: 4px 8px;

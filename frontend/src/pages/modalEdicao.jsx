@@ -47,9 +47,9 @@ const ModalEdicao = ({ item, onClose, onAtualizar, onExcluir }) => {
             <h3 className="modal-titulo">Editar Insumo</h3>
 
             <div className="modal-inputs-row">
-                <input type="text" name="nomeProduto" value={formData.nomeProduto} onChange={handleChange} className="modal-input"/>
-                <input type="number" name="quantidadeMinima" value={formData.quantidadeMinima} onChange={handleChange} className="modal-input"/>
-                <input type="number" name="quantidadeMaxima" value={formData.quantidadeMaxima} onChange={handleChange} className="modal-input"/>
+                <input type="text" name="nomeProduto" value={formData.nomeProduto} onChange={handleChange} className="modal-input" />
+                <input type="number" name="quantidadeMinima" value={formData.quantidadeMinima} onChange={handleChange} className="modal-input" />
+                <input type="number" name="quantidadeMaxima" value={formData.quantidadeMaxima} onChange={handleChange} className="modal-input" />
                 <select name="categoria" value={formData.categoria} onChange={handleChange} className="modal-input modal-select">
                     <option value="">Categoria</option>
                     <option value="Carnes">Carnes</option>
@@ -75,9 +75,7 @@ const ModalEdicao = ({ item, onClose, onAtualizar, onExcluir }) => {
                 <select name="unidadeMedida" value={formData.unidadeMedida} onChange={handleChange} className="modal-input modal-select">
                     <option value="">Unidade de medida</option>
                     <option value="gramas">Gramas</option>
-                    <option value="litros">Litros</option>
-                    <option value="unidade">Unidade</option>
-                    <option value="kg">Kg</option>
+                    <option value="mililitros">Mililitros</option>
                 </select>
                 <select name="unidadeCompra" value={formData.unidadeCompra} onChange={handleChange} className="modal-input modal-select">
                     <option value="">Unidade de Compra</option>
@@ -90,15 +88,15 @@ const ModalEdicao = ({ item, onClose, onAtualizar, onExcluir }) => {
             <div className="modal-estoque">
                 <p>Quantidade no Estoque</p>
                 <div className="modal-estoque-controls">
-                    <button onClick={() => alterarEstoque("add")} className="modal-estoque-add"><img src={plus} alt="plus"/></button>
+                    <button onClick={() => alterarEstoque("remove")} className="modal-estoque-remove"><img src={minus} alt="minus" /></button>
                     <span>{formData.quantidadeAtual}</span>
-                    <button onClick={() => alterarEstoque("remove")} className="modal-estoque-remove"><img src={minus} alt="minus"/></button>
+                    <button onClick={() => alterarEstoque("add")} className="modal-estoque-add"><img src={plus} alt="plus" /></button>
                 </div>
             </div>
 
             <div className="modal-actions">
-                <button className="modal-btn modal-btn-salvar" onClick={handleSalvar}><img src={Check} alt="Salvar"/> Salvar Alteração</button>
-                <button className="modal-btn modal-btn-excluir" onClick={handleExcluir}><img src={Delete} alt="Excluir"/> Excluir produto</button>
+                <button className="modal-btn modal-btn-salvar" onClick={handleSalvar}><img src={Check} alt="Salvar" /> Salvar Alteração</button>
+                <button className="modal-btn modal-btn-excluir" onClick={handleExcluir}><img src={Delete} alt="Excluir" /> Excluir produto</button>
             </div>
         </div>
     );

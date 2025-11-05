@@ -70,12 +70,7 @@ export default function Inventario() {
             </div>
           </div>
           <div className="item-actions">
-            <button
-              className="item-actions-btn"
-              onClick={() => setItemEmEdicao(item.id)}
-            >
-              <img src={Edit} alt="Editar" /> Editar
-            </button>
+            <button className="item-actions-btn" onClick={() => setItemEmEdicao(item.id)}><img src={Edit} alt="Editar" /> Editar </button>
           </div>
         </div>
 

@@ -167,14 +167,8 @@ export default function RelatorioDeEstoque() {
                 </div>
 
                 <div className="acoes-exportacao">
-                    <button className="btn-exportar" onClick={handleExportarInventarioCompleto}>
-                        <img src={PDF} alt="pdf-icon" />
-                        Exportar Inventário Completo (PDF)
-                    </button>
-                    <button className="btn-exportar" onClick={handleExportarRelatorioReposicao}>
-                        <img src={PDF} alt="pdf-icon" />
-                        Exportar Relatório De Reposição (PDF)
-                    </button>
+                    <button className="btn-exportar" onClick={handleExportarInventarioCompleto}><img src={PDF} alt="pdf-icon" />Exportar Inventário Completo (PDF)</button>
+                    <button className="btn-exportar" onClick={handleExportarRelatorioReposicao}><img src={PDF} alt="pdf-icon" />Exportar Relatório De Reposição (PDF)</button>
                 </div>
             </div>
 

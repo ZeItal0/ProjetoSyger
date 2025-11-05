@@ -67,56 +67,56 @@ enum StatusCardapio {
 }
 
 model Usuarios {
-  id_usuario              Int       @id @default(autoincrement())
-  nome_completo           String    @db.VarChar(255)
-  email                   String    @unique @db.VarChar(255)
-  usuario                 String    @unique @db.VarChar(100)
-  cnpj                    String?   @unique @db.VarChar(18)
-  senha_hash              String    @db.VarChar(255)
-  cargo                   String    @db.VarChar(100)
+  id_usuario              Int           @id @default(autoincrement())
+  nome_completo           String        @db.VarChar(255)
+  email                   String        @unique @db.VarChar(255)
+  usuario                 String        @unique @db.VarChar(100)
+  cnpj                    String?       @unique @db.VarChar(18)
+  senha_hash              String        @db.VarChar(255)
+  cargo                   String        @db.VarChar(100)
   nivel_acesso            NivelAcesso
   status                  StatusUsuario @default(Ativo)
-  data_cadastro           DateTime  @default(now())
-  data_ultima_atualizacao DateTime  @default(now())
+  data_cadastro           DateTime      @default(now())
+  data_ultima_atualizacao DateTime      @default(now())
 
-  movimentacoes           MovimentacaoEstoque[]
-  pedidos                 Pedidos[]
-  despesas                Despesas[]
-  historicos              Historico_Auditoria[]
-  mensagens_enviadas      MensagensInternas[] @relation("Remetente")
-  mensagens_recebidas     MensagensInternas[] @relation("Destinatario")
-  alertas                 Alertas[]
+  movimentacoes       MovimentacaoEstoque[]
+  pedidos             Pedidos[]
+  despesas            Despesas[]
+  historicos          Historico_Auditoria[]
+  mensagens_enviadas  MensagensInternas[]   @relation("Remetente")
+  mensagens_recebidas MensagensInternas[]   @relation("Destinatario")
+  alertas             Alertas[]
 }
 
 model Fornecedores {
-  id_fornecedor      Int       @id @default(autoincrement())
-  nome_empresa       String    @db.VarChar(255)
-  cnpj               String?   @unique @db.VarChar(18)
-  nome_contato       String?   @db.VarChar(255)
-  email              String?   @db.VarChar(255)
-  telefone           String?   @db.VarChar(20)
-  inscricao_estadual String?   @db.VarChar(50)
-  cep                String?   @db.VarChar(10)
-  rua                String?   @db.VarChar(255)
-  numero             String?   @db.VarChar(100)
-  bairro             String?   @db.VarChar(255)
-  observacoes        String?   @db.VarChar(500)
-  data_cadastro      DateTime  @default(now())
-  ativo              Boolean   @default(true)
+  id_fornecedor      Int      @id @default(autoincrement())
+  nome_empresa       String   @db.VarChar(255)
+  cnpj               String?  @unique @db.VarChar(18)
+  nome_contato       String?  @db.VarChar(255)
+  email              String?  @db.VarChar(255)
+  telefone           String?  @db.VarChar(20)
+  inscricao_estadual String?  @db.VarChar(50)
+  cep                String?  @db.VarChar(10)
+  rua                String?  @db.VarChar(255)
+  numero             String?  @db.VarChar(100)
+  bairro             String?  @db.VarChar(255)
+  observacoes        String?  @db.VarChar(500)
+  data_cadastro      DateTime @default(now())
+  ativo              Boolean  @default(true)
 
-  produtos           Fornecedor_Produto[]
-  despesas           Despesas[]
+  produtos Fornecedor_Produto[]
+  despesas Despesas[]
 }
 
 model CategoriasProduto {
-  id_categoria_produto Int      @id @default(autoincrement())
-  nome_categoria        String  @unique @db.VarChar(100)
-  produtos              Produtos[]
+  id_categoria_produto Int        @id @default(autoincrement())
+  nome_categoria       String     @unique @db.VarChar(100)
+  produtos             Produtos[]
 }
 
 model UnidadesMedida {
-  id_unidade_medida Int      @id @default(autoincrement())
-  nome_unidade      String   @unique @db.VarChar(50)
+  id_unidade_medida Int                   @id @default(autoincrement())
+  nome_unidade      String                @unique @db.VarChar(50)
   produtos          Produtos[]
   ingredientes      Prato_Ingrediente[]
   movimentacoes     MovimentacaoEstoque[]
@@ -137,37 +137,37 @@ model Produtos {
   data_ultima_atualizacao DateTime  @default(now())
   ativo                   Boolean   @default(true)
 
-  categoria               CategoriasProduto @relation(fields: [id_categoria_produto], references: [id_categoria_produto])
-  unidade                 UnidadesMedida     @relation(fields: [id_unidade_medida], references: [id_unidade_medida])
-  fornecedores            Fornecedor_Produto[]
-  ingredientes            Prato_Ingrediente[]
-  movimentacoes           MovimentacaoEstoque[]
-  itensPedido             Pedido_Itens[]
+  categoria     CategoriasProduto     @relation(fields: [id_categoria_produto], references: [id_categoria_produto])
+  unidade       UnidadesMedida        @relation(fields: [id_unidade_medida], references: [id_unidade_medida])
+  fornecedores  Fornecedor_Produto[]
+  ingredientes  Prato_Ingrediente[]
+  movimentacoes MovimentacaoEstoque[]
+  itensPedido   Pedido_Itens[]
 }
 
 model Fornecedor_Produto {
   id_fornecedor Int
   id_produto    Int
 
-  fornecedor    Fornecedores @relation(fields: [id_fornecedor], references: [id_fornecedor], onDelete: Cascade)
-  produto       Produtos     @relation(fields: [id_produto], references: [id_produto], onDelete: Cascade)
+  fornecedor Fornecedores @relation(fields: [id_fornecedor], references: [id_fornecedor], onDelete: Cascade)
+  produto    Produtos     @relation(fields: [id_produto], references: [id_produto], onDelete: Cascade)
 
   @@id([id_fornecedor, id_produto])
 }
 
 model MovimentacaoEstoque {
-  id_movimentacao   Int       @id @default(autoincrement())
+  id_movimentacao   Int              @id @default(autoincrement())
   id_produto        Int
   tipo_movimentacao TipoMovimentacao
   quantidade        Decimal
   id_unidade_medida Int
-  data_movimentacao DateTime  @default(now())
+  data_movimentacao DateTime         @default(now())
   id_usuario        Int?
-  observacoes       String?   @db.VarChar(500)
+  observacoes       String?          @db.VarChar(500)
 
-  produto           Produtos       @relation(fields: [id_produto], references: [id_produto], onDelete: SetNull)
-  unidade           UnidadesMedida @relation(fields: [id_unidade_medida], references: [id_unidade_medida])
-  usuario           Usuarios?      @relation(fields: [id_usuario], references: [id_usuario])
+  produto Produtos       @relation(fields: [id_produto], references: [id_produto], onDelete: SetNull)
+  unidade UnidadesMedida @relation(fields: [id_unidade_medida], references: [id_unidade_medida])
+  usuario Usuarios?      @relation(fields: [id_usuario], references: [id_usuario])
 }
 
 model CategoriasPrato {
@@ -177,20 +177,20 @@ model CategoriasPrato {
 }
 
 model Pratos {
-  id_prato           Int       @id @default(autoincrement())
-  nome_prato         String    @db.VarChar(255)
+  id_prato           Int      @id @default(autoincrement())
+  nome_prato         String   @db.VarChar(255)
   id_categoria_prato Int
   tempo_preparo      Int?
   valor_base_custo   Decimal?
-  descricao          String?   @db.VarChar(500)
-  data_cadastro      DateTime  @default(now())
-  ativo              Boolean   @default(true)
+  descricao          String?  @db.VarChar(500)
+  data_cadastro      DateTime @default(now())
+  ativo              Boolean  @default(true)
 
-  categoria          CategoriasPrato @relation(fields: [id_categoria_prato], references: [id_categoria_prato])
-  ingredientes       Prato_Ingrediente[]
-  variacoes          VariacoesPorcao[]
-  itensPedido        Pedido_Itens[]
-  cardapios          CardapioPratos[]
+  categoria    CategoriasPrato     @relation(fields: [id_categoria_prato], references: [id_categoria_prato])
+  ingredientes Prato_Ingrediente[]
+  variacoes    VariacoesPorcao[]
+  itensPedido  Pedido_Itens[]
+  cardapios    CardapioPratos[]
 }
 
 model Prato_Ingrediente {
@@ -198,29 +198,31 @@ model Prato_Ingrediente {
   id_produto        Int
   quantidade        Decimal
   id_unidade_medida Int
+  valor_medida      Float?
 
-  prato             Pratos          @relation(fields: [id_prato], references: [id_prato], onDelete: Cascade)
-  produto           Produtos        @relation(fields: [id_produto], references: [id_produto], onDelete: Cascade)
-  unidade           UnidadesMedida  @relation(fields: [id_unidade_medida], references: [id_unidade_medida])
+  prato   Pratos         @relation(fields: [id_prato], references: [id_prato], onDelete: Cascade)
+  produto Produtos       @relation(fields: [id_produto], references: [id_produto], onDelete: Cascade)
+  unidade UnidadesMedida @relation(fields: [id_unidade_medida], references: [id_unidade_medida])
 
   @@id([id_prato, id_produto])
 }
 
 model VariacoesPorcao {
-  id_variacao          Int       @id @default(autoincrement())
-  id_prato             Int
-  nome_menu            String    @db.VarChar(100)
+  id_variacao           Int      @id @default(autoincrement())
+  id_prato              Int
+  nome_menu             String   @db.VarChar(100)
   multiplicador_receita Decimal?
-  preco_venda          Decimal
+  preco_venda           Decimal
 
-  prato                Pratos @relation(fields: [id_prato], references: [id_prato], onDelete: Cascade)
-  adicionais           VariacaoPorcao_Adicional[]
-  itensPedido          Pedido_Itens[]
+  prato          Pratos                     @relation(fields: [id_prato], references: [id_prato], onDelete: Cascade)
+  adicionais     VariacaoPorcao_Adicional[]
+  itensPedido    Pedido_Itens[]
+  cardapioPratos CardapioPratos[]
 }
 
 model Adicionais {
-  id_adicional   Int       @id @default(autoincrement())
-  nome_adicional String    @db.VarChar(255)
+  id_adicional   Int                        @id @default(autoincrement())
+  nome_adicional String                     @db.VarChar(255)
   preco          Decimal
   variacoes      VariacaoPorcao_Adicional[]
 }
@@ -229,8 +231,8 @@ model VariacaoPorcao_Adicional {
   id_variacao  Int
   id_adicional Int
 
-  variacao     VariacoesPorcao @relation(fields: [id_variacao], references: [id_variacao], onDelete: Cascade)
-  adicional    Adicionais      @relation(fields: [id_adicional], references: [id_adicional], onDelete: Cascade)
+  variacao  VariacoesPorcao @relation(fields: [id_variacao], references: [id_variacao], onDelete: Cascade)
+  adicional Adicionais      @relation(fields: [id_adicional], references: [id_adicional], onDelete: Cascade)
 
   @@id([id_variacao, id_adicional])
 }
@@ -241,23 +243,23 @@ model Mesas {
   status      StatusMesa @default(Fechada)
   capacidade  Int?
 
-  pedidos     Pedidos[]
+  pedidos Pedidos[]
 }
 
 model Marmitas {
-  id_marmita     Int            @id @default(autoincrement())
-  numero_marmita String         @unique @db.VarChar(50)
-  status         StatusMarmita  @default(Em_espera)
+  id_marmita     Int           @id @default(autoincrement())
+  numero_marmita String        @unique @db.VarChar(50)
+  status         StatusMarmita @default(Em_espera)
 
-  pedidos        Pedidos[]
+  pedidos Pedidos[]
 }
 
 model Pedidos {
-  id_pedido        Int           @id @default(autoincrement())
+  id_pedido        Int            @id @default(autoincrement())
   tipo_venda       TipoVenda
   id_mesa          Int?
   id_marmita       Int?
-  data_hora_pedido DateTime      @default(now())
+  data_hora_pedido DateTime       @default(now())
   subtotal         Decimal
   desconto         Decimal        @default(0.00)
   total_liquido    Decimal
@@ -265,14 +267,14 @@ model Pedidos {
   status_pedido    StatusPedido   @default(Pendente)
   id_usuario       Int?
 
-  mesa             Mesas?         @relation(fields: [id_mesa], references: [id_mesa])
-  marmita          Marmitas?      @relation(fields: [id_marmita], references: [id_marmita])
-  usuario          Usuarios?      @relation(fields: [id_usuario], references: [id_usuario])
-  itens            Pedido_Itens[]
+  mesa    Mesas?         @relation(fields: [id_mesa], references: [id_mesa])
+  marmita Marmitas?      @relation(fields: [id_marmita], references: [id_marmita])
+  usuario Usuarios?      @relation(fields: [id_usuario], references: [id_usuario])
+  itens   Pedido_Itens[]
 }
 
 model Pedido_Itens {
-  id_item_pedido Int       @id @default(autoincrement())
+  id_item_pedido Int     @id @default(autoincrement())
   id_pedido      Int
   id_prato       Int?
   id_produto     Int?
@@ -280,56 +282,56 @@ model Pedido_Itens {
   quantidade     Decimal
   preco_unitario Decimal
 
-  pedido         Pedidos          @relation(fields: [id_pedido], references: [id_pedido])
-  prato          Pratos?          @relation(fields: [id_prato], references: [id_prato], onDelete: SetNull)
-  produto        Produtos?        @relation(fields: [id_produto], references: [id_produto], onDelete: SetNull)
-  variacao       VariacoesPorcao? @relation(fields: [id_variacao], references: [id_variacao], onDelete: SetNull)
+  pedido   Pedidos          @relation(fields: [id_pedido], references: [id_pedido])
+  prato    Pratos?          @relation(fields: [id_prato], references: [id_prato], onDelete: SetNull)
+  produto  Produtos?        @relation(fields: [id_produto], references: [id_produto], onDelete: SetNull)
+  variacao VariacoesPorcao? @relation(fields: [id_variacao], references: [id_variacao], onDelete: SetNull)
 }
 
 model CategoriasFinanceiras {
-  id_categoria_financeira Int      @id @default(autoincrement())
-  nome_categoria          String   @unique @db.VarChar(100)
+  id_categoria_financeira Int        @id @default(autoincrement())
+  nome_categoria          String     @unique @db.VarChar(100)
   despesas                Despesas[]
 }
 
 model Despesas {
-  id_despesa              Int       @id @default(autoincrement())
-  descricao               String    @db.VarChar(255)
+  id_despesa              Int          @id @default(autoincrement())
+  descricao               String       @db.VarChar(255)
   id_fornecedor           Int?
   valor_original          Decimal
   id_categoria_financeira Int
   data_vencimento         DateTime
   status_divida           StatusDivida
   data_pagamento          DateTime?
-  data_registro           DateTime @default(now())
+  data_registro           DateTime     @default(now())
   id_usuario_registro     Int?
 
-  fornecedor              Fornecedores? @relation(fields: [id_fornecedor], references: [id_fornecedor], onDelete: SetNull)
-  categoria               CategoriasFinanceiras @relation(fields: [id_categoria_financeira], references: [id_categoria_financeira])
-  usuario                 Usuarios?     @relation(fields: [id_usuario_registro], references: [id_usuario])
+  fornecedor Fornecedores?         @relation(fields: [id_fornecedor], references: [id_fornecedor], onDelete: SetNull)
+  categoria  CategoriasFinanceiras @relation(fields: [id_categoria_financeira], references: [id_categoria_financeira])
+  usuario    Usuarios?             @relation(fields: [id_usuario_registro], references: [id_usuario])
 }
 
 model Historico_Auditoria {
-  id_historico Int       @id @default(autoincrement())
+  id_historico Int      @id @default(autoincrement())
   id_usuario   Int?
-  acao         String    @db.VarChar(255)
-  detalhes     String?   @db.VarChar(500)
-  data_hora    DateTime  @default(now())
+  acao         String   @db.VarChar(255)
+  detalhes     String?  @db.VarChar(500)
+  data_hora    DateTime @default(now())
 
-  usuario      Usuarios? @relation(fields: [id_usuario], references: [id_usuario])
+  usuario Usuarios? @relation(fields: [id_usuario], references: [id_usuario])
 }
 
 model MensagensInternas {
-  id_mensagem     Int       @id @default(autoincrement())
+  id_mensagem     Int      @id @default(autoincrement())
   id_remetente    Int
   id_destinatario Int?
-  assunto         String?   @db.VarChar(255)
-  conteudo        String    @db.VarChar(1000)
-  data_envio      DateTime  @default(now())
-  lida            Boolean   @default(false)
+  assunto         String?  @db.VarChar(255)
+  conteudo        String   @db.VarChar(1000)
+  data_envio      DateTime @default(now())
+  lida            Boolean  @default(false)
 
-  remetente       Usuarios  @relation("Remetente", fields: [id_remetente], references: [id_usuario])
-  destinatario    Usuarios? @relation("Destinatario", fields: [id_destinatario], references: [id_usuario])
+  remetente    Usuarios  @relation("Remetente", fields: [id_remetente], references: [id_usuario])
+  destinatario Usuarios? @relation("Destinatario", fields: [id_destinatario], references: [id_usuario])
 }
 
 model Alertas {
@@ -340,24 +342,26 @@ model Alertas {
   id_usuario_destino Int?
   lido               Boolean  @default(false)
 
-  usuario_destino    Usuarios? @relation(fields: [id_usuario_destino], references: [id_usuario])
+  usuario_destino Usuarios? @relation(fields: [id_usuario_destino], references: [id_usuario])
 }
 
 model Cardapio {
-  id_cardapio Int      @id @default(autoincrement())
-  nome        String   @db.VarChar(100)
-  data        DateTime @default(now())
+  id_cardapio Int            @id @default(autoincrement())
+  nome        String         @db.VarChar(100)
+  data        DateTime       @default(now())
   status      StatusCardapio @default(Ativo)
 
-  pratos      CardapioPratos[]
+  pratos CardapioPratos[]
 }
 
 model CardapioPratos {
-  id_cardapio_prato Int  @id @default(autoincrement())
+  id_cardapio_prato Int     @id @default(autoincrement())
   id_cardapio       Int
   id_prato          Int
+  id_variacao       Int?
   disponivel        Boolean @default(true)
 
-  cardapio          Cardapio @relation(fields: [id_cardapio], references: [id_cardapio], onDelete: Cascade)
-  prato             Pratos   @relation(fields: [id_prato], references: [id_prato], onDelete: Cascade)
+  cardapio Cardapio         @relation(fields: [id_cardapio], references: [id_cardapio], onDelete: Cascade)
+  prato    Pratos           @relation(fields: [id_prato], references: [id_prato], onDelete: Cascade)
+  variacao VariacoesPorcao? @relation(fields: [id_variacao], references: [id_variacao], onDelete: Cascade)
 }

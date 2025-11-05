@@ -136,9 +136,7 @@ export default function Despesas() {
 
     return (
         <div className="controle-despesas-container">
-            <h1>Controle de Despesas</h1>
-
-            <GlassBox>
+            <h1>Controle de Despesas</h1>          
                 <div className="novo-lancamento">
                     <h2>Novo Lançamento (Contas a Pagar)</h2>
 
@@ -172,13 +170,11 @@ export default function Despesas() {
                         </div>
                     )}
 
-                    <p className="info-dre">Importante para análise de DRE</p>
-
                     <button className={`btn-adicionar ${camposObrigatoriosPreenchidos ? 'ativo' : ''}`} onClick={handleAdicionarConta} disabled={!camposObrigatoriosPreenchidos}>
                         {camposObrigatoriosPreenchidos ? 'Adicionar Conta' : 'Preencha todos os campos obrigatórios'}
                     </button>
                 </div>
-            </GlassBox>
+            
 
             <div className="contas-registradas">
                 <div className="header-contas-registradas">

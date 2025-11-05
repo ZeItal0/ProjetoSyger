@@ -17,7 +17,7 @@ export const LoginController = async (req, res) => {
     const isValid = await bcrypt.compare(senha, user.senha_hash);
     if (!isValid) return res.status(401).json({ message: "senha incorreta" });
 
-    const token = jwt.sign({ id: user.id_usuario, usuario: user.usuario, nivel_acesso: user.nivel_acesso },JWT_SECRET,{ expiresIn: "1h" });
+    const token = jwt.sign({ id: user.id_usuario, usuario: user.usuario, nivel_acesso: user.nivel_acesso },JWT_SECRET,{ expiresIn: "2h" });
 
     res.json({
       message: "Bem vindo ao Siger",

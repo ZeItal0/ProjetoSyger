@@ -131,10 +131,6 @@ export default function RelatoriosDeVendas() {
                 </div>
 
                 <div className="coluna-direita">
-                    <div className="botoes-exportar">
-                        <button className="botao-exportar" onClick={gerarPDF}><img src={PDF} alt="pdf-img"/> Exportar PDF</button>
-                        <button className="botao-email" onClick={enviarEmail}><img src={Email} alt="Email-img"/> Enviar por E-mail</button>
-                    </div>
                     <h2 className="calendario-titulo">Calendário</h2>
                     <div className="calendario-container">
                         <Calendar
@@ -148,6 +144,10 @@ export default function RelatoriosDeVendas() {
                             prevLabel="<"
                             calendarType="gregory"
                         />
+                    </div>
+                    <div className="botoes-exportar">
+                        <button className="botao-exportar" onClick={gerarPDF}><img src={PDF} alt="pdf-img"/> Exportar PDF</button>
+                        <button className="botao-email" onClick={enviarEmail}><img src={Email} alt="Email-img"/> Enviar por E-mail</button>
                     </div>
                 </div>
             </div>

@@ -3,34 +3,32 @@
   gap: 40px;
 }
 
-.menu-btn {
+.menu-btn-top {
   background: none;
   border: none;
-  color: #fff;
+  color: #f5f5f5;
   font-weight: 600;
   font-size: 0.9em;
   cursor: pointer;
   position: relative;
-  transition: all 0.3s ease;
+  transition: all 0.3s;
 }
 
-.menu-btn:hover {
-  opacity: 0.8;
+.menu-btn-top:hover {
+  color: #f5f5f5;
   scale: 1.06;
 }
 
-.menu-btn.active {
-  border: 1.8px solid #fff;
+.menu-btn-top.active {
+  border: 1.8px solid #f5f5f5;
   border-radius: 30px;
   padding: 6px 18px;
 }
 
-.menu-btn.active {
-  border: 1.8px solid #fff;
+.menu-btn-top.active {
+  border: 1.8px solid #f5f5f5;
   border-radius: 30px;
   padding: 6px 18px;
   transform: scale(1.05);
   transition: all 0.25s ease;
 }
-
-

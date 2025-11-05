@@ -26,6 +26,7 @@ export const useInsumos = () => {
         quantidade_maxima: Number(p.quantidade_maxima) || 0,
         categoria: p.categoria?.nome_categoria || "",
         unidadeMedida: p.unidade?.nome_unidade || "",
+        id_unidade_medida: p.unidade?.id_unidade_medida || 1,
         forma_compra: p.forma_compra || "",
         validade: p.validade ? new Date(p.validade).toISOString().split("T")[0] : "",
         valorTotal: p.custo_unitario ? `R$ ${Number(p.custo_unitario).toFixed(2)}` : "R$ 0,00",

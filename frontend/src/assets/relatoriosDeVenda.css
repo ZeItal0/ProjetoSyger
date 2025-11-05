@@ -235,17 +235,17 @@
 
 .botao-exportar, .botao-email {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background-color: #ff8e71;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  padding: 8px 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
+    align-items: center;
+    gap: 8px;
+    padding: 15px 90px;
+    background: #ff8e71;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
 .botao-exportar:hover, .botao-email:hover {

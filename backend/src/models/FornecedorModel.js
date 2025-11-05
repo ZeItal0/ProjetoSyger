@@ -1,4 +1,4 @@
-import  prisma  from "../prismaCliente.js"
+import prisma from "../prismaCliente.js"
 
 export const findByCNPJ = async (cnpj) => {
   return await prisma.fornecedores.findFirst({ where: { cnpj } });

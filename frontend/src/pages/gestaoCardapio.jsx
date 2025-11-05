@@ -1,172 +1,116 @@
-import React, { useState } from "react";
-import "../assets/gestaocardapio.css";
-import GlassBox from "../components/GlassBox";
+import React from "react";
+import "../assets/gestaoCardapio.css";
+import edit from "../icons/edit.png";
+import { useGestaoCardapio } from "../api/useGestaoCardapio";
+
+const PratoItem = ({ prato, onEditVariacoes }) => {
+    return (
+        <div className="prato-item-card">
+            <div className="prato-info-grid">
+                <div className="prato-info-col">
+                    <span className="prato-label">PRATO (RECEITA BASE)</span>
+                    <span className="prato-nome">{prato.nome}</span>
+                </div>
+                <div className="prato-info-col">
+                    <span className="prato-label">CUSTO BASE (R$)</span>
+                    <span className="prato-custo"> R$ {prato.custoBase.toFixed(2)}</span>
+                </div>
+                <div className="prato-info-col opcoes-venda-col">
+                    <span className="prato-label">OPÇÕES DE VENDA</span>
+                    <div className="opcoes-venda-badges">
+                        {(prato.variacoes || []).map((variacao) => (
+                            <span key={variacao.id_variacao} className="variacao-badge">
+                                {variacao.nome} (R${variacao.preco.toFixed(2)})
+                            </span>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            <div className="editar-variacoes-btn">
+                <button className="editar-variacoes-btn__inner" onClick={() => onEditVariacoes(prato)}>
+                    <img src={edit} alt="editar" />
+                    <span>Editar Variações</span>
+                </button>
+            </div>
+        </div>
+    );
+};
+
+const EditarVariacoes = ({ prato, onSave, onCancel, onVariacaoChange, onAddVariacao, onRemoveVariacao, }) => {
+    return (
+        <div className="editar-variacoes-container">
+            <h2>Editar Variações para: {prato.nome}</h2>
+
+            <div className="opcoes-venda-section">
+                <h3>Opções de Venda (Variações)</h3>
+                <div className="variacoes-table">
+                    <div className="variacoes-header">
+                        <span>NOME NO MENU</span>
+                        <span>MULTIPLICADOR DA RECEITA</span>
+                        <span>PREÇO DE VENDA (R$)</span>
+                        <span>AÇÃO</span>
+                    </div>
+                    {(prato.variacoes || []).map((variacao, index) => (
+                        <div key={variacao.id_variacao} className="variacao-row">
+                            <input type="text" value={variacao.nome} onChange={(e) => onVariacaoChange(index, "nome", e.target.value)} placeholder="Pequeno, Medio, Grande (0g)" />
+                            <input type="number" step="0.1" value={variacao.multiplicador} onChange={(e) => onVariacaoChange(index, "multiplicador", parseFloat(e.target.value) || 0.0)} />
+                            <input type="number" step="0.01" value={variacao.preco} onChange={(e) => onVariacaoChange(index, "preco", parseFloat(e.target.value) || 0.0)} />
+                            <button className="remover-variacao-btn" onClick={() => onRemoveVariacao(index)}>Remover</button>
+                        </div>
+                    ))}
+                </div>
+                <button className="adicionar-variacao-btn" onClick={onAddVariacao}>+ Adicionar Variação de Porção</button>
+            </div>
+
+            <div style={{ display: "flex", gap: 10, marginTop: 10 }}>
+                <button className="salvar-configuracoes-btn" onClick={onSave}>Salvar Configurações de Venda</button>
+                <button className="adicionar-variacao-btn" onClick={onCancel} style={{ alignSelf: "center" }}>Cancelar</button>
+            </div>
+        </div>
+    );
+};
 
 export default function GestaoCardapio() {
-    const [pratos, setPratos] = useState([
-        {
-            nome: "Nome do Prato",
-            custoBase: 0,
-            variacoes: [
-                { nome: "Pequeno (0g)", multiplicador: 0, preco: 0 },
-                { nome: "Médio (0g)", multiplicador: 0, preco: 0 },
-                { nome: "Grande (0g)", multiplicador: 0, preco: 0 },
-            ],
-        },
-        {
-            nome: "Outro Prato",
-            custoBase: 0,
-            variacoes: [
-                { nome: "Pequeno (0g)", multiplicador: 0, preco: 0 },
-                { nome: "Médio (0g)", multiplicador: 0, preco: 0 },
-                { nome: "Grande (0g)", multiplicador: 0, preco: 0 },
-            ],
-        },
-        {
-            nome: "Outro Prato",
-            custoBase: 0,
-            variacoes: [
-                { nome: "Pequeno (0g)", multiplicador: 0, preco: 0 },
-                { nome: "Médio (0g)", multiplicador: 0, preco: 0 },
-                { nome: "Grande (0g)", multiplicador: 0, preco: 0 },
-            ],
-        },
-        {
-            nome: "Outro Prato",
-            custoBase: 0,
-            variacoes: [
-                { nome: "Pequeno (0g)", multiplicador: 0, preco: 0 },
-                { nome: "Médio (0g)", multiplicador: 0, preco: 0 },
-                { nome: "Grande (0g)", multiplicador: 0, preco: 0 },
-            ],
-        },
-    ]);
+  const {
+    pratos,
+    carregando,
+    pratoEmEdicao,
+    handleEditVariacoes,
+    handleSave,
+    handleVariacaoChange,
+    handleAddVariacao,
+    handleRemoveVariacao,
+    setPratoEmEdicao,
+  } = useGestaoCardapio();
 
-    const [pratoSelecionado, setPratoSelecionado] = useState(null);
-    const [novoAdicional, setNovoAdicional] = useState("");
+  if (carregando) return <h2 style={{ textAlign: "center" }}>Carregando pratos...</h2>;
 
+  return (
+        <div className="gestao-cardapio-vendas-container">
+            <h1>Gestão do cardápio (Opções de Venda)</h1>
 
-    const editarPrato = (index) => setPratoSelecionado(index);
-
-    const adicionarVariacao = () => {
-        if (pratoSelecionado === null) return;
-        setPratos((antigos) => {
-            const novos = [...antigos];
-            const variacoes = [...novos[pratoSelecionado].variacoes];
-            variacoes.push({ nome: "", multiplicador: 0, preco: 0 });
-            novos[pratoSelecionado] = { ...novos[pratoSelecionado], variacoes };
-            return novos;
-        });
-    };
-
-    const removerVariacao = (varIndex) => {
-        if (pratoSelecionado === null) return;
-        setPratos((antigos) => {
-            const novos = [...antigos];
-            const variacoes = [...novos[pratoSelecionado].variacoes];
-            variacoes.splice(varIndex, 1);
-            novos[pratoSelecionado] = { ...novos[pratoSelecionado], variacoes };
-            return novos;
-        });
-    };
-
-
-    const atualizarVariacao = (varIndex, campo, valor) => {
-        if (pratoSelecionado === null) return;
-
-        setPratos((antigos) => {
-            const novos = [...antigos];
-            const variacoes = [...novos[pratoSelecionado].variacoes];
-            const variacao = { ...variacoes[varIndex] };
-
-            if (campo === "multiplicador" || campo === "preco") {
-                variacao[campo] = valor === "" ? "" : Number(valor);
-            } else {
-                variacao[campo] = valor;
-            }
-
-            variacoes[varIndex] = variacao;
-            novos[pratoSelecionado] = { ...novos[pratoSelecionado], variacoes };
-            return novos;
-        });
-    };
-
-
-    return (
-        <div className="gestao-cardapio-container">
-            <GlassBox>
-                <h2>Gestão do cardápio</h2>
-                    <div className="tabela-scroll">
-                    <table className="tabela-pratos">
-                        <thead>
-                            <tr>
-                                <th>PRATO (RECEITA BASE)</th>
-                                <th>CUSTO BASE (R$)</th>
-                                <th>OPÇÕES DE VENDA</th>
-                                <th>AÇÕES</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            {pratos.map((prato, index) => (
-                                <tr key={index}>
-                                    <td>{prato.nome}</td>
-                                    <td>R$ {prato.custoBase.toFixed(2)}</td>
-                                    <td> {prato.variacoes.map((v, i) => (<span key={i} className="badge"> {v.nome} (R$ {Number(v.preco).toFixed(2)}) </span>))} </td>
-                                    <td> <button className="editar-btn" onClick={() => editarPrato(index)}> Editar Variações </button> </td>
-                                </tr>
-                            ))}
-
-                        </tbody>
-                    </table>
-                </div>
-            </GlassBox>
-
-            <p></p>
-
-            {pratoSelecionado !== null && (
-                <GlassBox>
-                    <div className="editar-area">
-                        <h3>Editar Variações para: <span>{pratos[pratoSelecionado].nome}</span></h3>
-
-                        <div className="tabela-variacoes">
-                            <div className="header">
-                                <span>NOME NO MENU</span>
-                                <span>MULTIPLICADOR DA RECEITA</span>
-                                <span>PREÇO DE VENDA (R$)</span>
-                                <span>AÇÃO</span>
-                            </div>
-
-                            {pratos[pratoSelecionado].variacoes.map((v, i) => (
-                                <div key={i} className="linha-variacao">
-
-                                    <input value={v.nome} onChange={(e) => atualizarVariacao(i, "nome", e.target.value)} />
-
-                                    <input type="number" step="0.1" value={v.multiplicador} onChange={(e) => atualizarVariacao(i, "multiplicador", e.target.value)} />
-
-                                    <input type="number" step="0.1" value={v.preco} onChange={(e) => atualizarVariacao(i, "preco", e.target.value)} />
-
-                                    <button className="remover-btn" onClick={() => removerVariacao(i)}> Remover </button>
-
-                                </div>
-                            ))}
-
-                            <button className="add-variacao-btn" onClick={adicionarVariacao}> + Adicionar Variação de Porção</button>
-
+            <div className="pratos-list">
+                {pratos.length > 0 ? (
+                    pratos.map((prato) => (
+                        <div key={prato.id} className="prato-com-editor">
+                            <PratoItem prato={prato} onEditVariacoes={handleEditVariacoes} />
+                            {pratoEmEdicao && pratoEmEdicao.id === prato.id && (
+                                <EditarVariacoes
+                                    prato={pratoEmEdicao}
+                                    onSave={handleSave}
+                                    onCancel={() => setPratoEmEdicao(null)}
+                                    onVariacaoChange={handleVariacaoChange}
+                                    onAddVariacao={handleAddVariacao}
+                                    onRemoveVariacao={handleRemoveVariacao}
+                                />
+                            )}
                         </div>
-
-                        <div className="modificadores">
-                            <label>Modificadores / Adicionais</label>
-                            <div className="linha-modificador">
-                                <input type="text" placeholder="Ex: Adicional de Queijo" value={novoAdicional} onChange={(e) => setNovoAdicional(e.target.value)} />
-                                <button className="add-modificacao-btn">Adicionar</button>
-                            </div>
-                        </div>
-
-                        <button className="salvar-btn">Salvar Configurações de Venda</button>
-                    </div>
-                </GlassBox>
-            )}
+                    ))
+                ) : (
+                    <p>nenhum prato encontrado</p>
+                )}
+            </div>
         </div>
     );
 }

@@ -37,7 +37,7 @@ export default function Topmenu({ area = "Estoque", onSelect }) {
     <nav className="topmenu" aria-label="top menu">
       <div className="menu-left">
         {filteredItems.map((item, index) => (
-          <button key={index} className={`menu-btn ${activeIndex === index ? "active" : ""}`} onClick={() => handleClick(index, item.label)}>{item.label}</button>
+          <button key={index} className={`menu-btn-top ${activeIndex === index ? "active" : ""}`} onClick={() => handleClick(index, item.label)}>{item.label}</button>
         ))}
       </div>
 

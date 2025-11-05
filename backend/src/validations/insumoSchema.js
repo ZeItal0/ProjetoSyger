@@ -61,7 +61,7 @@ export const insumoSchema = Joi.object({
 
 
   unidadeMedida: Joi.string()
-    .valid("gramas", "litros", "unidade", "kg")
+    .valid("gramas", "mililitros")
     .required()
     .messages({
       "any.only": "Unidade de medida inválida",

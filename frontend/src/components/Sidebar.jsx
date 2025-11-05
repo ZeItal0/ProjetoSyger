@@ -9,7 +9,7 @@ import financeiro from "../icons/income.png";
 import relatorios from "../icons/report.png";
 import dashboard from "../icons/dashboard.png";
 import historico from "../icons/history.png";
-import usuarios from "../icons/group.png";
+import controles from "../icons/settings.png";
 import sair from "../icons/logout.png";
 
 const menuItems = [
@@ -20,7 +20,7 @@ const menuItems = [
   { label: "Financeiro", icon: financeiro, path: "/financeiro", roles: ["Administrador", "Funcionario_Comum", "Financeiro_Gerente"] },
   { label: "Relatorios", icon: relatorios, path: "/relatorio", roles: ["Administrador", "Funcionario_Comum", "Financeiro_Gerente"] },
   { label: "Historico", icon: historico, path: "/historico", roles: ["Administrador"] },
-  { label: "Usuarios", icon: usuarios, path: "/usuarios", roles: ["Administrador"] },
+  { label: "Controles", icon: controles, path: "/controles", roles: ["Administrador"] },
 ];
 
 export default function Sidebar({ activeItem, setActiveItem }) {

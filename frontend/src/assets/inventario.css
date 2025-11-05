@@ -70,8 +70,7 @@
 }
 
 
-.item-header,
-.item-value {
+.item-header,.item-value {
     display: flex;
     flex-direction: column;
 }

@@ -1,0 +1,179 @@
+.historico-content {
+    padding: 30px;
+    background-color: #fff;
+    height: 10vh;
+    color: #333;
+}
+
+.historico-content h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #000;
+}
+
+.filtros-container {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.filtros-container select {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    color: #333;
+    background-color: #fff;
+    outline: none;
+    transition: border-color 0.3s ease;
+    height: 40px;
+    min-width: 180px;
+    appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    background-size: 10px auto;
+    padding-right: 30px;
+}
+
+.input-data-container input {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    background-color: #fff;
+    color: #333;
+    padding: 10px 15px;
+}
+
+.filtros-container select:focus,.filtros-container .input-data-container input:focus {
+    border-color: #ff8e71;
+}
+
+.input-data-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-data-container .icone-calendario {
+    position: absolute;
+    right: 10px;
+    color: #666;
+    pointer-events: none;
+}
+
+.btn-aplicar {
+    background-color: #ff8e71;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 40px;
+}
+
+.btn-aplicar:hover {
+    background-color: #ff724e;
+}
+
+.titulo-atividades {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.historico-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.atividade-item {
+    display: grid;
+    grid-template-columns: 50px 1fr 150px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.atividade-icone-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.atividade-detalhes {
+    display: flex;
+    flex-direction: column;
+}
+
+.atividade-usuario {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 2px;
+}
+
+.atividade-descricao {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+}
+
+.atividade-acao {
+    font-weight: 600;
+    color: #ff8e71;
+    text-transform: capitalize;
+}
+
+.atividade-data-hora {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.icon-auditoria {
+    height: 40px;
+    width: 40px;
+}
+
+@media (max-width: 768px) {
+    .filtros-container {
+        flex-wrap: wrap;
+    }
+
+    .filtros-container select,
+    .filtros-container .input-data-container,
+    .btn-aplicar {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .atividade-item {
+        grid-template-columns: 40px 1fr;
+        gap: 10px;
+    }
+
+    .atividade-data-hora {
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;
+        align-items: flex-end;
+    }
+
+    .atividade-detalhes {
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
+    }
+}

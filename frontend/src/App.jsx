@@ -2,14 +2,14 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginCadastro from "./pages/loginCadastro";
 import Home from "./pages/home";
-import DashBoard from "./pages/dashBoard"
-import Estoque from "./pages/Estoque"
-import Pratos from "./pages/pratos"
-import Vendas from "./pages/vendas"
-import Financeiro from "./pages/financeiro"
-import Relatorios from "./pages/relatorio"
-import Historico from "./pages/historico"
-import Usuarios from "./pages/usuarios"
+import DashBoard from "./pages/dashBoard";
+import Estoque from "./pages/Estoque";
+import Pratos from "./pages/pratos";
+import Vendas from "./pages/vendas";
+import Financeiro from "./pages/financeiro";
+import Relatorios from "./pages/relatorio";
+import Historico from "./pages/historico";
+import Controles from "./pages/controles";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -26,7 +26,7 @@ function App() {
         <Route path="/financeiro" element={<ProtectedRoute element={Financeiro} requiredRoles={["Administrador", "Funcionario_Comum", "Financeiro_Gerente"]}/>}/>
         <Route path="/relatorio" element={<ProtectedRoute element={Relatorios} requiredRoles={["Administrador", "Funcionario_Comum", "Financeiro_Gerente"]}/>}/>
         <Route path="/historico" element={<ProtectedRoute element={Historico} requiredRoles={["Administrador"]}/>}/>
-        <Route path="/usuarios" element={<ProtectedRoute element={Usuarios} requiredRoles={["Administrador"]}/>}/>
+        <Route path="/controles" element={<ProtectedRoute element={Controles} requiredRoles={["Administrador"]}/>}/>
 
       </Routes>
     </Router>

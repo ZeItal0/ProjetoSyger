@@ -1,231 +1,450 @@
-.gestao-cardapio-container {
-  background: #f5f5f5;
-  padding: 20px;
-  border-radius: 12px;
-  color: #333333;
+.gestao-cardapio-vendas-container {
+    padding: 30px;
+    background-color: #fff;
+    color: #333333;
+    height: 10vh;
 }
 
-.tabela-scroll {
-  max-height: 200px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-width: thin;
-  scrollbar-color: #ff8e71 #f5f5f5; 
+.gestao-cardapio-vendas-container h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #333333;
 }
 
-.tabela-scroll::-webkit-scrollbar {
-  width: 8px;
+.pratos-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 30px;
 }
 
-.tabela-scroll::-webkit-scrollbar-track {
-  background: #f5f5f5;
-  border-radius: 8px;
+.prato-item-card {
+    display: flex;
+    align-items: stretch;
+    border: 1px solid #FF8E71;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: #f5f5f5;
+    transition: box-shadow 0.3s ease;
+    min-height: 100px;
 }
 
-.tabela-scroll::-webkit-scrollbar-thumb {
-  background-color: #ff8e71;
-  border-radius: 8px;
-  border: 2px solid #f5f5f5;
+.prato-info-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 3fr;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    flex: 1 1 auto;
 }
 
-.tabela-scroll::-webkit-scrollbar-thumb:hover {
-  background-color: #ff724e;
+.prato-info-col {
+    display: flex;
+    flex-direction: column;
 }
 
-
-.tabela-pratos thead th {
-  position: sticky;
-  top: 0;
-  background: #f5f5f5;
-  z-index: 2;
+.prato-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 4px;
+    text-transform: uppercase;
 }
 
-
-
-h2 {
-  margin-bottom: 15px;
-  color: #333333;
+.prato-nome, .prato-custo {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #333;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 25px;
+.opcoes-venda-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
-th {
-  text-align: left;
-  background: #f5f5f5;
-  padding: 10px;
-  color: #333333;
+.opcoes-venda-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
-td {
-  border-bottom: 1px solid #a1a1a1;
-  padding: 10px;
-  vertical-align: middle;
-  color: #333333;
+.variacao-badge {
+    background-color: #CDDEF8;
+    color: #536EB3;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
 }
 
-.badge {
-  background: #dce8ff;
-  color: #2b4db4;
-  font-weight: 500;
-  border-radius: 10px;
-  padding: 4px 8px;
-  margin-right: 5px;
-  font-size: 0.85rem;
+.editar-variacoes-btn {
+    width: 120px;
+    background-color: #C9D6E8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom-right-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.15s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 10;
+    flex-shrink: 0;
 }
 
-.editar-btn {
-  background: none;
-  color: #ff8e71;
-  border: none;
-  cursor: pointer;
-  font-weight: lighter;
+.editar-variacoes-btn:hover {
+    background-color: #B2C9EB;
 }
 
+.editar-variacoes-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -1px;
+    bottom: 0;
+    width: 1px;
 
-
-
-.editar-area {
-  border: 1px solid #f5f5f5;
-  border-radius: 10px;
-  padding: 15px;
-  background: #f5f5f5;
-  margin-top: 10px;
-  color: #333333;
-  
 }
 
-.tabela-variacoes .header, .linha-variacao {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 0.4fr;
-  gap: 20px;
-  align-items: center;
+.editar-variacoes-btn__inner,
+.editar-variacoes-btn button,
+.editar-variacoes-btn button:focus {
+    background: none;
+    border: none;
+    color: #f5f5f5;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 }
 
-.tabela-variacoes .header {
-  font-weight: bold;
-  font-size: 0.6rem;
-  margin-bottom: 5px;
+.editar-variacoes-btn img {
+    width: 22px;
+    height: 22px;
+    filter: brightness(0) invert(1);
 }
 
-.linha-variacao {
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 8px;
+.editar-variacoes-container {
+    background-color: #f8f8f8;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 12px;
+    margin-left: 10px;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.04);
 }
 
-
-.linha-variacao input {
-  padding: 5px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #f5f5f5;
-  color: #333333;
-  appearance: textfield; 
+.editar-variacoes-container h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 18px;
+    color: #333;
 }
 
-.linha-variacao input:focus {
-  border-color: #ff8e71;
-  outline: none;
+.opcoes-venda-section h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #333333;
 }
 
-
-.remover-btn {
-  background: #a25f55;
-  border: none;
-  border-radius: 8px;
-  color: #f5f5f5;
-  cursor: pointer;
-  font-weight: lighter;
-  height: 30px;
-  width: 200px;
-  max-width: 200px;
-  text-align: center;
-  transition: background 0.2s ease, transform 0.1s ease;
+/* Tabela de Variações */
+.variacoes-table {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 15px;
+    align-items: center;
 }
 
-.remover-btn:hover {
-  transform: scale(1.03);
+.variacoes-header {
+    display: contents;
 }
 
-
-
-.add-variacao-btn {
-  margin-top: 10px;
-  background: #f5f5f5;
-  border-color: #ff8e71;
-  color: #ff8e71;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-}
-.add-variacao-btn:hover {
-  border-color: #ff8e71;
-  color: #f5f5f5;
-  background-color: #ff724e;
-  transition: 0.3s;
-    transform: scale(1.03);
+.variacoes-header span {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #333333;
+    text-transform: uppercase;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
 }
 
-.modificadores {
-  margin-top: 25px;
+.variacao-row {
+    display: contents;
 }
 
-.linha-modificador {
-  display: flex;
-  gap: 10px;
-  margin-top: 5px;
+.variacao-row input {
+    padding: 10px 12px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: #333333;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.15s ease;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.linha-modificador input {
-  flex: 1;
-  padding: 8px;
-  border-radius: 6px;
-  border: 1px solid #ddd;
-  background-color: #f5f5f5;
-  color: #333333;
-}
-.linha-modificador input[type="text"]:focus{
-  outline: none;
-  border-color: #ff8e71;
-  background-color: #f5f5f5;
+.variacao-row input:focus {
+    border-color: #ff8e71;
+    box-shadow: 0 2px 6px rgba(255,142,113,0.12);
 }
 
-.add-modificacao-btn {
-  background: #b2f1a8;
-  border: none;
-  border-radius: 6px;
-  color: #f5f5f5;
-  font-weight: lighter;
-  cursor: pointer;
-  padding: 8px 12px;
+.remover-variacao-btn {
+    background-color: #ffebee;
+    color: #f44336;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 12px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.2s ease, transform 0.12s ease;
 }
 
-.add-modificacao-btn:hover {
-    background-color: #91c389;
+.remover-variacao-btn:hover {
+    background-color: #fce4e4;
 }
 
-.salvar-btn {
-  margin-top: 20px;
-  width: 100%;
-  background: #ff8e71;
-  color: white;
-  font-weight: bold;
-  border: none;
-  border-radius: 8px;
-  padding: 14px;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.2s;
+.adicionar-variacao-btn {
+    background: none;
+    border: 1px solid #ff8e71;
+    color: #ff8e71;
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    width: fit-content;
+    margin-top: 10px;
+    transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.salvar-btn:hover {
-  background: #ff724e;
-  transition: background 0.2s ease, transform 0.8s ease;
-  transform: scale(1.01);
+.adicionar-variacao-btn:hover {
+    color: #F5F5F5;
+    background-color: #ff8e71;
+    border: 1px solid #ff8e71;
+}
+
+.modificadores-section {
+    margin-top: 20px;
+}
+
+.modificadores-section h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #333333;
+}
+
+.adicional-input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.adicional-input-group input {
+    flex-grow: 1;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    color: #333333;
+    background-color: #fff;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.12s ease;
+}
+
+.adicional-input-group input:focus {
+    border-color: #ff8e71;
+    box-shadow: 0 2px 6px rgba(255,142,113,0.08);
+}
+
+.adicionar-adicional-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: background-color 0.18s ease, transform 0.12s ease;
+}
+
+.adicionar-adicional-btn:hover {
+    background-color: #43a047;
+    transform: translateY(-1px);
+}
+
+.adicionais-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.adicional-tag {
+    background-color: #e8f5e9;
+    color: #388e3c;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.adicional-tag button {
+    background: none;
+    border: none;
+    color: #388e3c;
+    cursor: pointer;
+    font-weight: 700;
+    padding: 0;
+    line-height: 1;
+}
+
+.adicional-tag img {
+    width: 12px;
+    height: 12px;
+}
+
+.salvar-configuracoes-btn {
+    width: 100%;
+    background: #ff8e71;
+    color: #f5f5f5;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 16px;
+    cursor: pointer;
+    font-size: 1.05rem;
+    font-weight: 700;
+    transition: background 0.2s ease, box-shadow 0.12s ease;
+    box-shadow: 0 4px 6px rgba(255, 142, 113, 0.24);
+}
+
+.salvar-configuracoes-btn:hover {
+    background: #ff724e;
+}
+
+.editar-variacoes-container .acao-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.modal-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: opacity 0.18s ease, transform 0.12s ease;
+}
+
+.modal-btn img {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+}
+
+.modal-btn-salvar {
+    background-color: #b2f1a8;
+    color: #083d0b;
+}
+
+.modal-btn-excluir {
+    background-color: #e57373;
+    color: #fff;
+}
+
+.modal-btn-excluir:hover {
+    background-color: #c75b5b;
+    transform: translateY(-2px);
+}
+
+.modal-btn-salvar:hover {
+    background: #90d389;
+    transform: translateY(-2px);
+}
+
+.variacoes-table > .variacao-row > input, .variacoes-header > span {
+    box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+    .prato-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .opcoes-venda-col {
+        align-items: flex-start;
+    }
+
+    .variacoes-table {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .editar-variacoes-btn {
+        width: 80px;
+    }
+
+    .variacoes-header span:nth-child(3), .variacoes-header span:nth-child(4) {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .prato-info-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .editar-variacoes-btn {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 60px;
+    }
+
+    .prato-item-card {
+        min-height: auto;
+        padding-right: 60px;
+    }
+
+    .editar-variacoes-btn__inner span, .editar-variacoes-btn button span {
+        display: none;
+    }
+
+    .variacoes-table {
+        grid-template-columns: 1fr;
+    }
+
+    .variacao-row input, .remover-variacao-btn {
+        width: 100%;
+    }
 }
 
