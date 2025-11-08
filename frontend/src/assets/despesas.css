@@ -219,12 +219,13 @@
 }
 
 .tabela-contas tbody {
-    display: block;
-    max-height: 500px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #ff8e71 #f5f5f5;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    overflow: visible;
+    max-height: none;
 }
+
 
 .tabela-contas tbody::-webkit-scrollbar {
     width: 6px;
