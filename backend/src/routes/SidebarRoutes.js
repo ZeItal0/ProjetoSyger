@@ -31,7 +31,7 @@ router.get("/historico", autenticarToken, autorizar("Administrador", "Funcionari
   res.json({nivelAcesso: req.usuario.nivel_acesso,});
 });
 
-router.get("/usuarios", autenticarToken, autorizar("Administrador", "Funcionario_Comum"), (req, res) => {
+router.get("/controles", autenticarToken, autorizar("Administrador", "Funcionario_Comum"), (req, res) => {
   res.json({nivelAcesso: req.usuario.nivel_acesso,});
 });
 

@@ -43,11 +43,25 @@ export default function Sidebar({ activeItem, setActiveItem }) {
   }, [location.pathname, setActiveItem]);
 
   const toggleSidebar = () => setIsSidebarCollapsed(!isSidebarCollapsed);
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("nivel_acesso");
-    navigate("/");
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      await fetch("http://localhost:5000/LoginERegistro/logout", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (err) {
+      console.error("erro ao registrar logout:", err);
+    } finally {
+      localStorage.removeItem("token");
+      localStorage.removeItem("nivel_acesso");
+      navigate("/");
+    }
   };
+
   const handleMenuClick = (item) => {
     setActiveItem(item.label);
     navigate(item.path);

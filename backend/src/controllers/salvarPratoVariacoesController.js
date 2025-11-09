@@ -1,5 +1,6 @@
 import { salvarVariacoesSchema } from "../validations/variacoesSchema.js";
 import { pratoModel } from "../models/PratosModel.js";
+import { registrarAuditoria } from "../utils/registrarAuditoria.js";
 
 export const salvarVariacoes = async (req, res) => {
   try {
@@ -12,7 +13,7 @@ export const salvarVariacoes = async (req, res) => {
 
     const { id_prato, variacoes } = req.body;
     const resultado = await pratoModel.salvarVariacoes(id_prato, variacoes);
-
+    await registrarAuditoria(req.usuario.id, "CADASTRO", `Usuário "${req.usuario.nome_completo}" Cadastrou uma nova variacao do prato ID:"${id_prato}".`);
     res.status(200).json(resultado);
   } catch (err) {
     console.error("erro ao salvar variações:", err);

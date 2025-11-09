@@ -1,3 +1,6 @@
+.inventario-container {
+    height: 10vh;
+}
 .titulo-inventario {
     font-size: 24px;
     font-weight: bold;

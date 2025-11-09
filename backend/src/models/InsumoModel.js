@@ -64,3 +64,16 @@ export const atualizarProduto = async (id_produto, dados) => {
     data: dados,
   });
 };
+
+export const buscarPorId = async (id_produto) => {
+  return await prisma.produtos.findUnique({
+    where: { id_produto: Number(id_produto) },
+    include: {
+      categoria: true,
+      unidade: true,
+      fornecedores: {
+        include: { fornecedor: true },
+      },
+    },
+  });
+};

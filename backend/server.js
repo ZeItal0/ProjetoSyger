@@ -2,13 +2,14 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import LoginRegistroRoutes from "./src/routes/LoginRegistroRoutes.js";
-import FornecedoresRoutes from "./src/routes/fornecedoresRoutes.js"
+import FornecedoresRoutes from "./src/routes/fornecedoresRoutes.js";
 import { securityMiddleware } from "./src/middlewares/securityMiddleware.js";
 import SidebarRoutes from "./src/routes/SidebarRoutes.js";
-import ProdutoRoutes from "./src/routes/produtosRoutes.js"
-import pratosRoutes from "./src/routes/pratosRoutes.js"
+import ProdutoRoutes from "./src/routes/produtosRoutes.js";
+import pratosRoutes from "./src/routes/pratosRoutes.js";
 import cardapioRoutes from "./src/routes/cardapioRoutes.js";
-import despesasRoutes from "./src/routes/despesasRoutes.js"
+import despesasRoutes from "./src/routes/despesasRoutes.js";
+import auditoriaRoutes from "./src/routes/auditoriaRoutes.js";
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use("/cadastro", FornecedoresRoutes);
 app.use("/cadastroProduto", ProdutoRoutes);
 app.use("/pratos", pratosRoutes);
 app.use("/despesas", despesasRoutes);
+app.use("/auditoria", auditoriaRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`server rodando na porta ${PORT}`));

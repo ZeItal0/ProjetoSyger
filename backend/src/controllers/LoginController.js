@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import * as LoginRegistroModel from "../models/LoginRegistroModel.js";
 import { loginSchema } from "../validations/loginRegistroSchema.js";
+import { registrarAuditoria } from "../utils/registrarAuditoria.js";
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -17,7 +18,10 @@ export const LoginController = async (req, res) => {
     const isValid = await bcrypt.compare(senha, user.senha_hash);
     if (!isValid) return res.status(401).json({ message: "senha incorreta" });
 
-    const token = jwt.sign({ id: user.id_usuario, usuario: user.usuario, nivel_acesso: user.nivel_acesso },JWT_SECRET,{ expiresIn: "2h" });
+    const token = jwt.sign({ id: user.id_usuario, usuario: user.usuario, nome_completo: user.nome_completo, nivel_acesso: user.nivel_acesso, }, JWT_SECRET, { expiresIn: "2h" });
+
+    await registrarAuditoria(user.id_usuario, "LOGIN", `Usuário "${user.nome_completo}" fez login no sistema`);
+
 
     res.json({
       message: "Bem vindo ao Siger",

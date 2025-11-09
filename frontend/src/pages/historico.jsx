@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Sidebar from "../components/Sidebar";
 import MainHeader from "../components/MainHeader";
 import "../assets/home.css";
@@ -9,160 +9,107 @@ import check from "../icons/checkA.png";
 import editar from "../icons/editA.png";
 import sair from "../icons/exitA.png";
 import excluir from "../icons/recycleA.png";
-
-const mockHistorico = [
-    {
-        id: 1,
-        usuario: "Usuario nome | #01",
-        acao: "Login",
-        descricao: "Entrou no sistema",
-        data: "dd/mm/yyyy",
-        hora: "00:00",
-        icone: "login"
-    },
-    {
-        id: 2,
-        usuario: "Usuario nome | #01",
-        acao: "estorno",
-        descricao: "estornou o pedido #00",
-        data: "dd/mm/yyyy",
-        hora: "00:00",
-        icone: "alerta"
-    },
-    {
-        id: 3,
-        usuario: "Usuario nome | #01",
-        acao: "venda",
-        descricao: "realizou uma venda rápida",
-        data: "dd/mm/yyyy",
-        hora: "00:00",
-        icone: "check"
-    },
-    {
-        id: 4,
-        usuario: "Usuario nome | #01",
-        acao: "sair",
-        descricao: "saiu do sistema",
-        data: "dd/mm/yyyy",
-        hora: "00:00",
-        icone: "logout"
-    },
-    {
-        id: 5,
-        usuario: "Usuario nome | #01",
-        acao: "editou",
-        descricao: "editou um item do estoque Nome do item para novo Nome",
-        data: "dd/mm/yyyy",
-        hora: "00:00",
-        icone: "edit"
-    },
-    {
-        id: 6,
-        usuario: "Usuario nome | #01",
-        acao: "deletou",
-        descricao: "deletou um item",
-        data: "dd/mm/yyyy",
-        hora: "00:00",
-        icone: "delete"
-    },
-];
-
+import { useAuditoria } from "../api/useAuditoria";
+import Paginacao from "../components/paginacaoComponent";
 
 const IconeAtividade = ({ tipo }) => {
-    let iconContent;
-    switch (tipo) {
-        case 'login':
-            iconContent = <img src={entrar} className="icon-auditoria"/>;
-            break;
-        case 'alerta':
-            iconContent = <img src={alerta} className="icon-auditoria"/>;
-            break;
-        case 'check':
-            iconContent = <img src={check} className="icon-auditoria"/>;
-            break;
-        case 'logout':
-            iconContent = <img src={sair} className="icon-auditoria"/>;
-            break;
-        case 'edit':
-            iconContent = <img src={editar} className="icon-auditoria"/>;
-            break;
-        case 'delete':
-            iconContent = <img src={excluir} className="icon-auditoria"/>;
-            break;
-        default:
-            iconContent = <img src={entrar} className="icon-auditoria"/>;
-    }
-    return <div className={`icone-atividade icone-${tipo}`}>{iconContent}</div>;
+  const acao = tipo?.toLowerCase();
+  let icon;
+
+  if (acao.includes("login")) icon = entrar;
+  else if (acao.includes("logout") || acao.includes("sair")) icon = sair;
+  else if (acao.includes("atualizou") || acao.includes("edit")) icon = editar;
+  else if (acao.includes("deletou") || acao.includes("delete")) icon = excluir;
+  else if (acao.includes("cadastro") || acao.includes("venda")) icon = check;
+  else icon = alerta;
+
+  return <img src={icon} className="icon-auditoria" alt={tipo} />;
 };
 
-
 export default function Historico() {
-    const [activeItem, setActiveItem] = useState("Historico");
-    const [filtroAcao, setFiltroAcao] = useState("Todas as ações");
-    const [filtroUsuario, setFiltroUsuario] = useState("Todos os utilizadores");
-    const [filtroData, setFiltroData] = useState("");
+  const {
+    historicoFiltrado,
+    usuariosUnicos,
+    loading,
+    filtroAcao,
+    filtroUsuario,
+    filtroData,
+    setFiltroAcao,
+    setFiltroUsuario,
+    setFiltroData,
+    paginaAtual,
+    setPaginaAtual,
+    totalPaginas,
+  } = useAuditoria();
 
-    const historicoFiltrado = mockHistorico.filter(item => {
-        return true;
-    });
+  const [activeItem, setActiveItem] = React.useState("Historico");
 
-    return (
-        <div className="home-container">
-            <Sidebar activeItem={activeItem} setActiveItem={setActiveItem} />
+  return (
+    <div className="home-container">
+      <Sidebar activeItem={activeItem} setActiveItem={setActiveItem} />
 
-            <div className="main-content-area">
-                <MainHeader area="Historico"/>
+      <div className="main-content-area">
+        <MainHeader area="Histórico" />
 
-                <main className="main-content historico-content">
-                    <h1>Histórico de Atividades (Auditoria)</h1>
+        <main className="main-content historico-content">
+          <h1>Histórico de Atividades (Auditoria)</h1>
 
-                    <div className="filtros-container">
-                        <select value={filtroAcao} onChange={(e) => setFiltroAcao(e.target.value)}>
-                            <option>Todas as ações</option>
-                            <option>Login</option>
-                            <option>Estorno</option>
-                            <option>Venda</option>
-                            <option>Sair</option>
-                            <option>Edição</option>
-                            <option>Deleção</option>
-                        </select>
+          <div className="filtros-container">
+            <select value={filtroAcao} onChange={(e) => setFiltroAcao(e.target.value)}>
+              <option>Todas as ações</option>
+              <option>LOGIN</option>
+              <option>CADASTRO</option>
+              <option>ATUALIZOU</option>
+              <option>DELETOU</option>
+              <option>LOGOUT</option>
+            </select>
 
-                        <select value={filtroUsuario} onChange={(e) => setFiltroUsuario(e.target.value)}>
-                            <option>Todos os utilizadores</option>
-                            <option>Usuario nome | #01</option>
-                        </select>
+            <select value={filtroUsuario} onChange={(e) => setFiltroUsuario(e.target.value)}>
+              {usuariosUnicos.map((usuario, i) => (
+                <option key={i}>{usuario}</option>
+              ))}
+            </select>
 
-                        <div className="input-data-container">
-                            <input type="date" placeholder="dd/mm/yyyy" value={filtroData} onChange={(e) => setFiltroData(e.target.value)} />
-                            <span className="icone-calendario"></span>
-                        </div>
-
-                        <button className="btn-aplicar"><span className="icone-aplicar"></span>Aplicar</button>
-                    </div>
-
-                    <h2 className="titulo-atividades">Últimas {historicoFiltrado.length} atividades</h2>
-
-                    <div className="historico-lista">
-                        {historicoFiltrado.map(item => (
-                            <div key={item.id} className="atividade-item">
-                                <div className="atividade-icone-wrapper">
-                                    <IconeAtividade tipo={item.icone} />
-                                </div>
-                                <div className="atividade-detalhes">
-                                    <span className="atividade-usuario">{item.usuario}</span>
-                                    <p className="atividade-descricao">
-                                        <span className="atividade-acao">{item.acao}:</span> {item.descricao}
-                                    </p>
-                                </div>
-                                <div className="atividade-data-hora">
-                                    <span className="atividade-data">{item.data}</span>
-                                    <span className="atividade-hora">{item.hora}</span>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </main>
+            <div className="input-data-container">
+              <input type="date" value={filtroData} onChange={(e) => setFiltroData(e.target.value)}/>
+              <span className="icone-calendario"></span>
             </div>
-        </div>
-    );
+          </div>
+
+          {loading ? (
+            <p>Carregando histórico...</p>
+          ) : historicoFiltrado.length === 0 ? (
+            <p>Nenhum registro encontrado.</p>
+          ) : (
+            <>
+              <h2 className="titulo-atividades"> Últimas {historicoFiltrado.length} atividades</h2>
+
+              <div className="historico-lista">
+                {historicoFiltrado.map((item) => (
+                  <div key={item.id} className="atividade-item">
+                    <div className="atividade-icone-wrapper">
+                      <IconeAtividade tipo={item.acao} />
+                    </div>
+                    <div className="atividade-detalhes">
+                      <span className="atividade-usuario">{item.usuario}</span>
+                      <p className="atividade-descricao">
+                        <span className="atividade-acao">{item.acao}:</span>{" "}
+                        {item.descricao}
+                      </p>
+                    </div>
+                    <div className="atividade-data-hora">
+                      <span className="atividade-data">{item.data}</span>
+                      <span className="atividade-hora">{item.hora}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <Paginacao paginaAtual={paginaAtual} totalPaginas={totalPaginas} setPaginaAtual={setPaginaAtual}/>
+            </>
+          )}
+        </main>
+      </div>
+    </div>
+  );
 }

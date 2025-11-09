@@ -90,11 +90,7 @@ export default function Despesas() {
         <div className="header-contas-registradas">
           <h2>Contas Registradas</h2>
           <div className="filtros-container">
-            <select
-              className="filtro-select"
-              value={filtroCategoria}
-              onChange={(e) => setFiltroCategoria(e.target.value)}
-            >
+            <select className="filtro-select" value={filtroCategoria} onChange={(e) => setFiltroCategoria(e.target.value)}>
               <option value="">Filtrar por categoria</option>
               <option value="Aluguel">Aluguel</option>
               <option value="Fornecedores">Fornecedores</option>
@@ -103,11 +99,7 @@ export default function Despesas() {
               <option value="Outros">Outros</option>
             </select>
 
-            <select
-              className="filtro-select"
-              value={filtroStatus}
-              onChange={(e) => setFiltroStatus(e.target.value)}
-            >
+            <select className="filtro-select" value={filtroStatus} onChange={(e) => setFiltroStatus(e.target.value)}>
               <option value="">Filtrar por status</option>
               <option value="A_pagar">A pagar</option>
               <option value="Pago">Pago</option>
@@ -115,13 +107,7 @@ export default function Despesas() {
               <option value="Cancelado_Estornado">Cancelado/Estornado</option>
             </select>
 
-            <input
-              type="month"
-              className="filtro-select filtro-mes-ano"
-              value={filtroMesAno}
-              onChange={(e) => setFiltroMesAno(e.target.value)}
-              placeholder="Filtrar por Mês/ano"
-            />
+            <input type="month" className="filtro-select filtro-mes-ano" value={filtroMesAno} onChange={(e) => setFiltroMesAno(e.target.value)} placeholder="Filtrar por Mês/ano"/>
           </div>
         </div>
 

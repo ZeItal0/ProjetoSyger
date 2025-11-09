@@ -1,6 +1,7 @@
 import * as DespesaModel from "../models/DespesasModel.js";
 import * as CategoriaModel from "../models/categoriasModel.js";
 import { DespesaSchema } from "../validations/DespesaSchema.js";
+import { registrarAuditoria } from "../utils/registrarAuditoria.js";
 
 export const criarDespesa = async (req, res) => {
   try {
@@ -38,6 +39,7 @@ export const criarDespesa = async (req, res) => {
       categoriaId: categoriaRecord.id_categoria_financeira,
       usuarioId,
     });
+    await registrarAuditoria(req.usuario.id, "CADASTRO", `Usuário "${req.usuario.nome_completo}" cadastrou uma nova Despesa de nome "${descricao}" valor R$${valor_original} data de vencimento ${data_vencimento} e status "${status_divida}".`);
 
     return res.status(201).json(novaDespesa);
   } catch (err) {
