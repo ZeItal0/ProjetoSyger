@@ -99,4 +99,7 @@ export const insumoSchema = Joi.object({
     .messages({
       "number.base": "ID do usuário inválido",
     }),
+  pesoPorUnidade: Joi.number().optional().messages({
+    "number.base": "O peso por unidade deve ser um número",
+  }),
 });

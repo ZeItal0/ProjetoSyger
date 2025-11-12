@@ -133,6 +133,7 @@ model Produtos {
   quantidade_maxima       Decimal   @default(0.00)
   forma_compra            String?   @db.VarChar(50)
   custo_unitario          Decimal?
+  peso_por_unidade        Decimal?            @db.Decimal(10, 2)
   data_cadastro           DateTime  @default(now())
   data_ultima_atualizacao DateTime  @default(now())
   ativo                   Boolean   @default(true)

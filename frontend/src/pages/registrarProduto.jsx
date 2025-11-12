@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "../assets/registrarProduto.css";
-import { useRegistrarProduto } from "../api/registrarProduto"
+import { useRegistrarProduto } from "../api/registrarProduto";
 import FornecedorPng from "../icons/fornecedor.png";
 import Plus from "../icons/plus.png";
 import Minus from "../icons/minus.png";
 
 export default function RegistrarProduto() {
-  const { formData, quantidade, aumentar, diminuir, fornecedorSelecionado, setFornecedorSelecionado, fornecedores, carregando, handleInputChange, handleSalvarProduto } = useRegistrarProduto();
+  const { formData, quantidade, aumentar, diminuir, fornecedorSelecionado, setFornecedorSelecionado, fornecedores, carregando, handleInputChange, handleSalvarProduto, totalMedida, } = useRegistrarProduto();
 
   return (
     <div className="registrar-produto-container">
@@ -14,7 +14,7 @@ export default function RegistrarProduto() {
         <h2 className="titulo">Registrar Insumo</h2>
 
         <div className="input-row">
-          <input type="text" name="nomeProduto" placeholder="Nome Do Produto" value={formData.nomeProduto} onChange={handleInputChange} className="input-full" />
+          <input type="text" name="nomeProduto" placeholder="Nome do Produto" value={formData.nomeProduto} onChange={handleInputChange} className="input-full" />
 
           <select name="categoria" value={formData.categoria} onChange={handleInputChange}>
             <option value="">Categoria</option>
@@ -39,16 +39,16 @@ export default function RegistrarProduto() {
         <div className="input-row">
           <input type="number" name="quantidadeMinima" placeholder="Quantidade MÍN" value={formData.quantidadeMinima} onChange={handleInputChange} className="input-medium" />
           <input type="number" name="quantidadeMaxima" placeholder="Quantidade MAX" value={formData.quantidadeMaxima} onChange={handleInputChange} className="input-medium" />
-
-          <input type="date" name="validade" value={formData.validade} onChange={handleInputChange} className="input-medium" />
-
+          <input type="date" name="validade" value={formData.validade} onChange={handleInputChange} className="input-medium"/>
           <select name="unidadeMedida" value={formData.unidadeMedida} onChange={handleInputChange}>
             <option value="">Unidade de medida</option>
             <option value="gramas">Gramas</option>
             <option value="mililitros">Mililitros</option>
           </select>
-
-          <input type="number" name="valorTotal" placeholder="Valor Total" value={formData.valorTotal} onChange={handleInputChange} className="input-medium" />
+        </div>
+        <div className="input-row">
+          <input type="number" name="pesoPorUnidade" placeholder="Peso por unidade" value={formData.pesoPorUnidade} onChange={handleInputChange} className="input-medium"/>
+          <input type="number" name="valorTotal" placeholder="Valor Total" value={formData.valorTotal} onChange={handleInputChange} className="input-medium"/>
         </div>
 
         <div className="quantidade-container">
@@ -64,7 +64,21 @@ export default function RegistrarProduto() {
           </div>
         </div>
 
-        <button className={`btn-selecionar-fornecedor ${fornecedorSelecionado ? "selecionado" : ""}`} onClick={handleSalvarProduto}>Salvar Produto</button>
+        <div className="quantidade-info">
+          {formData.pesoPorUnidade && formData.unidadeMedida ? (
+            <p>
+              {quantidade} {formData.unidadeCompra || "unidades"} de{" "}
+              {formData.pesoPorUnidade}
+              {formData.unidadeMedida} ={" "}
+              <strong>
+                {totalMedida} {formData.unidadeMedida} no total
+              </strong>
+            </p>
+          ) : (
+            <p>Defina o peso por unidade e a unidade de medida</p>
+          )}
+        </div>
+        <button className={`btn-selecionar-fornecedor ${fornecedorSelecionado ? "selecionado" : ""}`}onClick={handleSalvarProduto}>Salvar Produto</button>
       </div>
 
       <div className="fornecedores-section">
@@ -76,15 +90,23 @@ export default function RegistrarProduto() {
         ) : (
           <div className="fornecedores-grid">
             {fornecedores.map((fornecedor) => (
-              <div key={fornecedor.id_fornecedor} className={`fornecedor-card ${fornecedorSelecionado === fornecedor.id_fornecedor ? "selecionado" : ""}`} onClick={() => setFornecedorSelecionado(fornecedor.id_fornecedor)}>
+              <div key={fornecedor.id_fornecedor}className={`fornecedor-card ${fornecedorSelecionado === fornecedor.id_fornecedor ? "selecionado" : "" }`}onClick={() => setFornecedorSelecionado(fornecedor.id_fornecedor)}>
                 <div className="fornecedor-header">
-                  <span className={`diamond ${fornecedorSelecionado === fornecedor.id_fornecedor ? "active" : ""}`}></span>
+                  <span
+                    className={`diamond ${fornecedorSelecionado === fornecedor.id_fornecedor
+                        ? "active"
+                        : ""
+                      }`}
+                  ></span>
                   <span className="fornecedor-id">#{fornecedor.id_fornecedor}</span>
                 </div>
-
                 <div className="fornecedor-info">
                   <p className="fornecedor-nome">{fornecedor.nome_empresa}</p>
-                  <p className="fornecedor-data">{fornecedor.data_cadastro ? new Date(fornecedor.data_cadastro).toLocaleDateString() : "Sem data"} </p>
+                  <p className="fornecedor-data">
+                    {fornecedor.data_cadastro
+                      ? new Date(fornecedor.data_cadastro).toLocaleDateString()
+                      : "Sem data"}
+                  </p>
                 </div>
 
                 <div className="fornecedor-icon">
@@ -95,7 +117,6 @@ export default function RegistrarProduto() {
           </div>
         )}
       </div>
-
     </div>
   );
 }

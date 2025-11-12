@@ -24,7 +24,7 @@ export const findActiveUserByUsuario = async (usuario) => {
   });
 
   if (!user) {
-    throw new Error("esuario nao encontrado");
+    throw new Error("usuario nao encontrado");
   }
 
   if (user.status === "Inativo" || user.status === "Suspenso") {

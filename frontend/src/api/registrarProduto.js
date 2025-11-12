@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 export function useRegistrarProduto() {
-    const [formData, setFormData] = useState({ nomeProduto: "", categoria: "", unidadeCompra: "", quantidadeMinima: "", quantidadeMaxima: "", validade: "", unidadeMedida: "", valorTotal: ""});
+    const [formData, setFormData] = useState({ nomeProduto: "", categoria: "", unidadeCompra: "", quantidadeMinima: "", quantidadeMaxima: "", validade: "", unidadeMedida: "", valorTotal: "", pesoPorUnidade: "" });
 
     const [quantidade, setQuantidade] = useState(0);
     const [fornecedorSelecionado, setFornecedorSelecionado] = useState(null);
@@ -62,7 +62,7 @@ export function useRegistrarProduto() {
             if (response.ok) {
                 alert("Produto cadastrado com sucesso");
                 console.log(resultado);
-                setFormData({ nomeProduto: "", categoria: "", unidadeCompra: "", quantidadeMinima: "", quantidadeMaxima: "", validade: "", unidadeMedida: "", valorTotal: ""});
+                setFormData({ nomeProduto: "", categoria: "", unidadeCompra: "", quantidadeMinima: "", quantidadeMaxima: "", validade: "", unidadeMedida: "", valorTotal: "", pesoPorUnidade: ""});
                 setQuantidade(0);
                 setFornecedorSelecionado(null);
             } else if (response.status === 400 && resultado.message) {
@@ -75,7 +75,11 @@ export function useRegistrarProduto() {
             alert("Erro ao cadastrar produto!");
         }
     };
+    const totalMedida =
+        formData.pesoPorUnidade && quantidade
+            ? quantidade * parseFloat(formData.pesoPorUnidade)
+            : 0;
 
 
-    return { formData, setFormData, quantidade, aumentar, diminuir, fornecedorSelecionado, setFornecedorSelecionado, fornecedores, carregando, handleInputChange, handleSalvarProduto };
+    return { formData, setFormData, quantidade, aumentar, diminuir, fornecedorSelecionado, setFornecedorSelecionado, fornecedores, carregando, handleInputChange, handleSalvarProduto, totalMedida, };
 }

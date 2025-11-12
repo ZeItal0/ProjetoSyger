@@ -3,7 +3,7 @@ import * as InsumoModel from "../models/InsumoModel.js";
 import { registrarAuditoria } from "../utils/registrarAuditoria.js";
 
 export const cadastrarInsumo = async (req, res) => {
-  const { nomeProduto, categoria, unidadeCompra, quantidadeMinima, quantidadeMaxima, validade, unidadeMedida, valorTotal, quantidade, fornecedorSelecionado, id_usuario } = req.body;
+  const { nomeProduto, categoria, unidadeCompra, quantidadeMinima, quantidadeMaxima, validade, unidadeMedida, valorTotal, quantidade, fornecedorSelecionado, id_usuario, pesoPorUnidade, } = req.body;
 
   try {
     const { error } = insumoSchema.validate(req.body, { abortEarly: false });
@@ -22,6 +22,7 @@ export const cadastrarInsumo = async (req, res) => {
       quantidade_atual: parseFloat(quantidade),
       forma_compra: unidadeCompra,
       custo_unitario: parseFloat(valorTotal) / (quantidade || 1),
+      peso_por_unidade: pesoPorUnidade ? parseFloat(pesoPorUnidade) : null,
     });
 
     await InsumoModel.vincularFornecedorProduto(fornecedorSelecionado, novoProduto.id_produto);
