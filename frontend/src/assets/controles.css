@@ -139,23 +139,31 @@
 }
 
 .notificacao-item {
-    background-color: #ffebe9;
-    border-radius: 5px;
-    padding: 8px 12px;
+    background-color: #ffddd2;
+    border-radius: 10px;
+    padding: 10px 15px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end; 
     align-items: center;
 }
 
+.notificacao-detalhes {
+    text-align: right;
+    font-family: sans-serif;
+    color: #333333;
+}
+
 .notificacao-mensagem {
-    font-size: 0.9rem;
-    color: #333;
+    display: block;
+    font-weight: bold;
+    font-size: 11px;
+    margin-bottom: 5px;
 }
 
 .notificacao-data-hora {
-    font-size: 0.8rem;
-    color: #666;
-    text-align: right;
+    display: block;
+    font-size: 11px;
+    color: #333333;
 }
 
 .secao-gestao-utilizadores {

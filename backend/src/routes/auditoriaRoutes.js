@@ -5,7 +5,7 @@ import { autenticarToken, autorizar } from "../middlewares/autenticarTokenMiddle
 
 const router = express.Router();
 
-router.get("/listar",autenticarToken, autorizar("Administrador", "Funcionario_Comum"), listarHistoricoAuditoria);
+router.get("/listar",autenticarToken, autorizar("Administrador"), listarHistoricoAuditoria);
 
 
 export default router;

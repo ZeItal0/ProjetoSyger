@@ -27,7 +27,7 @@ export const RegistroController = async (req, res) => {
       senha_hash,
       cargo: "Funcionario",
       nivel_acesso: "Funcionario_Comum",
-      status: "Ativo",
+      status: "Inativo",
     });
 
     await registrarAuditoria( novoUsuario.id_usuario,"CADASTRO",`Usuário "${nome_completo}" fez o cadastro e aguarda autorização do administrador.`);

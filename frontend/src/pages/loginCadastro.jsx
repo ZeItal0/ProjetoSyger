@@ -3,6 +3,7 @@ import "../assets/loginCadastro.css";
 import sygerLogo from "../components/logo.png";
 import { useNavigate } from "react-router-dom";
 import { login, register } from "../api/loginCadastro";
+import { conectarSocket } from "../services/socket";
 
 export default function LoginCadastro() {
   const [isLogin, setIsLogin] = useState(true);
@@ -26,6 +27,7 @@ export default function LoginCadastro() {
         localStorage.setItem("nome_usuario", result.user.nome);
         localStorage.setItem("nivel_acesso", result.user.nivel_acesso);
         alert(result.message);
+        // conectarSocket(result.token);
         navigate("/home");
       } else {
         result = await register({

@@ -10,18 +10,17 @@ export const LoginController = async (req, res) => {
   const { usuario, senha } = req.body;
   try {
     const { error } = loginSchema.validate(req.body, { abortEarly: false });
-    if (error) return res.status(400).json({ message: error.details.map(d => d.message) });
+    if (error)
+      return res.status(400).json({ message: error.details.map(d => d.message) });
 
-    const user = await LoginRegistroModel.findUserByUsuario(usuario);
-    if (!user) return res.status(404).json({ message: "usuario nao encontrado" });
+    const user = await LoginRegistroModel.findActiveUserByUsuario(usuario);
 
     const isValid = await bcrypt.compare(senha, user.senha_hash);
-    if (!isValid) return res.status(401).json({ message: "senha incorreta" });
+    if (!isValid) return res.status(401).json({ message: "Senha incorreta" });
 
-    const token = jwt.sign({ id: user.id_usuario, usuario: user.usuario, nome_completo: user.nome_completo, nivel_acesso: user.nivel_acesso, }, JWT_SECRET, { expiresIn: "2h" });
+    const token = jwt.sign({id: user.id_usuario, usuario: user.usuario, nome_completo: user.nome_completo, nivel_acesso: user.nivel_acesso,},JWT_SECRET,{ expiresIn: "2h" });
 
-    await registrarAuditoria(user.id_usuario, "LOGIN", `Usuário "${user.nome_completo}" fez login no sistema`);
-
+    await registrarAuditoria(user.id_usuario,"LOGIN",`Usuário "${user.nome_completo}" fez login no sistema`);
 
     res.json({
       message: "Bem vindo ao Siger",
@@ -35,6 +34,6 @@ export const LoginController = async (req, res) => {
     });
 
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(403).json({ message: err.message });
   }
 };
