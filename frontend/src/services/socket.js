@@ -19,7 +19,7 @@ export function conectarSocket(token) {
     const userId = localStorage.getItem("id");
     if (userId) {
       socket.emit("registrarUsuario", userId);
-      console.log(`usuario ${userId} re-registrado na reconexao`);
+      console.log(`usuario ${userId} reconectado`);
     }
   });
 

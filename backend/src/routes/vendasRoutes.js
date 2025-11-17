@@ -2,6 +2,7 @@ import express from "express";
 import { finalizarVenda } from "../controllers/vendaController.js";
 import { listarMesasAbertas, criarMesa, adicionarItemMesa, removerItemMesa, finalizarMesa } from "../controllers/mesaController.js"
 import { criarMarmita, listarMarmitas, adicionarItemMarmita, removerItemMarmita, finalizarMarmita  } from "../controllers/marmitasController.js";
+import { listarVendasRapidas, estornarVendaRapida } from "../controllers/estornoController.js";
 import { autenticarToken, autorizar } from "../middlewares/autenticarTokenMiddleware.js";
 
 const router = express.Router();
@@ -18,6 +19,9 @@ router.get("/listar/marmitas", autenticarToken, autorizar("Administrador","Funci
 router.post("/marmitas/:id_marmita/adicionar-item",autenticarToken, autorizar("Administrador", "Funcionario_Comum"), adicionarItemMarmita);
 router.delete("/marmitas/:id_marmita/remover-item/:id_item_pedido",autenticarToken, autorizar("Administrador", "Funcionario_Comum"),removerItemMarmita);
 router.post("/marmitas/:id_marmita/finalizar", autenticarToken, autorizar("Administrador", "Funcionario_Comum"), finalizarMarmita);
+
+router.get("/vendas-rapidas", autenticarToken, autorizar("Administrador", "Funcionario_Comum"), listarVendasRapidas);
+router.put("/estornar/:id_pedido", autenticarToken, autorizar("Administrador", "Funcionario_Comum"), estornarVendaRapida);
 
 export default router;
 

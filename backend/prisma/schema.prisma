@@ -251,7 +251,7 @@ model Mesas {
 
 model Marmitas {
   id_marmita     Int           @id @default(autoincrement())
-  numero_marmita String        @unique @db.VarChar(50)
+  numero_marmita String        @db.VarChar(50)
   status         StatusMarmita @default(Em_espera)
 
   pedidos Pedidos[]

@@ -182,13 +182,22 @@ export const finalizarMesaModel = async ({ id_mesa, forma_pagamento, id_usuario 
     for (const ing of variacao.prato.ingredientes) {
       const pesoIngrediente = Number(ing.valor_medida);
       const consumoIngrediente = (pesoIngrediente / pesoPronto) * pesoConsumido;
-      const consumoUnidade = consumoIngrediente / ing.produto.peso_por_unidade;
+
+      const produtoAtual = await prisma.produtos.findUnique({
+        where: { id_produto: ing.id_produto },
+      });
+
+      const novaQuantidadeReal = produtoAtual.quantidade_real - consumoIngrediente;
+      let novaQuantidadeAtual = produtoAtual.quantidade_atual;
+      if (novaQuantidadeReal < produtoAtual.peso_por_unidade * novaQuantidadeAtual) {
+        novaQuantidadeAtual -= 1;
+      }
 
       await prisma.produtos.update({
         where: { id_produto: ing.id_produto },
         data: {
-          quantidade_real: { decrement: consumoIngrediente },
-          quantidade_atual: { decrement: consumoUnidade },
+          quantidade_real: novaQuantidadeReal,
+          quantidade_atual: novaQuantidadeAtual,
         },
       });
 
@@ -207,3 +216,4 @@ export const finalizarMesaModel = async ({ id_mesa, forma_pagamento, id_usuario 
 
   return pedido;
 };
+
