@@ -128,7 +128,8 @@ model Produtos {
   id_categoria_produto    Int
   id_unidade_medida       Int
   validade                DateTime?
-  quantidade_atual        Decimal   @default(0.00)
+  quantidade_atual Decimal  @default(0.00) @db.Decimal(10, 2)
+  quantidade_real         Decimal?   @default(0.00) 
   quantidade_minima       Decimal   @default(0.00)
   quantidade_maxima       Decimal   @default(0.00)
   forma_compra            String?   @db.VarChar(50)
@@ -186,6 +187,7 @@ model Pratos {
   descricao          String?  @db.VarChar(500)
   data_cadastro      DateTime @default(now())
   ativo              Boolean  @default(true)
+  peso_pronto_total  Decimal? @db.Decimal(10,2)
 
   categoria    CategoriasPrato     @relation(fields: [id_categoria_prato], references: [id_categoria_prato])
   ingredientes Prato_Ingrediente[]
@@ -240,7 +242,7 @@ model VariacaoPorcao_Adicional {
 
 model Mesas {
   id_mesa     Int        @id @default(autoincrement())
-  numero_mesa String     @unique @db.VarChar(50)
+  numero_mesa String     @db.VarChar(50)
   status      StatusMesa @default(Fechada)
   capacidade  Int?
 

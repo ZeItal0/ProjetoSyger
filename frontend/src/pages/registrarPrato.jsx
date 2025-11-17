@@ -7,21 +7,21 @@ import Minusremove from "../icons/minusremove.png";
 import { useRegistrarPrato } from "../api/useRegistrarPratos";
 
 export default function RegistrarPrato() {
-  const { 
+  const {
     produtos,
-    loading, 
-    erro, 
-    categorias, 
-    categoriaAtiva, 
-    setCategoriaAtiva, 
-    ingredientes, 
-    setIngredientes, 
-    form, 
-    setForm, 
-    adicionarIngrediente, 
-    removerIngrediente, 
-    salvarPrato, 
-    produtosFiltrados, 
+    loading,
+    erro,
+    categorias,
+    categoriaAtiva,
+    setCategoriaAtiva,
+    ingredientes,
+    setIngredientes,
+    form,
+    setForm,
+    adicionarIngrediente,
+    removerIngrediente,
+    salvarPrato,
+    produtosFiltrados,
   } = useRegistrarPrato();
 
   if (loading) return <p>carregando insumos</p>;
@@ -33,9 +33,10 @@ export default function RegistrarPrato() {
         <div className="form-area">
           <h2>Registrar Prato</h2>
           <div className="inputs">
-            <input type="text" placeholder="Nome do prato" value={form.nome_prato} onChange={(e) => setForm({ ...form, nome_prato: e.target.value })}/>
-            <input type="number" placeholder="Valor do prato" value={form.valor_base_custo} onChange={(e) => setForm({ ...form, valor_base_custo: e.target.value })}/>
-            <input type="text" placeholder="Tempo de preparo (min)" value={form.tempo_preparo} onChange={(e) => setForm({ ...form, tempo_preparo: e.target.value })}/>
+            <input type="text" placeholder="Nome do prato" value={form.nome_prato} onChange={(e) => setForm({ ...form, nome_prato: e.target.value })} />
+            <input type="number" placeholder="Valor do prato" value={form.valor_base_custo} onChange={(e) => setForm({ ...form, valor_base_custo: e.target.value })} />
+            <input type="text" placeholder="Tempo de preparo (min)" value={form.tempo_preparo} onChange={(e) => setForm({ ...form, tempo_preparo: e.target.value })} />
+            <input type="number" placeholder="Peso pronto total (g ou ml)" value={form.peso_pronto_total} onChange={(e) => setForm({ ...form, peso_pronto_total: e.target.value })}/>
 
             <select value={form.categoria}
               onChange={(e) => setForm({ ...form, categoria: e.target.value })}>
@@ -72,13 +73,13 @@ export default function RegistrarPrato() {
                 </div>
                 <span className="medida">
                   <input type="number" className="input-medida" value={ing.valorMedida} onChange={(e) => {
-                      const novaMedida = e.target.value;
-                      setIngredientes((prev) =>
-                        prev.map((i) =>
-                          i.id === ing.id ? { ...i, valorMedida: novaMedida } : i
-                        )
-                      );
-                    }}
+                    const novaMedida = e.target.value;
+                    setIngredientes((prev) =>
+                      prev.map((i) =>
+                        i.id === ing.id ? { ...i, valorMedida: novaMedida } : i
+                      )
+                    );
+                  }}
                   />{ing.unidade}
                 </span>
               </div>
@@ -100,7 +101,7 @@ export default function RegistrarPrato() {
             {produtosFiltrados.map((produto) => (
               <div key={produto.id} className="card-produto">
                 <p className="nome-produto">{produto.nome}</p>
-                <p className="quantidade-produto">Estoque: {produto.quantidade} {produto.unidadeMedida}</p>
+                <p className="quantidade-produto">Estoque: {produto.quantidade} UN</p>
                 <p className="preco-produto"> Valor: {produto.valorTotal}</p>
                 <div className="acoes">
                   <button className="btn remove" onClick={() => removerIngrediente(produto)}><img src={Minusremove} alt="minus-icon" /></button>

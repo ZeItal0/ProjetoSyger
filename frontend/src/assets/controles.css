@@ -1,8 +1,10 @@
 .controles-content {
-    padding: 30px;
-    background-color: #fff;
-    color: #333;
+    max-width: 160vh;
+    margin-left: 1%;
+    background-color: transparent;
     height: 10vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .controles-content h1 {

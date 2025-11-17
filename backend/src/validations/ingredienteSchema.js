@@ -26,7 +26,7 @@ const ingredienteSchema = Joi.object({
 });
 
 export const registrarPratoSchema = Joi.object({
- nome_prato: Joi.string().pattern(/[A-Za-zÀ-ÿ]/).min(3).required().messages({
+  nome_prato: Joi.string().pattern(/[A-Za-zÀ-ÿ]/).min(3).required().messages({
     "string.base": "Nome do prato deve ser texto",
     "string.empty": "Nome do prato é obrigatório",
     "string.min": "Nome do prato deve ter ao menos 3 caracteres",
@@ -59,5 +59,11 @@ export const registrarPratoSchema = Joi.object({
       "array.base": "Ingredientes devem ser uma lista",
       "array.min": "Deve haver pelo menos 1 ingrediente",
       "any.required": "Ingredientes são obrigatórios",
+    }),
+  peso_pronto_total: Joi.number().positive().required()
+    .messages({
+      "number.base": "Valor da medida deve ser um número",
+      "number.positive": "Valor da medida deve ser maior que 0",
+      "any.required": "Valor da medida é obrigatório",
     }),
 });

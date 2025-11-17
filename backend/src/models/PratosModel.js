@@ -15,7 +15,7 @@ export const findOrCreateCategoriaPrato = async (nome_categoria) => {
 };
 
 export const createPrato = async (dados) => {
-  const { nome_prato, id_categoria_prato, tempo_preparo, valor_base_custo, descricao, ingredientes } = dados;
+  const { nome_prato, id_categoria_prato, tempo_preparo, valor_base_custo, descricao, ingredientes, peso_pronto_total } = dados;
 
   const prato = await prisma.pratos.create({
     data: {
@@ -24,6 +24,7 @@ export const createPrato = async (dados) => {
       tempo_preparo,
       valor_base_custo,
       descricao,
+      peso_pronto_total,
     },
   });
 

@@ -1,8 +1,10 @@
 .historico-content {
-    padding: 30px;
-    background-color: #fff;
+   max-width: 160vh;
+    margin-left: 1%;
+    background-color: transparent;
     height: 10vh;
-    color: #333;
+    display: flex;
+    flex-direction: column;
 }
 
 .historico-content h1 {

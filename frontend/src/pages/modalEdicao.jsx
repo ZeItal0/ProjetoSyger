@@ -95,8 +95,8 @@ const ModalEdicao = ({ item, onClose, onAtualizar, onExcluir }) => {
             </div>
 
             <div className="modal-actions">
-                <button className="modal-btn modal-btn-salvar" onClick={handleSalvar}><img src={Check} alt="Salvar" /> Salvar Alteração</button>
-                <button className="modal-btn modal-btn-excluir" onClick={handleExcluir}><img src={Delete} alt="Excluir" /> Excluir produto</button>
+                <button className="modal-btn-editar modal-btn-salvar-editar" onClick={handleSalvar}><img src={Check} alt="Salvar" /> Salvar Alteração</button>
+                <button className="modal-btn-editar modal-btn-excluir-editar" onClick={handleExcluir}><img src={Delete} alt="Excluir" /> Excluir produto</button>
             </div>
         </div>
     );

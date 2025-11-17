@@ -233,7 +233,7 @@
     margin-top: 30px;
 }
 
-.modal-btn {
+.modal-btn-editar {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -247,30 +247,30 @@
     min-width: 200px;
 }
 
-.modal-btn img {
+.modal-btn-editar img {
     width: 20px;
     height: 20px;
     margin-right: 10px;
 }
 
-.modal-btn-salvar {
+.modal-btn-salvar-editar {
     background-color: #b2f1a8;
     color: #f5f5f5;
 }
 
 
-.modal-btn-excluir {
+.modal-btn-excluir-editar {
     background-color: #e57373;
     color: #f5f5f5;
 }
 
-.modal-btn-excluir:hover {
+.modal-btn-excluir-editar:hover {
     background-color: #c75b5b;
     transition: 0.3s;
     transform: scale(1.03);
 }
 
-.modal-btn-salvar:hover {
+.modal-btn-salvar-editar:hover {
     background: #90d389;
     transition: 0.3s;
     transform: scale(1.03);

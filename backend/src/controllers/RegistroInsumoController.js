@@ -12,6 +12,11 @@ export const cadastrarInsumo = async (req, res) => {
     const categoriaExistente = await InsumoModel.findOrCreateCategoria(categoria);
     const unidadeExistente = await InsumoModel.findOrCreateUnidade(unidadeMedida);
 
+    const quantidadeAtual = parseFloat(quantidade);
+    const pesoUnidade = parseFloat(pesoPorUnidade || 0);
+
+    const quantidadeReal = quantidadeAtual * pesoUnidade;
+
     const novoProduto = await InsumoModel.createProduto({
       nome_produto: nomeProduto,
       id_categoria_produto: categoriaExistente.id_categoria_produto,
@@ -20,6 +25,7 @@ export const cadastrarInsumo = async (req, res) => {
       quantidade_minima: parseFloat(quantidadeMinima),
       quantidade_maxima: quantidadeMaxima ? parseFloat(quantidadeMaxima) : null,
       quantidade_atual: parseFloat(quantidade),
+      quantidade_real: quantidadeReal,
       forma_compra: unidadeCompra,
       custo_unitario: parseFloat(valorTotal) / (quantidade || 1),
       peso_por_unidade: pesoPorUnidade ? parseFloat(pesoPorUnidade) : null,

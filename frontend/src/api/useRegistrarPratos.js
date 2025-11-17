@@ -14,6 +14,7 @@ export function useRegistrarPrato() {
     valor_base_custo: "",
     tempo_preparo: "",
     categoria: "",
+    peso_pronto_total: "",
   });
 
   const adicionarIngrediente = (produto) => {
@@ -67,6 +68,7 @@ export function useRegistrarPrato() {
       valor_base_custo: parseFloat(form.valor_base_custo),
       tempo_preparo: form.tempo_preparo,
       categoria: form.categoria,
+      peso_pronto_total: parseFloat(form.peso_pronto_total),
       ingredientes: ingredientes.map((i) => ({
         id_produto: i.id,
         quantidade: i.quantidade,

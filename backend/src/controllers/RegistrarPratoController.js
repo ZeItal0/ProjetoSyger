@@ -8,7 +8,7 @@ export const registrarPrato = async (req, res) => {
     if (error) {
       return res.status(400).json({ message: error.details.map(d => d.message) });
     }
-    const { nome_prato, categoria, tempo_preparo, valor_base_custo, descricao, ingredientes } = value;
+    const { nome_prato, categoria, tempo_preparo, valor_base_custo, descricao, ingredientes, peso_pronto_total } = value;
 
     const categoriaObj = await findOrCreateCategoriaPrato(categoria);
 
@@ -19,6 +19,7 @@ export const registrarPrato = async (req, res) => {
       valor_base_custo: Number(valor_base_custo),
       descricao,
       ingredientes,
+      peso_pronto_total: Number(peso_pronto_total),
     });
 
     const ingredientesDesc = Array.isArray(ingredientes)

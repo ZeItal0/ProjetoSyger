@@ -110,7 +110,22 @@
     stroke: #333;
 }
 
-
+.btnCriarMesa {
+     margin-top: 20px;
+    background: #ff8e71;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: 0.3s;
+}
+.btnCriarMesa:hover {
+    background-color: #ff7856;
+    transform: scale(1.01);
+}
 
 .btn-add-carrinho {
     margin-top: 15px;
@@ -398,18 +413,53 @@
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-.card-mesa.livre {
+.card-mesa.aberta {
     background-color: #e6ffe6;
     border-color: #8ce68c;
     color: #38761d;
 }
-.card-mesa.ocupada {
-    background-color: #fff0e6;
-    border-color: #ffb799;
+.card-mesa.fechada {
+    background-color: #cc520066;
+    border-color: #CC5200;
     color: #cc5200;
 }
 .card-mesa.aguardando {
     background-color: #ffffcc;
     border-color: #ffcc00;
     color: #997300;
+}
+
+.mesas-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.grid-mesas-scroll {
+  flex: 1;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.card-mesa.Em_espera {
+    background-color: #ffde717e;
+    border-color: #FFDE71;
+    color: #736537; 
+}
+.card-mesa.Finalizado {
+    background-color: #e6ffe6;
+    border-color: #8ce68c;
+    color: #38761d;
+}
+.card-mesa.em_espera {
+    background-color: #ffde717e;
+    border-color: #FFDE71;
+    color: #736537; 
+}
+.card-mesa.finalizado {
+    background-color: #e6ffe6;
+    border-color: #8ce68c;
+    color: #38761d;
 }

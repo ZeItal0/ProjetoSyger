@@ -74,7 +74,7 @@ export const useInsumos = () => {
       });
       if (!response.ok) throw new Error("Erro ao excluir insumo");
 
-      setItens(prev => prev.filter(item => item.id !== id));
+      setItens(prev => prev.map(item => item.id === id ? { ...item, ativo: false } : item ));
     } catch (error) {
       console.error(error);
       throw error;

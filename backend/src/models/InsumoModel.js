@@ -32,6 +32,7 @@ export const registrarMovimentacao = async (dados) => {
 
 export const listarInsumos = async () => {
   return await prisma.produtos.findMany({
+    where: { ativo: true },
     include: {
       categoria: true,
       unidade: true,
@@ -41,13 +42,10 @@ export const listarInsumos = async () => {
 };
 
 export const deletarInsumo = async (produtoId) => {
-  return await prisma.$transaction([
-    prisma.fornecedor_Produto.deleteMany({ where: { id_produto: produtoId } }),
-    prisma.movimentacaoEstoque.deleteMany({ where: { id_produto: produtoId } }),
-    prisma.prato_Ingrediente.deleteMany({ where: { id_produto: produtoId } }),
-    prisma.pedido_Itens.deleteMany({ where: { id_produto: produtoId } }),
-    prisma.produtos.delete({ where: { id_produto: produtoId } }),
-  ]);
+  return await prisma.produtos.update({
+    where: { id_produto: produtoId },
+    data: { ativo: false }
+  });
 };
 
 export const findCategoriaByNome = async (nome_categoria) => {

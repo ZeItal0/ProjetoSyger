@@ -12,6 +12,8 @@ export const listarCardapioDoDiaAtivo = async (req, res) => {
 
     const resultado = pratosCardapio.map((item) => ({
       id_cardapio_prato: item.id_cardapio_prato,
+      id_prato: item.id_prato,
+      id_variacao: item.id_variacao,
       nome_prato: item.prato.nome_prato,
       categoria: item.prato.categoria?.nome_categoria || "Sem categoria",
       variacao: item.variacao ? item.variacao.nome_menu : null,
