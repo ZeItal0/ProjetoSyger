@@ -1,0 +1,74 @@
+import prisma from "../src/prismaCliente.js";
+
+async function main() {
+    console.log("=== INICIANDO TESTE DE CRIAÇÃO DE PRODUTO ===");
+
+    let categoria = await prisma.CategoriasProduto.findUnique({
+        where: { nome_categoria: "insumo Teste" }
+    });
+
+    if (!categoria) {
+        categoria = await prisma.CategoriasProduto.create({
+            data: { nome_categoria: "insumo Teste" }
+        });
+        console.log("Categoria criada:", categoria.nome_categoria);
+    }
+
+    let unidade = await prisma.UnidadesMedida.findUnique({
+        where: { nome_unidade: "Kg" }
+    });
+
+    if (!unidade) {
+        unidade = await prisma.UnidadesMedida.create({
+            data: { nome_unidade: "Kg" }
+        });
+        console.log("unidade de medida criada:", unidade.nome_unidade);
+    }
+
+    // 3️⃣ Criar produto
+    const produtoTeste = {
+        nome_produto: "Arroz Teste",
+        id_categoria_produto: categoria.id_categoria_produto,
+        id_unidade_medida: unidade.id_unidade_medida,
+        quantidade_real: 10000,
+        quantidade_atual: 10,
+        peso_por_unidade: 1000,
+        quantidade_minima: 5,
+        quantidade_maxima: 200,
+        custo_unitario: 10.5,
+        ativo: true
+    };
+
+    const produtoCriado = await prisma.Produtos.create({
+        data: produtoTeste
+    });
+
+    console.log("produto criado com sucesso!");
+    console.log({
+        id_produto: produtoCriado.id_produto,
+        nome_produto: produtoCriado.nome_produto,
+        categoria: categoria.nome_categoria,
+        unidade: unidade.nome_unidade,
+        quantidade_real: produtoCriado.quantidade_real
+    });
+
+    const produtoBanco = await prisma.Produtos.findUnique({
+        where: { id_produto: produtoCriado.id_produto }
+    });
+
+    if (produtoBanco) {
+        console.log("produto confirmado no banco de dados.");
+    } else {
+        console.log("produto nao encontrado no banco.");
+    }
+}
+
+main()
+    .then(() => {
+        console.log("\n=== TESTE FINALIZADO ===");
+        process.exit(0);
+    })
+    .catch((err) => {
+        console.error(err);
+        process.exit(1);
+    });
