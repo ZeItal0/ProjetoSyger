@@ -37,6 +37,14 @@ export default function Vendas() {
   const carrinhoVendaRapida = vendaRapidaItens;
   const mesaAtual = mesas.find((m) => m.id === mesaAtiva) || null;
   const marmitaAtual = marmitas.find((m) => m.id === marmitaAtiva) || null;
+  const [cooldown, setCooldown] = useState(false);
+  const [loadingBtn, setLoadingBtn] = useState(false);
+  const [cooldownMarmita, setCooldownMarmita] = useState(false);
+  const [loadingMarmitaBtn, setLoadingMarmitaBtn] = useState(false);
+  const [cooldownRemoverMesa, setCooldownRemoverMesa] = useState(false);
+  const [cooldownRemoverMarmita, setCooldownRemoverMarmita] = useState(false);
+  const [loadingRemoverMesa, setLoadingRemoverMesa] = useState(null);
+  const [loadingRemoverMarmita, setLoadingRemoverMarmita] = useState(null);
 
   const carrinhoAtual =
     abaAtiva === "Marmitas"
@@ -53,7 +61,7 @@ export default function Vendas() {
   };
 
   const atualizarMesaItensLocal = (mesaId, novoCarrinho) => {
-    setMesas((prev) => prev.map((m) => m.id === mesaId ? { ...m, itens: novoCarrinho, total: novoCarrinho.reduce((a, it) => a + (it.preco_unitario ?? it.preco ?? 0) * it.quantidade, 0), status: novoCarrinho.length ? "aberta" : "fechada", } : m ) );
+    setMesas((prev) => prev.map((m) => m.id === mesaId ? { ...m, itens: novoCarrinho, total: novoCarrinho.reduce((a, it) => a + (it.preco_unitario ?? it.preco ?? 0) * it.quantidade, 0), status: novoCarrinho.length ? "aberta" : "fechada", } : m));
   };
 
 
@@ -651,6 +659,64 @@ export default function Vendas() {
     return subtotal - (subtotal * desconto) / 100;
   };
 
+  const handleAddToMesa = async (produto) => {
+    if (cooldown) return;
+
+    setLoadingBtn(true);
+    setCooldown(true);
+
+    await adicionarItemAMesa({
+      id_prato: produto.id_prato,
+      id_variacao: produto.id_variacao,
+      id_produto: produto.id,
+      preco: produto.preco ?? produto.preco_unitario ?? 0,
+      nome: produto.nome_prato ?? produto.nome,
+    });
+    setLoadingBtn(false);
+    setTimeout(() => {
+      setCooldown(false);
+    }, 1500);
+  };
+
+  const handleAddToMarmita = async (produto) => {
+    if (cooldownMarmita) return;
+
+    setLoadingMarmitaBtn(true);
+    setCooldownMarmita(true);
+
+    await adicionarItemAMarmita({
+      id_prato: produto.id_prato,
+      id_variacao: produto.id_variacao,
+      id_produto: produto.id,
+      preco: produto.preco ?? produto.preco_unitario ?? 0,
+      nome: produto.nome_prato ?? produto.nome,
+    });
+
+    setLoadingMarmitaBtn(false);
+
+    setTimeout(() => {
+      setCooldownMarmita(false);
+    }, 1500);
+  };
+
+  const handleRemoverItemMesa = async (id_item, idMesa) => {
+    if (cooldownRemoverMesa) return;
+    setLoadingRemoverMesa(id_item);
+    setCooldownRemoverMesa(true);
+    await removerItemMesa(id_item, idMesa);
+    setLoadingRemoverMesa(null);
+    setTimeout(() => setCooldownRemoverMesa(false), 1000);
+  };
+
+  const handleRemoverItemMarmita = async (id_item, idMarmita) => {
+    if (cooldownRemoverMarmita) return;
+    setLoadingRemoverMarmita(id_item);
+    setCooldownRemoverMarmita(true);
+    await removerItemMarmita(id_item, idMarmita);
+    setLoadingRemoverMarmita(null);
+    setTimeout(() => setCooldownRemoverMarmita(false), 1000);
+  };
+
 
 
   return (
@@ -702,38 +768,22 @@ export default function Vendas() {
                   )}
 
                   {abaAtiva === "Gestão de Mesas" && mesaAtiva !== null && (
-                    <button
-                      className="btn-add-carrinho"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        adicionarItemAMesa({
-                          id_prato: produto.id_prato,
-                          id_variacao: produto.id_variacao,
-                          id_produto: produto.id,
-                          preco: produto.preco ?? produto.preco_unitario ?? 0,
-                          nome: produto.nome_prato ?? produto.nome,
-                        });
-                      }}
-                    >
-                      <img src={Plusadd} alt="icon-plus" />
+                    <button className={`btn-add-carrinho ${cooldown ? "btn-disabled" : ""}`} disabled={cooldown} onClick={(e) => { e.stopPropagation(); handleAddToMesa(produto);}}>
+                      {loadingBtn ? (
+                        <div className="mini-loader"></div>
+                      ) : (
+                        <img src={Plusadd} alt="icon-plus" />
+                      )}
                     </button>
                   )}
 
                   {abaAtiva === "Marmitas" && marmitaAtiva !== null && (
-                    <button
-                      className="btn-add-carrinho"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        adicionarItemAMarmita({
-                          id_prato: produto.id_prato,
-                          id_variacao: produto.id_variacao,
-                          id_produto: produto.id,
-                          preco: produto.preco ?? produto.preco_unitario ?? 0,
-                          nome: produto.nome_prato ?? produto.nome,
-                        });
-                      }}
-                    >
-                      <img src={Plusadd} alt="icon-plus" />
+                    <button className={`btn-add-carrinho ${cooldownMarmita ? "btn-disabled" : ""}`} disabled={cooldownMarmita} onClick={(e) => { e.stopPropagation(); handleAddToMarmita(produto);}}>
+                      {loadingMarmitaBtn ? (
+                        <div className="mini-loader"></div>
+                      ) : (
+                        <img src={Plusadd} alt="icon-plus" />
+                      )}
                     </button>
                   )}
 
@@ -764,11 +814,7 @@ export default function Vendas() {
                 <p className="text-center">Nenhuma mesa aberta.</p>
               ) : (
                 mesas.map((mesa) => (
-                  <button
-                    key={mesa.id}
-                    className={`card-mesa ${mesa.status ?? ""}`}
-                    onClick={() => setMesaAtiva(mesa.id)}
-                  >
+                  <button key={mesa.id} className={`card-mesa ${mesa.status ?? ""}`} onClick={() => setMesaAtiva(mesa.id)}>
                     <img src={MesaIcon} className="mesa-icon" alt="mesa-icon" />
                     <span className="nome-mesa">{mesa.nome}</span>
                     <span className="total-mesa">R$ {obterTotalMesa(mesa)}</span>
@@ -839,11 +885,21 @@ export default function Vendas() {
                       <img className="lixo-icon" src={Lixo} alt="lixo" onClick={() => removerDoCarrinho(item.id)} />
                     )}
                     {abaAtiva === "Gestão de Mesas" && mesaAtiva !== null && (
-                      <img className="lixo-icon" src={Lixo} alt="lixo" onClick={() => removerItemMesa(item.id, mesaAtiva)} />
+                      <button className="btn-remove" disabled={cooldownRemoverMesa} onClick={() => handleRemoverItemMesa(item.id, mesaAtiva)}>
+                        {loadingRemoverMesa === item.id ? ( <div className="mini-loader"></div>
+                        ) : ( <img className="lixo-icon" src={Lixo} alt="lixo" />
+                        )}
+                      </button>
                     )}
+
                     {abaAtiva === "Marmitas" && marmitaAtiva !== null && (
-                      <img className="lixo-icon" src={Lixo} alt="lixo" onClick={() => removerItemMarmita(item.id, marmitaAtiva)} />
+                      <button className="btn-remove" disabled={cooldownRemoverMarmita} onClick={() => handleRemoverItemMarmita(item.id, marmitaAtiva)}>
+                        {loadingRemoverMarmita === item.id ? ( <div className="mini-loader"></div>
+                        ) : ( <img className="lixo-icon" src={Lixo} alt="lixo" />
+                        )}
+                      </button>
                     )}
+
                   </div>
                 ))
               )}

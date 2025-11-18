@@ -15,7 +15,7 @@ export const listarVendasRapidas = async (req, res) => {
 export const estornarVendaRapida = async (req, res) => {
   try {
     const { id_pedido } = req.params;
-    const id_usuario_estornando = req.user?.id_usuario;
+    const id_usuario_estornando = req.usuario.id || null;
     const resultado = await estornarVendaRapidaModel({ id_pedido, id_usuario_estornando });
     return res.json(resultado);
   } catch (err) {

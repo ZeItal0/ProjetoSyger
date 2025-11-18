@@ -15,6 +15,7 @@ import usuariosRoutes from "./src/routes/usuariosRoutes.js";
 import { inicializarSocket } from "./socketServer.js";
 import mensagensRoutes from "./src/routes/mensagensRoutes.js";
 import vendasRoutes from "./src/routes/vendasRoutes.js";
+import relatorioVendasRoutes from "./src/routes/relatorioVendasRoutes.js";
 
 dotenv.config();
 
@@ -37,6 +38,7 @@ app.use("/auditoria", auditoriaRoutes);
 app.use("/usuarios", usuariosRoutes);
 app.use("/mensagens", mensagensRoutes);
 app.use("/vendas", vendasRoutes);
+app.use("/relatorios", relatorioVendasRoutes);
 
 inicializarSocket(server);
 

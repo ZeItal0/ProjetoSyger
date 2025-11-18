@@ -45,7 +45,7 @@ export const finalizarMarmita = async (req, res) => {
     const pedido = await MarmitaModel.finalizarMarmitaModel({
       id_marmita: req.params.id_marmita,
       forma_pagamento: req.body.forma_pagamento,
-      id_usuario: req.user?.id_usuario || null,
+      id_usuario: req.usuario.id || null,
     });
     return res.status(200).json({ sucesso: true, pedido });
   } catch (err) {

@@ -45,7 +45,7 @@ export const finalizarMesa = async (req, res) => {
     const pedido = await MesaModel.finalizarMesaModel({
       id_mesa: req.params.id_mesa,
       forma_pagamento: req.body.forma_pagamento,
-      id_usuario: req.user?.id_usuario || null,
+      id_usuario: req.usuario.id || null,
     });
     return res.status(200).json({ sucesso: true, pedido });
   } catch (err) {
