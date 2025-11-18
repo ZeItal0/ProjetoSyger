@@ -1,27 +1,22 @@
 import prisma from "../src/prismaCliente.js";
 
-async function main() {
+describe("Teste de criação de categoria de prato", () => {
+  test("Criar categoria 'Doces'", async () => {
     console.log("=== INICIANDO TESTE DE CRIACAO DE CATEGORIA DE PRATO ===");
 
-    const nomeCategoria = "Grãos";
+    const nomeCategoria = "Doces";
 
     const categoria = await prisma.CategoriasPrato.create({
-        data: {
-            nome_categoria: nomeCategoria,
-        }
+      data: { nome_categoria: nomeCategoria }
     });
 
-    console.log("categoria de prato criada com sucesso");
+    console.log("Categoria de prato criada com sucesso");
     console.log(`ID: ${categoria.id_categoria_prato}`);
     console.log(`Nome: ${categoria.nome_categoria}`);
-}
 
-main()
-    .then(() => {
-        console.log("\n=== TESTE DE CATEGORIA DE PRATO FINALIZADO ===");
-        process.exit(0);
-    })
-    .catch(err => {
-        console.error(err);
-        process.exit(1);
-    });
+    console.log("=== TESTE DE CATEGORIA DE PRATO FINALIZADO ===");
+
+    expect(categoria).toHaveProperty("id_categoria_prato");
+    expect(categoria.nome_categoria).toBe(nomeCategoria);
+  });
+});
