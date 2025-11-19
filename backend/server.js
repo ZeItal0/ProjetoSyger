@@ -16,6 +16,7 @@ import { inicializarSocket } from "./socketServer.js";
 import mensagensRoutes from "./src/routes/mensagensRoutes.js";
 import vendasRoutes from "./src/routes/vendasRoutes.js";
 import relatorioVendasRoutes from "./src/routes/relatorioVendasRoutes.js";
+import relatorioEstoqueRoutes from "./src/routes/relatorioEstoqueRoutes.js"
 
 dotenv.config();
 
@@ -39,6 +40,7 @@ app.use("/usuarios", usuariosRoutes);
 app.use("/mensagens", mensagensRoutes);
 app.use("/vendas", vendasRoutes);
 app.use("/relatorios", relatorioVendasRoutes);
+app.use("/relatoriosEstoque", relatorioEstoqueRoutes);
 
 inicializarSocket(server);
 
