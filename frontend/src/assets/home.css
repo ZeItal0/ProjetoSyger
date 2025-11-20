@@ -17,8 +17,9 @@ html, body {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  height: 200vh;
   padding: 10px;
-  background-color: #fff;
+  background-color: #f5f5f5;
   scroll-behavior: smooth;
 }
 .main-content-area::-webkit-scrollbar {
@@ -33,7 +34,7 @@ html, body {
 .main-content-area::-webkit-scrollbar-thumb {
   background-color: #FF8E71;
   border-radius: 10px;
-  border: 2px solid #f1f1f1;
+  border: 2px solid #f5f5f5;
 }
 
 .main-content-area::-webkit-scrollbar-thumb:hover {

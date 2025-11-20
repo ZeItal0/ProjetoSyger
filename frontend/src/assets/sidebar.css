@@ -10,6 +10,12 @@
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
   transition: width 0.9s ease, min-width 0.9s ease;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none;
 }
 
 .sidebar.collapsed {
@@ -45,7 +51,7 @@
 
 .sidebar-header {
   padding: 20px;
-  color: #ffffff;
+  color: #f5f5f5;
   font-size: 1.5em;
   text-align: left;
 }
@@ -59,6 +65,7 @@
 .sidebar-nav {
   flex-grow: 1;
   padding: 70px 0;
+  
 }
 
 
@@ -95,7 +102,7 @@
 } */
 
 .nav-item.active {
-  background-color: #fff;
+  background-color: #f5f5f5;
   color: #ff8e71;
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
@@ -150,3 +157,47 @@
   background-color: rgba(0, 0, 0, 0);
 }
 
+
+@media (min-width: 1280px) {
+  .sidebar {
+    width: 250px;
+    min-width: 250px;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .sidebar {
+    width: 220px;
+    min-width: 220px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .sidebar {
+    width: 90px !important;
+    min-width: 90px !important;
+  }
+
+  .sidebar .nav-text,
+  .sidebar .logout-btn {
+    display: none !important;
+  }
+
+  .sidebar .nav-icon {
+    margin-right: 0 !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .sidebar {
+    position: fixed;
+    z-index: 9999;
+    height: 100vh;
+    left: -250px;
+    transition: left 0.4s ease;
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+}

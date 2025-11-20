@@ -45,6 +45,7 @@ height: 30px;
 .msg-icon-container {
   position: relative;
   cursor: pointer;
+  z-index: 3;
 }
 
 .msg-badge {

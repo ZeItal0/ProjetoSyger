@@ -1,99 +1,89 @@
-import React, { useState } from "react";
+import React from "react";
 import Sidebar from "../components/Sidebar";
 import MainHeader from "../components/MainHeader";
 import GlassBox from "../components/GlassBox";
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css"; 
+import "react-calendar/dist/Calendar.css";
 import "../assets/home.css";
 import "../assets/box.css";
+import { useDashboard } from "../api/useDashBoard";
 
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, BarChart, Bar, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import {
+  LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip,
+  BarChart, Bar, ResponsiveContainer, PieChart, Pie, Cell
+} from "recharts";
 
-const vendasHoje = [
-  { name: "Produto A", value: 400 },
-  { name: "Produto B", value: 300 },
-  { name: "Produto C", value: 300 },
-];
-
-const vendasOntem = [
-  { name: "Produto A", value: 200 },
-  { name: "Produto B", value: 500 },
-  { name: "Produto C", value: 100 },
-];
-
-const meses = [
-  { name: "jan", vendas: 200 },
-  { name: "fev", vendas: 400 },
-  { name: "mar", vendas: 300 },
-  { name: "abr", vendas: 100 },
-  { name: "mai", vendas: 200 },
-  { name: "jun", vendas: 250 },
-];
-
-const COLORS = ["#264653", "#2A9D8F", "#E9C46A"];
-
-
-const vendasData = [
-  { mes: "Jan", valor: 4000 },
-  { mes: "Fev", valor: 3000 },
-  { mes: "Mar", valor: 5000 },
-  { mes: "Abr", valor: 7000 },
-  { mes: "Mai", valor: 6000 },
-];
-
-const receitasDespesasData = [
-  { mes: "Jan", receita: 4000, despesa: 2400 },
-  { mes: "Fev", receita: 3000, despesa: 1398 },
-  { mes: "Mar", receita: 5000, despesa: 2400 },
-  { mes: "Abr", receita: 7000, despesa: 4000 },
-  { mes: "Mai", receita: 6000, despesa: 2500 },
-];
+const COLORS = ["#264653", "#2A9D8F", "#E9C46A", "#FF8E71", "#FF5757"];
 
 export default function Dashboard() {
-  const [activeItem, setActiveItem] = useState("Dashboard");
-  const [date, setDate] = useState(new Date());
-  
+
+  const {
+    activeItem, setActiveItem,
+    date, setDate,
+    range,
+    loading,
+    error,
+    totalVendas,
+    lucro,
+    totalEntrada,
+    totalSaida,
+    vendasPorMes,
+    receitasDespesas
+  } = useDashboard();
+
+  const formatDate = (d) => {
+    const dt = new Date(d);
+    return `${dt.getFullYear()}-${String(dt.getMonth() + 1).padStart(2, "0")}-${String(dt.getDate()).padStart(2, "0")}`;
+  };
 
   return (
     <div className="home-container">
+
       <Sidebar activeItem={activeItem} setActiveItem={setActiveItem} />
 
       <div className="main-content-area">
-        <MainHeader area="DashBoard"/>
-
+        <MainHeader area="DashBoard" />
         <main className="main-content dashboard-container">
 
-          
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <h2>Visão: {formatDate(range.start)} → {formatDate(range.end)}</h2>
+          </div>
+
+          {loading && <p>Carregando dados</p>}
+          {error && <p style={{ color: "red" }}>{error}</p>}
+
           <div className="metrics-row">
             <GlassBox>
               <h3>Total de Vendas</h3>
-              <p className="metric-value">R$ 24.500</p>
+              <p className="metric-value">
+                R$ {totalVendas.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+              </p>
             </GlassBox>
 
             <GlassBox>
-              <h3>Lucro do Mês</h3>
-              <p className="metric-value">R$ 8.230</p>
+              <h3>Lucro do Período</h3>
+              <p className="metric-value">
+                R$ {lucro.toLocaleString(undefined, { minimumFractionDigits: 2 })}
+              </p>
             </GlassBox>
 
             <GlassBox>
-              <h3>Produtos Cadastrados</h3>
-              <p className="metric-value">128</p>
+              <h3>Entrada de Produtos</h3>
+              <p className="metric-value">{totalEntrada}</p>
             </GlassBox>
 
             <GlassBox>
-              <h3>Produtos retirados</h3>
-              <p className="metric-value">35</p>
+              <h3>Saída de Produtos</h3>
+              <p className="metric-value">{totalSaida}</p>
             </GlassBox>
           </div>
 
-
           <div className="charts-grid dashboard-charts-extanded">
 
-            
             <GlassBox>
               <h3>Vendas por Mês</h3>
               <ResponsiveContainer width="100%" height={200}>
-                <LineChart data={vendasData}>
+                <LineChart data={vendasPorMes}>
                   <Line type="monotone" dataKey="valor" stroke="#FF8E71" strokeWidth={2} />
                   <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
                   <XAxis dataKey="mes" />
@@ -106,7 +96,7 @@ export default function Dashboard() {
             <GlassBox>
               <h3>Receitas e Despesas</h3>
               <ResponsiveContainer width="100%" height={200}>
-                <BarChart data={receitasDespesasData}>
+                <BarChart data={receitasDespesas}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="mes" />
                   <YAxis />
@@ -118,12 +108,24 @@ export default function Dashboard() {
             </GlassBox>
 
             <GlassBox>
-              <h3 className="grafico-titulo">Dia anterior</h3>
-              <ResponsiveContainer width="100%" height={200}>
+              <h3 className="grafico-titulo">Resumo Geral</h3>
+              <ResponsiveContainer width="100%" height={250}>
                 <PieChart>
-                  <Pie data={vendasOntem} cx="50%" cy="50%" outerRadius={100} dataKey="value" labelLine={false}>
-                    {vendasOntem.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Pie
+                    data={[
+                      { name: "Vendas (R$)", value: totalVendas },
+                      { name: "Despesas (R$)", value: receitasDespesas.reduce((s, r) => s + Number(r.despesa || 0), 0) },
+                      { name: "Entradas (Registros)", value: totalEntrada },
+                      { name: "Saídas (Registros)", value: totalSaida },
+                    ]}
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={90}
+                    dataKey="value"
+                    label
+                  >
+                    {[0, 1, 2, 3].map((i) => (
+                      <Cell key={i} fill={COLORS[i % COLORS.length]} />
                     ))}
                   </Pie>
                   <Tooltip />
@@ -131,22 +133,6 @@ export default function Dashboard() {
               </ResponsiveContainer>
             </GlassBox>
 
-            
-            <GlassBox >
-              <h3 className="grafico-titulo">Dia atual</h3>
-              <ResponsiveContainer width="100%" height={200}>
-                <PieChart>
-                  <Pie data={vendasHoje} cx="50%" cy="50%" outerRadius={100} dataKey="value" labelLine={false}>
-                    {vendasHoje.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                </PieChart>
-              </ResponsiveContainer>
-            </GlassBox>
-
-            
             <GlassBox>
               <h3 className="grafico-titulo">Calendário</h3>
               <div className="calendar-container">
