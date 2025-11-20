@@ -57,9 +57,20 @@ export const findUnidadeByNome = async (nome_unidade) => {
 };
 
 export const atualizarProduto = async (id_produto, dados) => {
+  const id = Number(id_produto);
+
+  const cleaned = Object.fromEntries(
+    Object.entries(dados).filter(([_, v]) => v !== undefined)
+  );
+
   return prisma.produtos.update({
-    where: { id_produto: Number(id_produto) },
-    data: dados,
+    where: { id_produto: id },
+    data: cleaned,
+    include: {
+      categoria: true,
+      unidade: true,
+      fornecedores: { include: { fornecedor: true } },
+    },
   });
 };
 

@@ -35,8 +35,8 @@ export default function Home() {
     <div className="home-color">
       <div className="home-container">
         <Sidebar activeItem={activeItem} setActiveItem={setActiveItem} />
-
-        <div className="main-content-area">
+        <div>
+          <div className="main-content-area">
           <MainHeader area="Home" />
 
           <main className="main-content home-page-content">
@@ -80,6 +80,8 @@ export default function Home() {
 
           </main>
         </div>
+        </div>
+        
       </div>
     </div>
   );

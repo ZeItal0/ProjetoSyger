@@ -44,7 +44,7 @@
 .registrar-produto-container input[type="text"], .registrar-produto-container input[type="number"], .registrar-produto-container input[type="date"], .registrar-produto-container select {
   width: 100%;
   padding: 12px 15px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 14px;
   font-family: 'Inter', sans-serif;
@@ -165,16 +165,15 @@
 }
 
 .fornecedores-section {
-  background-color: #ffffff;
+  background-color: #f5f5f5;
   border-radius: 12px;
   padding: 30px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .fornecedores-titulo {
   font-size: 18px;
   font-weight: 700;
-  color: #1a1a1a;
+  color: #333333;
   margin-bottom: 20px;
 }
 

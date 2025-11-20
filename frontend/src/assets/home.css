@@ -17,13 +17,12 @@ html, body {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  height: 200vh;
   padding: 10px;
   background-color: #f5f5f5;
   scroll-behavior: smooth;
 }
 .main-content-area::-webkit-scrollbar {
-  width: 10pxç
+  width: 10px;
 }
 
 .main-content-area::-webkit-scrollbar-track {

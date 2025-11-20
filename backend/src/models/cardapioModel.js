@@ -1,13 +1,26 @@
 import prisma from "../prismaCliente.js"
 
 export async function listarCardapioDoDia() {
+  const cardapioAtivo = await prisma.cardapio.findFirst({
+    where: { status: "Ativo" },
+    orderBy: { data: "desc" },
+    include: {
+      pratos: true,
+    },
+  });
+  const pratosNoCardapio = cardapioAtivo
+    ? cardapioAtivo.pratos.map((p) => p.id_prato)
+    : [];
   const pratos = await prisma.pratos.findMany({
+    where: {
+      id_prato: { notIn: pratosNoCardapio },
+      ativo: true,
+    },
     include: {
       categoria: true,
       variacoes: true,
     },
   });
-
   const resultado = pratos
     .filter((p) => p.variacoes && p.variacoes.length > 0)
     .map((p) => ({
