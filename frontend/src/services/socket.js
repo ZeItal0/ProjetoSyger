@@ -14,29 +14,14 @@ export function conectarSocket(token) {
   });
 
   socket.on("connect", () => {
-    console.log("conectado ao servidor socket:", socket.id);
-
     const userId = localStorage.getItem("id");
     if (userId) {
       socket.emit("registrarUsuario", userId);
-      console.log(`usuario ${userId} reconectado`);
     }
   });
 
   socket.on("disconnect", () => {
-    console.warn("desconectado do servidor socket");
-  });
-
-  socket.on("reconnect_attempt", (attempt) => {
-    console.log(`tentando reconectar${attempt}`);
-  });
-
-  socket.on("reconnect", () => {
-    console.log("reconectado ao servidor com sucesso!");
-  });
-
-  socket.on("reconnect_failed", () => {
-    console.error("falha ao reconectar ao servidor socket");
+    
   });
 
   return socket;

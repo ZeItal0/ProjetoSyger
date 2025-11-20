@@ -41,6 +41,11 @@ height: 30px;
   height: 30px;
 }
 
+.notification-icon-container {
+  position: relative;
+  cursor: pointer;
+  z-index: 3;
+}
 
 .msg-icon-container {
   position: relative;
@@ -67,11 +72,15 @@ height: 30px;
   background: #fff;
   color: #333333;
   width: 280px;
+  max-height: 400px;
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0,0,0,0.2);
   padding: 10px 15px;
   z-index: 999;
   animation: fadeIn 0.25s ease;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0,0,0,0.2) transparent;
 }
 
 .mensagem-popup h4 {
@@ -94,8 +103,46 @@ height: 30px;
   font-size: 0.9em;
 }
 
+
+
+.icon-shake {
+  animation: shakeIcon 0.4s ease-in-out;
+  animation-iteration-count: 3;
+}
+
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-5px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.pulse.repeat {
+  animation: pulse 0.8s ease-in-out infinite;
+}
+@keyframes glow {
+  0% { filter: drop-shadow(0 0 0px #f5f5f5); }
+  50% { filter: drop-shadow(0 0 6px #f5f5f5); }
+  100% { filter: drop-shadow(0 0 0px #f5f5f5); }
+}
+
+.glow.repeat {
+  animation: glow 1.2s ease-in-out infinite;
+}
+@keyframes iphone {
+  0% { transform: rotate(0deg) scale(1); }
+  20% { transform: rotate(-8deg) scale(1.1); }
+  40% { transform: rotate(8deg) scale(1.1); }
+  60% { transform: rotate(-5deg) scale(1.05); }
+  80% { transform: rotate(5deg) scale(1.05); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+.iphone-alert.repeat {
+  animation: iphone 0.9s ease-in-out infinite;
+}

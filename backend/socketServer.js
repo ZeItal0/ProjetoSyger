@@ -1,6 +1,7 @@
 import { Server } from "socket.io";
 import jwt from "jsonwebtoken";
 import { salvarMensagem } from "./src/services/mensagensService.js";
+import { listarProdutosEstoqueBaixo } from "./src/services/EstoqueService.js";
 
 let io;
 const usuariosConectados = new Map();
@@ -88,5 +89,22 @@ export function inicializarSocket(server) {
         }
       }
     });
+  });
+  setInterval(() => {
+    notificarEstoqueBaixo();
+  }, 5 * 60 * 1000);
+}
+
+async function notificarEstoqueBaixo() {
+  const produtosBaixo = await listarProdutosEstoqueBaixo();
+
+  produtosBaixo.forEach((produto) => {
+    const payload = {
+      titulo: "Estoque Baixo",
+      conteudo: `${produto.nome_produto} está abaixo da quantidade mínima (${produto.quantidade_atual}/${produto.quantidade_minima}) PorFavor Repor.`,
+      data: new Date().toLocaleString(),
+    };
+
+    io.emit("notificacao_estoque", payload);
   });
 }
