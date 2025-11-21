@@ -1,6 +1,15 @@
 import prisma from "../prismaCliente.js";
+import { verificarEstoqueParaVenda } from "../services/verificarEstoqueParaVenda.js";
 
 export const criarPedido = async ({ tipo_venda, forma_pagamento, itens, id_usuario }) => {
+
+    for (const item of itens) {
+        const estoque = await verificarEstoqueParaVenda(item.id_variacao, item.quantidade);
+        if (!estoque.ok) {
+            throw new Error(`Venda excede o estoque disponível do produto "${estoque.produto}" (ingrediente: ${estoque.ingrediente})`);
+        }
+    }
+
     const pedido = await prisma.pedidos.create({
         data: {
             tipo_venda,
@@ -49,18 +58,18 @@ export const criarPedido = async ({ tipo_venda, forma_pagamento, itens, id_usuar
 
             const novaQuantidadeReal = produtoAtual.quantidade_real - consumoIngrediente;
 
-            let novaQuantidadeAtual = produtoAtual.quantidade_atual;
-            if (novaQuantidadeReal < produtoAtual.peso_por_unidade * novaQuantidadeAtual) {
-                novaQuantidadeAtual -= 1;
-            }
+            const unidadesRestantes = Math.floor(
+                novaQuantidadeReal / Number(produtoAtual.peso_por_unidade)
+            );
 
             await prisma.produtos.update({
                 where: { id_produto: ing.id_produto },
                 data: {
                     quantidade_real: novaQuantidadeReal,
-                    quantidade_atual: novaQuantidadeAtual,
+                    quantidade_atual: unidadesRestantes
                 },
             });
+
 
             await prisma.movimentacaoEstoque.create({
                 data: {

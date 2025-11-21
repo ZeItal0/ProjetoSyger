@@ -65,6 +65,7 @@ export const listarVendasRapidasModel = async ({ page = 1, limit = 20 }) => {
 };
 
 export const estornarVendaRapidaModel = async ({ id_pedido, id_usuario_estornando }) => {
+
     const pedido = await prisma.pedidos.findUnique({
         where: { id_pedido: Number(id_pedido) },
         include: {
@@ -92,24 +93,27 @@ export const estornarVendaRapidaModel = async ({ id_pedido, id_usuario_estornand
         const variacao = item.variacao;
         if (!variacao?.prato?.ingredientes) continue;
 
-        const pesoPronto = Number(variacao.prato.peso_pronto_total);
         const multiplicador = Number(variacao.multiplicador_receita);
         const qtdVendida = Number(item.quantidade);
-        const pesoConsumido = pesoPronto * multiplicador * qtdVendida;
 
         for (const ing of variacao.prato.ingredientes) {
             const pesoIngrediente = Number(ing.valor_medida);
-            const consumoIngrediente = (pesoIngrediente / pesoPronto) * pesoConsumido;
-
+            const consumoIngrediente = Number(pesoIngrediente * multiplicador * qtdVendida);
             const produtoAtual = await prisma.produtos.findUnique({
                 where: { id_produto: ing.id_produto },
             });
 
-            const novaQuantidadeReal = new Prisma.Decimal(produtoAtual.quantidade_real).plus(consumoIngrediente);
+            const quantidadeRealAtual = Number(produtoAtual.quantidade_real);
+            const pesoPorUnidade = Number(produtoAtual.peso_por_unidade);
+            const quantidadeAtual = Number(produtoAtual.quantidade_atual);
 
-            let novaQuantidadeAtual = Number(produtoAtual.quantidade_atual);
-            const limiteProximaUnidade = Number(produtoAtual.peso_por_unidade) * (novaQuantidadeAtual + 1);
-            if (novaQuantidadeReal.toNumber() >= limiteProximaUnidade) {
+            const novaQuantidadeReal = quantidadeRealAtual + consumoIngrediente;
+
+            let novaQuantidadeAtual = quantidadeAtual;
+
+            const limiteProximaUnidade = pesoPorUnidade * (novaQuantidadeAtual + 1);
+
+            if (novaQuantidadeReal >= limiteProximaUnidade) {
                 novaQuantidadeAtual += 1;
             }
 
@@ -136,3 +140,4 @@ export const estornarVendaRapidaModel = async ({ id_pedido, id_usuario_estornand
 
     return { mensagem: "Venda estornada com sucesso" };
 };
+

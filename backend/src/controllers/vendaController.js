@@ -11,6 +11,6 @@ export const finalizarVenda = async (req, res) => {
 
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ erro: "Erro ao finalizar venda" });
+        return res.status(400).json({ message: error.message || "Erro ao finalizar venda" });
     }
 };

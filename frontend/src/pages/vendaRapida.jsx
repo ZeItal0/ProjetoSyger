@@ -638,7 +638,7 @@ export default function Vendas() {
       setMetodoPagamentoAtivo("dinheiro");
     } catch (err) {
       console.error(err);
-      alert(`Erro ao finalizar venda: ${err.message || err}`);
+      alert(`${err.message || err}`);
     } finally {
       setSalvandoVenda(false);
     }
