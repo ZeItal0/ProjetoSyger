@@ -81,6 +81,19 @@ export async function buscarCardapioAtivo() {
   });
 }
 
+export async function PratosDoCardapio(id_cardapio) {
+  return await prisma.cardapioPratos.findMany({
+    where: { 
+      id_cardapio,
+      disponivel: true,
+    },
+    include: {
+      prato: { include: { categoria: true } },
+      variacao: true,
+    },
+  });
+}
+
 export async function buscarPratosDoCardapio(id_cardapio) {
   return await prisma.cardapioPratos.findMany({
     where: { id_cardapio },

@@ -33,12 +33,18 @@ export default function MainHeader({ area, onMenuSelect }) {
       setTemNovaNotificacao(true);
     };
 
+    const handleNovaNotificacao = (notificacao) => {
+    setNotificacoes((prev) => [...prev, { ...notificacao, tipo: "usuario" }]);
+    setTemNovaNotificacao(true);
+  };
+
     socket.on("mensagem_recebida", handleMensagem);
     socket.on("notificacao_estoque", handleEstoqueBaixo);
-
+    socket.on("nova_notificacao", handleNovaNotificacao);
     return () => {
       socket.off("mensagem_recebida", handleMensagem);
       socket.off("notificacao_estoque", handleEstoqueBaixo);
+      socket.off("nova_notificacao", handleNovaNotificacao);
     };
   }, [userId]);
 

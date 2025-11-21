@@ -21,8 +21,9 @@ export const listarMarmitas = async (req, res) => {
 };
 
 export const adicionarItemMarmita = async (req, res) => {
+  const id_usuario = req.usuario?.id;
   try {
-    const item = await MarmitaModel.adicionarItemMarmitaModel({ id_marmita: req.params.id_marmita, ...req.body });
+    const item = await MarmitaModel.adicionarItemMarmitaModel({ id_marmita: req.params.id_marmita, ...req.body, id_usuario });
     return res.json(item);
   } catch (err) {
     console.error(err);
@@ -31,8 +32,9 @@ export const adicionarItemMarmita = async (req, res) => {
 };
 
 export const removerItemMarmita = async (req, res) => {
+  const id_usuario = req.usuario?.id;
   try {
-    await MarmitaModel.removerItemMarmitaModel(req.params.id_item_pedido);
+    await MarmitaModel.removerItemMarmitaModel(req.params.id_item_pedido, id_usuario);
     return res.json({ sucesso: true });
   } catch (err) {
     console.error(err);

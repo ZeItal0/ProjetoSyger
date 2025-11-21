@@ -4,8 +4,8 @@ import { registerSchema } from "../validations/loginRegistroSchema.js";
 import { registrarAuditoria } from "../utils/registrarAuditoria.js";
 
 export const RegistroController = async (req, res) => {
+  delete req.body.status;
   const { nome_completo, email, usuario, cnpj, senha } = req.body;
-
   try {
     const { error } = registerSchema.validate(req.body, { abortEarly: false });
     if (error) {
@@ -16,7 +16,7 @@ export const RegistroController = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({ message: "usuario nao pode ser cadastrado" });
     }
-
+    const status = "Inativo";
     const senha_hash = await bcrypt.hash(senha, 10);
 
     const novoUsuario = await LoginRegistroModel.createUser({
@@ -27,7 +27,7 @@ export const RegistroController = async (req, res) => {
       senha_hash,
       cargo: "Funcionario",
       nivel_acesso: "Funcionario_Comum",
-      status: "Inativo",
+      status,
     });
 
     await registrarAuditoria( novoUsuario.id_usuario,"CADASTRO",`Usuário "${nome_completo}" fez o cadastro e aguarda autorização do administrador.`);

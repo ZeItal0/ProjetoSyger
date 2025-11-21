@@ -9,7 +9,11 @@ export async function login(usuario, senha) {
 
   const result = await response.json();
   if (!response.ok) throw new Error(result.message || "erro ao fazer login");
-  
+  localStorage.setItem("token", result.token);
+  localStorage.setItem("id", result.user.id);
+  localStorage.setItem("nome_usuario", result.user.nome);
+  localStorage.setItem("nivel_acesso", result.user.nivel_acesso);
+
   return result;
 }
 
@@ -23,6 +27,6 @@ export async function register(data) {
 
   const result = await response.json();
   if (!response.ok) throw new Error(result.message || "Erro ao registrar");
+
   return result;
 }
-

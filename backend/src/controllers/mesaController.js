@@ -21,8 +21,9 @@ export const listarMesasAbertas = async (req, res) => {
 };
 
 export const adicionarItemMesa = async (req, res) => {
+  const id_usuario = req.usuario?.id;
   try {
-    const item = await MesaModel.adicionarItemMesaModel({ id_mesa: req.params.id_mesa, ...req.body });
+    const item = await MesaModel.adicionarItemMesaModel({ id_mesa: req.params.id_mesa, ...req.body, id_usuario });
     return res.json(item);
   } catch (err) {
     console.error(err);
@@ -31,8 +32,9 @@ export const adicionarItemMesa = async (req, res) => {
 };
 
 export const removerItemMesa = async (req, res) => {
+  const id_usuario = req.usuario?.id;
   try {
-    await MesaModel.removerItemMesaModel(req.params.id_item_pedido);
+    await MesaModel.removerItemMesaModel(req.params.id_item_pedido, id_usuario);
     return res.json({ sucesso: true });
   } catch (err) {
     console.error(err);

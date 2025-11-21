@@ -9,6 +9,8 @@ import Lixo from "../icons/trash.png";
 import MesaIcon from "../icons/mesa.png";
 import MarmitaIcon from "../icons/marmita.png";
 import Plusadd from "../icons/plusadd.png";
+import { conectarSocket, getSocket } from "../services/socket";
+
 
 const categorias = ["Todos", "Carnes", "Grãos", "Massas", "Bebidas", "Sobremesas", "Lanches", "Aperitivos"];
 
@@ -166,22 +168,47 @@ export default function Vendas() {
       try {
         setLoading(true);
         const token = localStorage.getItem("token");
-        const res = await fetch("http://localhost:5000/cardapio/cardapio-dia/ativo", {
-          headers: { Authorization: token ? `Bearer ${token}` : "" },
-        });
-        if (!res.ok) throw new Error("Erro ao buscar cardápio ativo");
+        const res = await fetch(
+          "http://localhost:5000/cardapio/cardapio-dia/vendas",
+          { headers: { Authorization: token ? `Bearer ${token}` : "" } }
+        );
         const data = await res.json();
         setProdutos(data.pratos || []);
-      } catch (err) {
-        console.error(err);
-        setErro("Erro ao carregar o cardápio");
       } finally {
         setLoading(false);
       }
     };
 
     carregarCardapio();
+
+    let socket = getSocket();
+    if (!socket) {
+      socket = conectarSocket(localStorage.getItem("token"));
+    }
+
+    socket.on("cardapio_atualizado", ({ id_variacao }) => {
+      setProdutos((prev) =>
+        prev.filter((p) => p.id_variacao !== id_variacao)
+      );
+    });
+
+    socket.on("cardapio_restaurado", async () => {
+      const token = localStorage.getItem("token");
+      const res = await fetch(
+        "http://localhost:5000/cardapio/cardapio-dia/vendas",
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      const data = await res.json();
+      setProdutos(data.pratos || []);
+    });
+
+    return () => {
+      socket.off("cardapio_atualizado");
+      socket.off("cardapio_restaurado");
+    };
   }, []);
+
+
 
   useEffect(() => {
     const carregarMesas = async () => {
@@ -768,7 +795,7 @@ export default function Vendas() {
                   )}
 
                   {abaAtiva === "Gestão de Mesas" && mesaAtiva !== null && (
-                    <button className={`btn-add-carrinho ${cooldown ? "btn-disabled" : ""}`} disabled={cooldown} onClick={(e) => { e.stopPropagation(); handleAddToMesa(produto);}}>
+                    <button className={`btn-add-carrinho ${cooldown ? "btn-disabled" : ""}`} disabled={cooldown} onClick={(e) => { e.stopPropagation(); handleAddToMesa(produto); }}>
                       {loadingBtn ? (
                         <div className="mini-loader"></div>
                       ) : (
@@ -778,7 +805,7 @@ export default function Vendas() {
                   )}
 
                   {abaAtiva === "Marmitas" && marmitaAtiva !== null && (
-                    <button className={`btn-add-carrinho ${cooldownMarmita ? "btn-disabled" : ""}`} disabled={cooldownMarmita} onClick={(e) => { e.stopPropagation(); handleAddToMarmita(produto);}}>
+                    <button className={`btn-add-carrinho ${cooldownMarmita ? "btn-disabled" : ""}`} disabled={cooldownMarmita} onClick={(e) => { e.stopPropagation(); handleAddToMarmita(produto); }}>
                       {loadingMarmitaBtn ? (
                         <div className="mini-loader"></div>
                       ) : (
@@ -886,16 +913,16 @@ export default function Vendas() {
                     )}
                     {abaAtiva === "Gestão de Mesas" && mesaAtiva !== null && (
                       <button className="btn-remove" disabled={cooldownRemoverMesa} onClick={() => handleRemoverItemMesa(item.id, mesaAtiva)}>
-                        {loadingRemoverMesa === item.id ? ( <div className="mini-loader"></div>
-                        ) : ( <img className="lixo-icon" src={Lixo} alt="lixo" />
+                        {loadingRemoverMesa === item.id ? (<div className="mini-loader"></div>
+                        ) : (<img className="lixo-icon" src={Lixo} alt="lixo" />
                         )}
                       </button>
                     )}
 
                     {abaAtiva === "Marmitas" && marmitaAtiva !== null && (
                       <button className="btn-remove" disabled={cooldownRemoverMarmita} onClick={() => handleRemoverItemMarmita(item.id, marmitaAtiva)}>
-                        {loadingRemoverMarmita === item.id ? ( <div className="mini-loader"></div>
-                        ) : ( <img className="lixo-icon" src={Lixo} alt="lixo" />
+                        {loadingRemoverMarmita === item.id ? (<div className="mini-loader"></div>
+                        ) : (<img className="lixo-icon" src={Lixo} alt="lixo" />
                         )}
                       </button>
                     )}

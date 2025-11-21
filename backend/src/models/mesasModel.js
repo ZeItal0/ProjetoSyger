@@ -1,5 +1,9 @@
 import prisma from "../prismaCliente.js";
+import { Prisma } from "@prisma/client";
 import { schemaCriarMesa } from "../validations/mesaSchema.js";
+import { verificarEstoqueDaVariacao } from "../services/verificarEstoqueDaVariacao.js";
+import { enviarNotificacaoUsuario } from "../services/notificacoes.js";
+import { getSocket } from "../../socketServer.js";
 
 export const criarMesaModel = async (dados) => {
   const { error, value } = schemaCriarMesa.validate(dados);
@@ -71,7 +75,8 @@ export const listarMesasAbertasModel = async () => {
   });
 };
 
-export const adicionarItemMesaModel = async ({ id_mesa, id_prato, id_variacao, id_produto, quantidade, preco_unitario }) => {
+export const adicionarItemMesaModel = async ({ id_mesa, id_prato, id_variacao, id_produto, quantidade, preco_unitario, id_usuario }) => {
+
   let pedido = await prisma.pedidos.findFirst({
     where: { id_mesa: Number(id_mesa), status_pedido: "Pendente" },
   });
@@ -99,10 +104,69 @@ export const adicionarItemMesaModel = async ({ id_mesa, id_prato, id_variacao, i
     },
   });
 
+  if (id_variacao) {
+    const variacao = await prisma.variacoesPorcao.findUnique({
+      where: { id_variacao: Number(id_variacao) },
+      include: {
+        prato: { include: { ingredientes: { include: { produto: true, unidade: true } } } },
+      },
+    });
+
+    if (variacao?.prato) {
+      const pesoPronto = Number(variacao.prato.peso_pronto_total);
+      const multiplicador = Number(variacao.multiplicador_receita);
+      const qtdVendida = Number(quantidade);
+      const pesoConsumido = pesoPronto * multiplicador * qtdVendida;
+
+      for (const ing of variacao.prato.ingredientes) {
+        const pesoIngrediente = Number(ing.valor_medida);
+        const consumoIngrediente = (pesoIngrediente / pesoPronto) * pesoConsumido;
+
+        const produtoAtual = await prisma.produtos.findUnique({
+          where: { id_produto: ing.id_produto },
+        });
+
+        const novaQuantidadeReal = produtoAtual.quantidade_real - consumoIngrediente;
+        let novaQuantidadeAtual = produtoAtual.quantidade_atual;
+        if (novaQuantidadeReal < produtoAtual.peso_por_unidade * novaQuantidadeAtual) {
+          novaQuantidadeAtual -= 1;
+        }
+
+        await prisma.produtos.update({
+          where: { id_produto: ing.id_produto },
+          data: {
+            quantidade_real: novaQuantidadeReal,
+            quantidade_atual: novaQuantidadeAtual,
+          },
+        });
+
+        await prisma.movimentacaoEstoque.create({
+          data: {
+            id_produto: ing.id_produto,
+            tipo_movimentacao: "Saida",
+            quantidade: consumoIngrediente,
+            id_unidade_medida: ing.id_unidade_medida,
+            observacoes: `Saída pela venda do item da mesa ${id_mesa}`,
+            id_usuario,
+          },
+        });
+      }
+    }
+
+    const esgotado = await verificarEstoqueDaVariacao(id_variacao);
+    if (esgotado) {
+      await enviarNotificacaoUsuario({
+        id_usuario,
+        titulo: "Ingrediente insuficiente",
+        conteudo: "Uma variação foi marcada como esgotada automaticamente por favor fazer Reestoque."
+      });
+    }
+  }
+
   return item;
 };
 
-export const removerItemMesaModel = async (id_item_pedido) => {
+export const removerItemMesaModel = async (id_item_pedido, id_usuario) => {
   const itemRemovido = await prisma.pedido_Itens.delete({
     where: { id_item_pedido: Number(id_item_pedido) },
   });
@@ -122,8 +186,71 @@ export const removerItemMesaModel = async (id_item_pedido) => {
     data: { subtotal, total_liquido: subtotal },
   });
 
+  if (itemRemovido.id_variacao) {
+    const variacao = await prisma.variacoesPorcao.findUnique({
+      where: { id_variacao: itemRemovido.id_variacao },
+      include: {
+        prato: { include: { ingredientes: { include: { produto: true, unidade: true } } } },
+      },
+    });
+
+    if (variacao?.prato?.ingredientes) {
+      const pesoPronto = Number(variacao.prato.peso_pronto_total);
+      const multiplicador = Number(variacao.multiplicador_receita);
+      const qtdRemovida = Number(itemRemovido.quantidade);
+      const pesoConsumido = pesoPronto * multiplicador * qtdRemovida;
+
+      for (const ing of variacao.prato.ingredientes) {
+        const pesoIngrediente = Number(ing.valor_medida);
+        const consumoIngrediente = (pesoIngrediente / pesoPronto) * pesoConsumido;
+
+        const produtoAtual = await prisma.produtos.findUnique({
+          where: { id_produto: ing.id_produto },
+        });
+
+        const novaQuantidadeReal = new Prisma.Decimal(produtoAtual.quantidade_real).plus(consumoIngrediente);
+
+        let novaQuantidadeAtual = Number(produtoAtual.quantidade_atual);
+        const limiteProximaUnidade = Number(produtoAtual.peso_por_unidade) * (novaQuantidadeAtual + 1);
+        if (novaQuantidadeReal.toNumber() >= limiteProximaUnidade) {
+          novaQuantidadeAtual += 1;
+        }
+
+        await prisma.produtos.update({
+          where: { id_produto: ing.id_produto },
+          data: {
+            quantidade_real: novaQuantidadeReal,
+            quantidade_atual: novaQuantidadeAtual,
+          },
+        });
+
+        await prisma.movimentacaoEstoque.create({
+          data: {
+            id_produto: ing.id_produto,
+            tipo_movimentacao: "Entrada",
+            quantidade: consumoIngrediente,
+            id_unidade_medida: ing.id_unidade_medida,
+            observacoes: `Reestoque pela remoção do item da mesa (${variacao.nome_menu})`,
+            id_usuario,
+          },
+        });
+
+        await prisma.cardapioPratos.updateMany({
+          where: { id_variacao: variacao.id_variacao },
+          data: { disponivel: true },
+        });
+
+        const socket = getSocket();
+        if (socket) {
+          socket.emit("cardapio_restaurado", { id_variacao: variacao.id_variacao });
+        }
+      }
+    }
+  }
+
   return true;
 };
+
 
 export const finalizarMesaModel = async ({ id_mesa, forma_pagamento, id_usuario }) => {
   const pedido = await prisma.pedidos.findFirst({
@@ -164,56 +291,8 @@ export const finalizarMesaModel = async ({ id_mesa, forma_pagamento, id_usuario 
     data: { status: "Fechada" },
   });
 
-  for (const item of pedido.itens) {
-    const variacao = await prisma.variacoesPorcao.findUnique({
-      where: { id_variacao: item.id_variacao },
-      include: {
-        prato: { include: { ingredientes: { include: { produto: true, unidade: true } } } },
-      },
-    });
-
-    if (!variacao?.prato) continue;
-
-    const pesoPronto = Number(variacao.prato.peso_pronto_total);
-    const multiplicador = Number(variacao.multiplicador_receita);
-    const qtdVendida = Number(item.quantidade);
-    const pesoConsumido = pesoPronto * multiplicador * qtdVendida;
-
-    for (const ing of variacao.prato.ingredientes) {
-      const pesoIngrediente = Number(ing.valor_medida);
-      const consumoIngrediente = (pesoIngrediente / pesoPronto) * pesoConsumido;
-
-      const produtoAtual = await prisma.produtos.findUnique({
-        where: { id_produto: ing.id_produto },
-      });
-
-      const novaQuantidadeReal = produtoAtual.quantidade_real - consumoIngrediente;
-      let novaQuantidadeAtual = produtoAtual.quantidade_atual;
-      if (novaQuantidadeReal < produtoAtual.peso_por_unidade * novaQuantidadeAtual) {
-        novaQuantidadeAtual -= 1;
-      }
-
-      await prisma.produtos.update({
-        where: { id_produto: ing.id_produto },
-        data: {
-          quantidade_real: novaQuantidadeReal,
-          quantidade_atual: novaQuantidadeAtual,
-        },
-      });
-
-      await prisma.movimentacaoEstoque.create({
-        data: {
-          id_produto: ing.id_produto,
-          tipo_movimentacao: "Saida",
-          quantidade: consumoIngrediente,
-          id_unidade_medida: ing.id_unidade_medida,
-          observacoes: `Saída pela venda da mesa ${id_mesa}`,
-          id_usuario,
-        },
-      });
-    }
-  }
 
   return pedido;
 };
+
 

@@ -36,10 +36,12 @@ export function inicializarSocket(server) {
     console.log("cliente conectado:", socket.id);
 
     socket.on("registrarUsuario", (userId) => {
-      usuariosConectados.set(userId, socket.id);
-      socket.join(`usuario_${userId}`);
-      console.log(`Usuário ${userId} registrado na sala usuario_${userId}`);
+      const id = Number(userId);
+      usuariosConectados.set(id, socket.id);
+      socket.join(`usuario_${id}`);
+      console.log(`Usuário ${id} registrado`);
     });
+
 
     socket.on("enviar_mensagem", async ({ destinatario, mensagem }) => {
       const remetenteId = socket.user?.id;
@@ -48,7 +50,6 @@ export function inicializarSocket(server) {
         console.log("remetente nao identificado");
         return;
       }
-
       try {
         const mensagemSalva = await salvarMensagem({
           id_remetente: remetenteId,
@@ -68,7 +69,7 @@ export function inicializarSocket(server) {
         if (destinatario === "Todos os Utilizadores Ativos") {
           io.emit("mensagem_recebida", payload);
         } else {
-          const socketId = usuariosConectados.get(destinatario);
+          const socketId = usuariosConectados.get(Number(destinatario));
           if (socketId) {
             io.to(socketId).emit("mensagem_recebida", payload);
             console.log(`Mensagem enviada e salva para usuário ${destinatario}`);
@@ -90,9 +91,10 @@ export function inicializarSocket(server) {
       }
     });
   });
+  
   setInterval(() => {
     notificarEstoqueBaixo();
-  }, 5 * 60 * 1000);
+  }, 20 * 60 * 1000);
 }
 
 async function notificarEstoqueBaixo() {
@@ -108,3 +110,12 @@ async function notificarEstoqueBaixo() {
     io.emit("notificacao_estoque", payload);
   });
 }
+
+export function getUsuariosConectados() {
+  return usuariosConectados;
+};
+
+export function getSocket() {
+  return io;
+};
+

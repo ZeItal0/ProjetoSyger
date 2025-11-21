@@ -1,9 +1,13 @@
 import prisma from "../prismaCliente.js";
+import { Prisma } from "@prisma/client";
 import { schemaCriarMarmita } from "../validations/marmitaSchema.js";
+import { verificarEstoqueDaVariacao } from "../services/verificarEstoqueDaVariacao.js";
+import { enviarNotificacaoUsuario } from "../services/notificacoes.js";
+import { getSocket } from "../../socketServer.js";
 
 export const criarMarmitaModel = async (dados) => {
     const { error, value } = schemaCriarMarmita.validate(dados);
-    if (error) {throw new Error(error.details[0].message);}
+    if (error) { throw new Error(error.details[0].message); }
 
     const { numero_marmita } = value;
 
@@ -70,7 +74,8 @@ export const listarMarmitasModel = async () => {
     });
 };
 
-export const adicionarItemMarmitaModel = async ({ id_marmita, id_prato, id_variacao, id_produto, quantidade, preco_unitario }) => {
+export const adicionarItemMarmitaModel = async ({ id_marmita, id_prato, id_variacao, id_produto, quantidade, preco_unitario, id_usuario }) => {
+
     let pedido = await prisma.pedidos.findFirst({
         where: { id_marmita: Number(id_marmita), status_pedido: "Pendente" },
     });
@@ -98,10 +103,78 @@ export const adicionarItemMarmitaModel = async ({ id_marmita, id_prato, id_varia
         },
     });
 
+    if (id_variacao) {
+
+        const variacao = await prisma.variacoesPorcao.findUnique({
+            where: { id_variacao: Number(id_variacao) },
+            include: {
+                prato: {
+                    include: {
+                        ingredientes: { include: { produto: true, unidade: true } }
+                    }
+                }
+            }
+        });
+
+        if (variacao?.prato) {
+
+            const pesoPronto = Number(variacao.prato.peso_pronto_total);
+            const multiplicador = Number(variacao.multiplicador_receita);
+            const qtdVendida = Number(quantidade);
+            const pesoConsumido = pesoPronto * multiplicador * qtdVendida;
+
+            for (const ing of variacao.prato.ingredientes) {
+
+                const pesoIngrediente = Number(ing.valor_medida);
+                const consumoIngrediente = (pesoIngrediente / pesoPronto) * pesoConsumido;
+
+                const produtoAtual = await prisma.produtos.findUnique({
+                    where: { id_produto: ing.id_produto }
+                });
+
+                const novaQuantidadeReal = produtoAtual.quantidade_real - consumoIngrediente;
+                let novaQuantidadeAtual = produtoAtual.quantidade_atual;
+
+                if (novaQuantidadeReal < produtoAtual.peso_por_unidade * novaQuantidadeAtual) {
+                    novaQuantidadeAtual -= 1;
+                }
+
+                await prisma.produtos.update({
+                    where: { id_produto: ing.id_produto },
+                    data: {
+                        quantidade_real: novaQuantidadeReal,
+                        quantidade_atual: novaQuantidadeAtual,
+                    },
+                });
+
+                await prisma.movimentacaoEstoque.create({
+                    data: {
+                        id_produto: ing.id_produto,
+                        tipo_movimentacao: "Saida",
+                        quantidade: consumoIngrediente,
+                        id_unidade_medida: ing.id_unidade_medida,
+                        observacoes: `Saída pela montagem da marmita ${id_marmita}`,
+                        id_usuario,
+                    },
+                });
+            }
+        }
+
+        const esgotado = await verificarEstoqueDaVariacao(id_variacao);
+
+        if (esgotado) {
+            await enviarNotificacaoUsuario({
+                id_usuario,
+                titulo: "Ingrediente insuficiente",
+                conteudo: "Uma variação foi marcada como esgotada automaticamente por favor fazer Reestoque."
+            });
+        }
+    }
+
     return item;
 };
 
-export const removerItemMarmitaModel = async (id_item_pedido) => {
+export const removerItemMarmitaModel = async (id_item_pedido, id_usuario) => {
     const itemRemovido = await prisma.pedido_Itens.delete({
         where: { id_item_pedido: Number(id_item_pedido) },
     });
@@ -123,96 +196,114 @@ export const removerItemMarmitaModel = async (id_item_pedido) => {
         data: { subtotal, total_liquido: subtotal },
     });
 
-    return true;
-};
-
-export const finalizarMarmitaModel = async ({ id_marmita, forma_pagamento, id_usuario }) => {
-    const pedido = await prisma.pedidos.findFirst({
-        where: { id_marmita: Number(id_marmita), status_pedido: "Pendente" },
-        include: { itens: true },
-    });
-
-    if (!pedido) throw new Error("Marmita não possui pedido em aberto");
-
-    const subtotal = pedido.itens.reduce(
-        (acc, i) => acc + Number(i.preco_unitario) * Number(i.quantidade),
-        0
-    );
-
-    const forma_pagamento_enum = (() => {
-        switch ((forma_pagamento || "").toLowerCase()) {
-            case "dinheiro": return "Dinheiro";
-            case "cartao": return "Cartao";
-            case "pix": return "Pix";
-            default: return "Dinheiro";
-        }
-    })();
-
-    await prisma.pedidos.update({
-        where: { id_pedido: pedido.id_pedido },
-        data: {
-            subtotal,
-            total_liquido: subtotal,
-            status_pedido: "Concluido",
-            forma_pagamento: forma_pagamento_enum,
-        },
-    });
-
-    await prisma.marmitas.update({
-        where: { id_marmita: Number(id_marmita) },
-        data: { status: "Finalizado" },
-    });
-
-    for (const item of pedido.itens) {
+    if (itemRemovido.id_variacao) {
         const variacao = await prisma.variacoesPorcao.findUnique({
-            where: { id_variacao: item.id_variacao },
+            where: { id_variacao: itemRemovido.id_variacao },
             include: {
                 prato: { include: { ingredientes: { include: { produto: true, unidade: true } } } },
             },
         });
 
-        if (!variacao?.prato) continue;
+        if (variacao?.prato?.ingredientes) {
+            const pesoPronto = Number(variacao.prato.peso_pronto_total);
+            const multiplicador = Number(variacao.multiplicador_receita);
+            const qtdRemovida = Number(itemRemovido.quantidade);
+            const pesoConsumido = pesoPronto * multiplicador * qtdRemovida;
 
-        const pesoPronto = Number(variacao.prato.peso_pronto_total);
-        const multiplicador = Number(variacao.multiplicador_receita);
-        const qtdVendida = Number(item.quantidade);
-        const pesoConsumido = pesoPronto * multiplicador * qtdVendida;
+            for (const ing of variacao.prato.ingredientes) {
+                const pesoIngrediente = Number(ing.valor_medida);
+                const consumoIngrediente = (pesoIngrediente / pesoPronto) * pesoConsumido;
 
-        for (const ing of variacao.prato.ingredientes) {
-            const pesoIngrediente = Number(ing.valor_medida);
-            const consumoIngrediente = (pesoIngrediente / pesoPronto) * pesoConsumido;
+                const produtoAtual = await prisma.produtos.findUnique({
+                    where: { id_produto: ing.id_produto },
+                });
 
-            const produtoAtual = await prisma.produtos.findUnique({
-                where: { id_produto: ing.id_produto },
-            });
+                const novaQuantidadeReal = new Prisma.Decimal(produtoAtual.quantidade_real).plus(consumoIngrediente);
 
-            const novaQuantidadeReal = produtoAtual.quantidade_real - consumoIngrediente;
+                let novaQuantidadeAtual = Number(produtoAtual.quantidade_atual);
+                const limiteProximaUnidade =
+                    Number(produtoAtual.peso_por_unidade) * (novaQuantidadeAtual + 1);
 
-            let novaQuantidadeAtual = produtoAtual.quantidade_atual;
-            if (novaQuantidadeReal < produtoAtual.peso_por_unidade * novaQuantidadeAtual) {
-                novaQuantidadeAtual -= 1;
+                if (novaQuantidadeReal.toNumber() >= limiteProximaUnidade) {
+                    novaQuantidadeAtual += 1;
+                }
+
+                await prisma.produtos.update({
+                    where: { id_produto: ing.id_produto },
+                    data: {
+                        quantidade_real: novaQuantidadeReal,
+                        quantidade_atual: novaQuantidadeAtual,
+                    },
+                });
+
+                await prisma.movimentacaoEstoque.create({
+                    data: {
+                        id_produto: ing.id_produto,
+                        tipo_movimentacao: "Entrada",
+                        quantidade: consumoIngrediente,
+                        id_unidade_medida: ing.id_unidade_medida,
+                        observacoes: `Reestoque pela remoção do item da marmita`,
+                        id_usuario,
+                    },
+                });
+
+                await prisma.cardapioPratos.updateMany({
+                    where: { id_variacao: variacao.id_variacao },
+                    data: { disponivel: true },
+                });
+
+                const socket = getSocket();
+                if (socket) {
+                    socket.emit("cardapio_restaurado", { id_variacao: variacao.id_variacao });
+                }
             }
-
-            await prisma.produtos.update({
-                where: { id_produto: ing.id_produto },
-                data: {
-                    quantidade_real: novaQuantidadeReal,
-                    quantidade_atual: novaQuantidadeAtual,
-                },
-            });
-
-            await prisma.movimentacaoEstoque.create({
-                data: {
-                    id_produto: ing.id_produto,
-                    tipo_movimentacao: "Saida",
-                    quantidade: consumoIngrediente,
-                    id_unidade_medida: ing.id_unidade_medida,
-                    observacoes: `Saída pela venda da marmita ${id_marmita}`,
-                    id_usuario,
-                },
-            });
         }
     }
 
-    return pedido;
+    return true;
 };
+
+export const finalizarMarmitaModel = async ({ id_marmita, forma_pagamento, id_usuario }) => {
+  const pedido = await prisma.pedidos.findFirst({
+    where: { id_marmita: Number(id_marmita), status_pedido: "Pendente" },
+    include: { itens: true },
+  });
+
+  if (!pedido) throw new Error("Marmita não possui pedido em aberto");
+
+  const subtotal = pedido.itens.reduce(
+    (acc, i) => acc + Number(i.preco_unitario) * Number(i.quantidade),
+    0
+  );
+
+  const forma_pagamento_enum = (() => {
+    switch ((forma_pagamento || "").toLowerCase()) {
+      case "dinheiro":
+        return "Dinheiro";
+      case "cartao":
+        return "Cartao";
+      case "pix":
+        return "Pix";
+      default:
+        return "Dinheiro";
+    }
+  })();
+
+  await prisma.pedidos.update({
+    where: { id_pedido: pedido.id_pedido },
+    data: {
+      subtotal,
+      total_liquido: subtotal,
+      status_pedido: "Concluido",
+      forma_pagamento: forma_pagamento_enum,
+    },
+  });
+
+  await prisma.marmitas.update({
+    where: { id_marmita: Number(id_marmita) },
+    data: { status: "Finalizado" },
+  });
+
+  return pedido;
+};
+
