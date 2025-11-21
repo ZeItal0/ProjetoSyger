@@ -68,8 +68,6 @@ const ModalEdicao = ({ item, onClose, onAtualizar, onExcluir }) => {
                     <option value="">Tipo de Alteracao</option>
                     <option value="Entrada">Entrada</option>
                     <option value="Saida">Saída</option>
-                    <option value="Reestoque">Reestoque</option>
-                    <option value="Ajuste">Ajuste</option>
                 </select>
                 <input type="date" name="validade" value={formData.validade} onChange={handleChange} className="modal-input" />
                 <select name="unidadeMedida" value={formData.unidadeMedida} onChange={handleChange} className="modal-input modal-select">

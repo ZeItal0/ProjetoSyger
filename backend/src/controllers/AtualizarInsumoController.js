@@ -21,7 +21,15 @@ export const atualizarInsumo = async (req, res) => {
       ? (await InsumoModel.findUnidadeByNome(value.unidadeMedida))?.id_unidade_medida
       : undefined;
 
-    const dadosAtualizados = {
+    let novaQuantidadeAtual =
+      value.quantidadeAtual !== undefined &&
+      value.quantidadeAtual !== null &&
+      value.quantidadeAtual !== "" &&
+      !isNaN(Number(value.quantidadeAtual))
+        ? Number(value.quantidadeAtual)
+        : undefined;
+
+    let dadosAtualizados = {
       ...(value.nomeProduto && { nome_produto: value.nomeProduto }),
       ...(value.quantidadeMinima && { quantidade_minima: Number(value.quantidadeMinima) }),
       ...(value.quantidadeMaxima && { quantidade_maxima: Number(value.quantidadeMaxima) }),
@@ -29,10 +37,37 @@ export const atualizarInsumo = async (req, res) => {
       ...(value.unidadeCompra && { forma_compra: value.unidadeCompra }),
       ...(value.validade && { validade: new Date(value.validade) }),
       ...(unidadeId && { id_unidade_medida: unidadeId }),
-      ...(value.quantidadeAtual && { quantidade_atual: Number(value.quantidadeAtual) }),
     };
 
+    let diferenca = 0;
+
+    if (novaQuantidadeAtual !== undefined) {
+      const antiga = Number(produtoAntigo.quantidade_atual);
+      diferenca = novaQuantidadeAtual - antiga;
+
+      dadosAtualizados.quantidade_atual = novaQuantidadeAtual;
+
+      if (diferenca !== 0 && produtoAntigo.peso_por_unidade) {
+        const peso = Number(produtoAntigo.peso_por_unidade);
+        const incremento = diferenca * peso;
+
+        const quantidadeRealAntiga = Number(produtoAntigo.quantidade_real || 0);
+        dadosAtualizados.quantidade_real = quantidadeRealAntiga + incremento;
+      }
+    }
+
     const produtoAtualizado = await InsumoModel.atualizarProduto(id, dadosAtualizados);
+
+    if (diferenca !== 0) {
+      await InsumoModel.registrarMovimentacao({
+        id_produto: Number(id),
+        tipo_movimentacao: diferenca > 0 ? "Entrada" : "Saida",
+        quantidade: Math.abs(diferenca),
+        id_unidade_medida: unidadeId || produtoAntigo.id_unidade_medida,
+        id_usuario: req.usuario?.id || null,
+        observacoes: "Alteração manual no cadastro do insumo",
+      });
+    }
 
     const alteracoes = Object.entries(dadosAtualizados)
       .map(([campo, novoValor]) => {
