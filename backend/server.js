@@ -18,6 +18,7 @@ import vendasRoutes from "./src/routes/vendasRoutes.js";
 import relatorioVendasRoutes from "./src/routes/relatorioVendasRoutes.js";
 import relatorioEstoqueRoutes from "./src/routes/relatorioEstoqueRoutes.js"
 import dashBoardRoutes from "./src/routes/dashBoardRoutes.js";
+import validarEmailRoutes from "./src/routes/validarEmailRoutes.js"
 
 dotenv.config();
 
@@ -43,6 +44,7 @@ app.use("/vendas", vendasRoutes);
 app.use("/relatorios", relatorioVendasRoutes);
 app.use("/relatoriosEstoque", relatorioEstoqueRoutes);
 app.use("/dashboard", dashBoardRoutes);
+app.use("/recuperar", validarEmailRoutes)
 
 
 inicializarSocket(server);

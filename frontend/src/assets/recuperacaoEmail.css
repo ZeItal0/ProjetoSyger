@@ -1,0 +1,123 @@
+.recuperacao-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: #f7967d; 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    text-align: center;
+}
+
+.glass-container {
+    width: 600px;
+    padding: 40px;
+}
+
+.logo-recuperacao {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    color: #f5f5f5;
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-top: 5px; /* Espaço entre o ícone e o texto */
+}
+
+.logo-icon {
+    height: 150px;
+    width: auto;
+}
+
+.recuperacao-title {
+    color: #f5f5f5;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.recuperacao-instruction {
+    color: #f5f5f5;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 50px;
+    padding: 0 20px;
+}
+
+.recuperacao-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.input-email {
+    position: relative;
+    width: 80%;
+    margin-bottom: 50px;
+}
+
+.input-email input {
+    width: 100%;
+    padding: 5px 0;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+    outline: none;
+    font-size: 1rem;
+    color: #f5f5f5;
+    background: transparent;
+    text-align: right;
+}
+
+.input-email input:focus {
+    border-bottom-color: #fff;
+}
+
+.input-email label {
+    position: absolute;
+    /* Posicionamento do label "Email" no canto inferior direito */
+    bottom: 5px;
+    right: 0;
+    font-size: 0.9rem;
+    /* Cor do label: Branco levemente transparente */
+    color: rgba(255, 255, 255, 0.8);
+    pointer-events: none;
+    transition: 0.3s ease all;
+}
+
+/* O label não deve se mover no design da imagem, ele fica fixo no canto direito */
+.input-email input:focus ~ label,
+.input-email input:not(:placeholder-shown) ~ label {
+    /* Manter a posição original */
+    bottom: 5px;
+    right: 0;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.btn-enviar {
+    /* Botão: Branco, bordas arredondadas, sombra suave */
+    background-color: #fff;
+    color: #f7967d; /* Cor do texto: Laranja/Pêssego */
+    border: none;
+    border-radius: 8px;
+    padding: 15px 40px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+    width: 60%;
+    max-width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-transform: lowercase; /* O texto do botão está em minúsculas na imagem */
+}
+
+.btn-enviar:hover {
+    background-color: #f0f0f0;
+}

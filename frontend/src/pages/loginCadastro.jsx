@@ -75,7 +75,7 @@ export default function LoginCadastro() {
               <input type="text" name="USUARIO" placeholder="USUÁRIO" className="form-input" />
               <input type="password" name="SENHA" placeholder="SENHA" className="form-input" />
               <button type="submit" className="enter-button">ENTRAR</button>
-              <a href="#" className="forgot-password">Esqueci minha senha</a>
+              <span className="forgot-password" onClick={() => navigate("/recuperar-senha")} style={{ cursor: "pointer" }}> Esqueci minha senha</span>
             </form>
           </div>
 

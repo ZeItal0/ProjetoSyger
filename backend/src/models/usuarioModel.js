@@ -119,3 +119,8 @@ export const listarUsuariosAtivos = async () => {
   }));
 };
 
+export const buscarUsuarioPorEmail = async (email) => {
+  return await prisma.usuarios.findFirst({
+    where: { email },
+  });
+};

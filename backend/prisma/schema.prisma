@@ -66,6 +66,31 @@ enum StatusCardapio {
   Inativo
 }
 
+model PasswordReset {
+  id          Int      @id @default(autoincrement())
+  id_usuario  Int
+  codigo_hash String
+  expiracao   DateTime
+  usado       Boolean  @default(false)
+  tentativas  Int      @default(0)
+  criado_em   DateTime @default(now())
+
+  usuario Usuarios @relation(fields: [id_usuario], references: [id_usuario], onDelete: Cascade)
+
+  @@index([id_usuario])
+}
+
+model ResetToken {
+  id        Int      @id @default(autoincrement())
+  id_usuario Int
+  token     String   @unique
+  expiracao DateTime
+  criado_em DateTime @default(now())
+
+  usuario Usuarios @relation(fields: [id_usuario], references: [id_usuario], onDelete: Cascade)
+}
+
+
 model Usuarios {
   id_usuario              Int           @id @default(autoincrement())
   nome_completo           String        @db.VarChar(255)
@@ -79,6 +104,8 @@ model Usuarios {
   data_cadastro           DateTime      @default(now())
   data_ultima_atualizacao DateTime      @default(now())
 
+  passwordResets      PasswordReset[]
+  resetTokens      ResetToken[]
   movimentacoes       MovimentacaoEstoque[]
   pedidos             Pedidos[]
   despesas            Despesas[]
@@ -128,13 +155,13 @@ model Produtos {
   id_categoria_produto    Int
   id_unidade_medida       Int
   validade                DateTime?
-  quantidade_atual Decimal  @default(0.00) @db.Decimal(10, 2)
-  quantidade_real         Decimal?   @default(0.00) 
+  quantidade_atual        Decimal   @default(0.00) @db.Decimal(10, 2)
+  quantidade_real         Decimal?  @default(0.00)
   quantidade_minima       Decimal   @default(0.00)
   quantidade_maxima       Decimal   @default(0.00)
   forma_compra            String?   @db.VarChar(50)
   custo_unitario          Decimal?
-  peso_por_unidade        Decimal?            @db.Decimal(10, 2)
+  peso_por_unidade        Decimal?  @db.Decimal(10, 2)
   data_cadastro           DateTime  @default(now())
   data_ultima_atualizacao DateTime  @default(now())
   ativo                   Boolean   @default(true)
@@ -187,7 +214,7 @@ model Pratos {
   descricao          String?  @db.VarChar(500)
   data_cadastro      DateTime @default(now())
   ativo              Boolean  @default(true)
-  peso_pronto_total  Decimal? @db.Decimal(10,2)
+  peso_pronto_total  Decimal? @db.Decimal(10, 2)
 
   categoria    CategoriasPrato     @relation(fields: [id_categoria_prato], references: [id_categoria_prato])
   ingredientes Prato_Ingrediente[]

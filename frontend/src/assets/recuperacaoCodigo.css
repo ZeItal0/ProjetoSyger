@@ -1,0 +1,204 @@
+.recuperacao-page-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    /* Cor de fundo da imagem: Laranja/Pêssego */
+    background-color: #f7967d; 
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    text-align: center;
+}
+
+/* Estilo do Glassbox (assumindo que o componente Glassbox aplica o efeito de vidro) */
+/* O Glassbox deve ser responsável por:
+   - width: 400px (aproximadamente)
+   - padding: 40px
+   - background: rgba(255, 255, 255, 0.15)
+   - backdrop-filter: blur(5px)
+   - border-radius: 15px
+   - box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37)
+*/
+
+/* Estilos para o conteúdo dentro do Glassbox */
+.logo-recuperacao {
+    display: flex;
+    flex-direction: column; /* Alinhamento vertical: ícone em cima, texto embaixo */
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+    color: #fff; /* Cor do texto e ícone */
+}
+
+.logo-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-top: 5px; /* Espaço entre o ícone e o texto */
+}
+
+.logo-icon-codigo {
+   height: 150px;
+    width: auto;
+}
+
+.recuperacao-title {
+    /* Cor do texto: Branco */
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.recuperacao-instruction {
+    /* Cor do texto: Branco levemente transparente */
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 50px;
+    padding: 0 20px;
+}
+
+.recuperacao-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.input-group {
+    position: relative;
+    width: 80%;
+    margin-bottom: 50px; /* Espaço maior para o input */
+}
+
+.input-group input {
+    width: 100%;
+    padding: 5px 0;
+    border: none;
+    /* Linha de input: Branca, fina */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.8);
+    outline: none;
+    font-size: 1rem;
+    /* Cor do texto digitado: Branco */
+    color: #fff;
+    background: transparent;
+    text-align: left; /* O texto digitado deve ser à esquerda */
+}
+
+.input-group input:focus {
+    border-bottom-color: #fff;
+}
+
+.input-group label {
+    position: absolute;
+    /* Posicionamento do label "Email" no canto inferior direito */
+    bottom: 5px;
+    right: 0;
+    font-size: 0.9rem;
+    /* Cor do label: Branco levemente transparente */
+    color: rgba(255, 255, 255, 0.8);
+    pointer-events: none;
+    transition: 0.3s ease all;
+}
+
+/* O label não deve se mover no design da imagem, ele fica fixo no canto direito */
+.input-group input:focus ~ label,
+.input-group input:not(:placeholder-shown) ~ label {
+    /* Manter a posição original */
+    bottom: 5px;
+    right: 0;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.btn-enviar {
+    /* Botão: Branco, bordas arredondadas, sombra suave */
+    background-color: #fff;
+    color: #f7967d; /* Cor do texto: Laranja/Pêssego */
+    border: none;
+    border-radius: 8px;
+    padding: 15px 40px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+    width: 60%;
+    max-width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-transform: lowercase; /* O texto do botão está em minúsculas na imagem */
+}
+
+.btn-enviar:hover {
+    background-color: #f0f0f0;
+}
+
+/* Estilo para o Glassbox (assumindo que o componente Glassbox não está no CSS, mas é bom ter o estilo caso seja uma div) */
+/* Se o Glassbox for uma div, o estilo abaixo deve ser aplicado a ele */
+/* .glass-container {
+    width: 400px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+} */
+
+/* Estilos para o componente de código de recuperação */
+
+.recuperacao-form-codigo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.code-input-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 50px;
+    width: 80%;
+    max-width: 300px;
+}
+
+.code-input {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #f7967d; /* Cor do texto: Laranja/Pêssego */
+    background-color: #fff; /* Fundo branco */
+    border: none;
+    border-radius: 5px;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.code-input:focus {
+    box-shadow: 0 0 0 2px #f7967d; /* Borda de foco na cor principal */
+}
+
+.btn-confirmar {
+    /* Botão: Branco, bordas arredondadas, sombra suave */
+    background-color: #fff;
+    color: #f7967d; /* Cor do texto: Laranja/Pêssego */
+    border: none;
+    border-radius: 8px;
+    padding: 15px 40px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: background-color 0.3s ease;
+    width: 60%;
+    max-width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase; /* O texto do botão está em maiúsculas na imagem */
+}
+
+.btn-confirmar:hover {
+    background-color: #f0f0f0;
+}

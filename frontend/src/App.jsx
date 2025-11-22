@@ -11,12 +11,18 @@ import Relatorios from "./pages/relatorio";
 import Historico from "./pages/historico";
 import Controles from "./pages/controles";
 import ProtectedRoute from "./components/ProtectedRoute";
+import RecuperacaoEmail from "./pages/recuperacaoEmail";
+import CodigoEnvio from "./pages/codigoEnvio";
+import NovaSenha from "./pages/novaSenha";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LoginCadastro/>}/>
+        <Route path="/recuperar-senha" element={<RecuperacaoEmail />} />
+        <Route path="/recuperar-codigo" element={<CodigoEnvio />} />
+        <Route path="/recuperar-nova-senha" element={<NovaSenha />} />
 
         <Route path="/home" element={<ProtectedRoute element={Home} requiredRoles={["Administrador", "Funcionario_Comum", "Financeiro_Gerente"]}/>}/>
         <Route path="/dashBoard" element={<ProtectedRoute element={DashBoard} requiredRoles={["Administrador", "Funcionario_Comum", "Financeiro_Gerente"]}/>}/>
