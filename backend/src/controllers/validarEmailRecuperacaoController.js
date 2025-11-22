@@ -1,7 +1,9 @@
 import { buscarUsuarioPorEmail } from "../models/usuarioModel.js";
+import { validarEmailSchema } from "../validations/redefinirSenhaSchema.js";
 
 export const validarEmailRecuperacao = async (req, res) => {
   try {
+    await validarEmailSchema.validateAsync(req.body, { abortEarly: false });
     const { email } = req.body;
 
     if (!email)

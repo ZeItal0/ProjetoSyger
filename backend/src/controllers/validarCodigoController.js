@@ -1,9 +1,11 @@
 import { verificarCodigo } from "../models/verificarcodigoModel.js";
 import prisma from "../prismaCliente.js";
 import crypto from "crypto";
+import { validarCodigoSchema } from "../validations/redefinirSenhaSchema.js";
 
 export const validarCodigo = async (req, res) => {
     try {
+        await validarCodigoSchema.validateAsync(req.body, { abortEarly: false });
         const { email, codigo } = req.body;
 
         if (!email || !codigo)

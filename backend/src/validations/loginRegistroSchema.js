@@ -31,7 +31,7 @@ export const registerSchema = Joi.object({
     }),
 
   senha: Joi.string()
-    .min(6).required().messages({
+    .min(6).max(20).required().messages({
       "string.empty": "senha e obrigatoria",
       "string.min": "senha deve ter no minimo 6 caracteres",
       "any.required": "senha e obrigatoria",
@@ -45,7 +45,7 @@ export const loginSchema = Joi.object({
       "any.required": "usuario e obrigatório",
     }),
 
-  senha: Joi.string().min(6).required().messages({
+  senha: Joi.string().min(6).max(20).required().messages({
       "string.empty": "senha e obrigatoria",
       "string.min": "senha invalida",
       "any.required": "senha e obrigatoria",
